@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VZ — Digitalização Premium</title>
+    <title>VZ — Escala Digital Local</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #05010a; color: #ffffff; overflow-x: hidden; }
+        body { font-family: 'Inter', sans-serif; background-color: #020202; color: #ffffff; overflow-x: hidden; }
 
         .chrome-text {
             font-family: 'Cinzel', serif;
@@ -20,141 +20,152 @@
         }
 
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(167, 139, 250, 0.2);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(139, 92, 246, 0.12);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .glass-card:hover {
             border-color: rgba(139, 92, 246, 0.5);
             background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px);
         }
 
-        .bag-container { width: 140px; height: 140px; display: flex; align-items: center; justify-content: center; position: relative; }
-        .bag-icon { filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.5)); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .bag-container:hover .bag-icon { transform: scale(1.1) rotate(5deg); }
-
-        .btn-chrome {
+        .btn-premium {
             background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
+            transition: 0.3s;
         }
+
+        .btn-premium:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.6);
+        }
+
+        details summary::-webkit-details-marker { display:none; }
+        details[open] summary svg { transform: rotate(180deg); }
+        summary { cursor: pointer; list-style: none; }
 
         @media (max-width: 640px) {
-            .mobile-title { font-size: 3.2rem !important; line-height: 1.1 !important; }
-            .bag-container { width: 100px; height: 100px; }
+            .mobile-title { font-size: 2.5rem !important; line-height: 1.1 !important; }
         }
     </style>
 </head>
 <body class="selection:bg-violet-500/30">
 
-    <nav class="sticky top-0 z-50 w-full px-4 py-4 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto flex justify-between items-center bg-slate-900/50 border border-white/10 rounded-2xl p-2 px-4 shadow-2xl">
-            <div class="flex items-center gap-2">
-                <div class="w-7 h-7 bg-violet-600 rounded flex items-center justify-center font-black text-xs">V</div>
-                <span class="chrome-text text-xl font-black italic tracking-tighter">VZ</span>
+    <nav class="sticky top-0 z-50 w-full px-6 py-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass-card p-3 px-8 rounded-3xl border-white/5">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-violet-600 rounded-xl flex items-center justify-center font-black text-white">V</div>
+                <span class="chrome-text text-2xl font-black italic tracking-tighter uppercase leading-none">VZ</span>
             </div>
-            <a href="https://wa.me/5581995655408?text=Olá VZ! Quero saber mais sobre a digitalização." class="bg-violet-600 text-white text-[9px] font-black px-4 py-2 rounded-full tracking-widest uppercase">Consultoria Grátis</a>
+            <a href="https://wa.me/5581995655408" class="bg-white text-black text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-tighter hover:bg-violet-600 hover:text-white transition-all">Começar Agora</a>
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="max-w-7xl mx-auto px-6 pt-16 pb-12 text-center">
-        <h1 class="chrome-text mobile-title text-6xl md:text-9xl font-black mb-6 leading-tight uppercase tracking-tighter">MÁQUINA DE <br> VENDAS</h1>
-        <p class="italic text-violet-200/80 text-xl md:text-2xl mb-12 max-w-2xl mx-auto px-4">Economize com taxas, venda mais e modernize sua operação hoje.</p>
-        <a href="https://wa.me/5581995655408?text=Olá VZ! Quero criar meu sistema agora." class="btn-chrome px-10 py-5 rounded-2xl font-black text-lg uppercase shadow-2xl inline-block">QUERO COMEÇAR AGORA</a>
+    <header class="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center">
+        <h1 class="chrome-text mobile-title text-6xl md:text-[8rem] font-black mb-8 leading-[0.9] tracking-tighter uppercase">
+            VENDA MAIS. <br> TRABALHE MENOS.
+        </h1>
+
+        <p class="text-slate-400 text-xl md:text-3xl mb-14 max-w-4xl mx-auto font-medium leading-tight px-4">
+            O seu <span class="text-white italic">Site de Pedidos Profissional</span> entregue em 48h. Automatize suas vendas e tenha lucro real no bolso.
+        </p>
+
+        <a href="https://wa.me/5581995655408?text=Olá! Quero meu site de pedidos e parar de perder tempo com atendimento manual." 
+           class="btn-premium px-12 py-6 rounded-3xl font-black text-xl uppercase tracking-widest text-white shadow-2xl inline-block max-w-sm w-full transition-transform active:scale-95">
+            EU QUERO LUCRAR MAIS
+        </a>
     </header>
 
-    <!-- FUNCIONALIDADES -->
-    <section class="max-w-7xl mx-auto px-6 py-12" id="features">
-        <div class="glass-card p-10 md:p-16 rounded-[3.5rem] flex flex-col md:flex-row items-center gap-12 justify-between">
-            <div class="flex-1">
-                <h3 class="chrome-text text-4xl md:text-6xl font-black mb-6 uppercase italic leading-none">SITE DE PEDIDOS</h3>
-                <p class="text-gray-300 font-medium text-lg leading-relaxed max-w-lg mb-8">
-                    Tenha uma plataforma robusta que remove o atrito entre o seu produto e o dinheiro do cliente.
-                </p>
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 font-bold">✓</span>
-                        <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Impressão Automática Pedidos</div>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 font-bold">✓</span>
-                        <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Checkout PIX Integrado</div>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 font-bold">✓</span>
-                        <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Atendimento 100% Autônomo</div>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <span class="text-emerald-400 font-bold">✓</span>
-                        <div class="text-[10px] font-bold uppercase tracking-widest text-gray-400">Link Otimizado para Bio</div>
-                    </li>
-                </ul>
+    <section class="max-w-7xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass-card p-10 rounded-[3rem] border-red-500/10">
+                <h4 class="text-red-400 font-black text-sm uppercase tracking-widest mb-6 italic text-center underline underline-offset-8 decoration-red-500/20">Sem o VZ Digital:</h4>
+                <p class="text-slate-500 text-xs font-semibold mb-6 flex gap-2"><span>✕</span> Perda de tempo enviando PDF manualmente.</p>
+                <p class="text-slate-500 text-xs font-semibold mb-6 flex gap-2"><span>✕</span> Cliente desiste por demora no atendimento.</p>
+                <p class="text-slate-500 text-xs font-semibold mb-6 flex gap-2"><span>✕</span> 27% de taxa para aplicativos de entrega.</p>
             </div>
-
-            <div class="bag-container">
-                <svg class="bag-icon w-full h-full" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 8V6C8 3.79086 9.79086 2 12 2C14.2091 2 16 3.79086 16 6V8" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"/>
-                    <path d="M4 8H20V19C20 20.6569 18.6569 22 17 22H7C5.34315 22 4 20.6569 4 19V8Z" fill="white"/>
-                    <circle cx="12" cy="14.5" r="2" fill="#7c3aed"/>
-                </svg>
+            <div class="glass-card p-10 rounded-[3rem] border-emerald-500/20 bg-emerald-500/5">
+                <h4 class="text-emerald-400 font-black text-sm uppercase tracking-widest mb-6 italic text-center underline underline-offset-8 decoration-emerald-500/20">Com o VZ Digital:</h4>
+                <p class="text-slate-200 text-xs font-bold mb-6 flex gap-2"><span class="text-emerald-500">✓</span> Autoatendimento profissional 24h por dia.</p>
+                <p class="text-slate-200 text-xs font-bold mb-6 flex gap-2"><span class="text-emerald-400">✓</span> Pedidos organizados direto no seu Zap.</p>
+                <p class="text-slate-200 text-xs font-bold mb-6 flex gap-2"><span class="text-emerald-400">✓</span> Taxa Zero. Pix Direto. Lucro Máximo.</p>
             </div>
         </div>
     </section>
 
-    <!-- PRATICIDADE -->
-    <section class="max-w-7xl mx-auto px-6 py-20">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass-card p-10 rounded-[2.5rem]">
-                <h4 class="text-white font-black text-lg uppercase italic mb-4">Mais Liberdade</h4>
-                <p class="text-gray-400 text-xs font-medium leading-relaxed italic">Você não precisa mais ficar respondendo "oi" e mandando PDF no WhatsApp. O site faz tudo!</p>
-            </div>
-            <div class="glass-card p-10 rounded-[2.5rem] border-violet-500/30">
-                <h4 class="text-white font-black text-lg uppercase italic mb-4">Zero Comissões</h4>
-                <p class="text-gray-400 text-xs font-medium leading-relaxed italic">Diferente dos apps tradicionais, aqui cada real do seu pedido entra direto no seu bolso.</p>
-            </div>
-            <div class="glass-card p-10 rounded-[2.5rem]">
-                <h4 class="text-white font-black text-lg uppercase italic mb-4">Configuração 48h</h4>
-                <p class="text-gray-400 text-xs font-medium leading-relaxed italic">Setup rápido e profissional. Em menos de 2 dias seu negócio estará no topo do digital.</p>
-            </div>
+    <section class="max-w-4xl mx-auto px-6 py-20">
+        <h2 class="chrome-text text-3xl md:text-5xl font-black text-center mb-16 uppercase italic w-full">DÚVIDAS FREQUENTES</h2>
+        
+        <div class="space-y-4 font-medium">
+            <details class="glass-card rounded-3xl overflow-hidden group">
+                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">Preciso baixar algum aplicativo?</span>
+                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
+                </summary>
+                <div class="px-8 pb-8 text-slate-400 text-xs md:text-sm leading-relaxed italic">
+                    Não! Seus clientes acessam através de um link rápido diretamente pelo navegador do celular. Não ocupa memória e é instantâneo.
+                </div>
+            </details>
+
+            <details class="glass-card rounded-3xl overflow-hidden group border-violet-500/20 shadow-[0_0_20px_rgba(139,92,246,0.05)]">
+                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">Paga comissão por cada venda?</span>
+                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
+                </summary>
+                <div class="px-8 pb-8 text-emerald-400 text-xs md:text-sm font-bold leading-relaxed italic">
+                    Absolutamente ZERO taxas. Todo o dinheiro que o cliente paga vai 100% para você via Pix ou cartão direto na sua conta.
+                </div>
+            </details>
+
+            <details class="glass-card rounded-3xl overflow-hidden group">
+                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">O que está incluso na manutenção?</span>
+                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
+                </summary>
+                <div class="px-8 pb-8 text-slate-400 text-xs md:text-sm leading-relaxed italic">
+                    Hospedagem do seu site, suporte VIP via WhatsApp e direito a alterações de preços ou fotos sempre que você precisar. Você nunca fica na mão.
+                </div>
+            </details>
+
+            <details class="glass-card rounded-3xl overflow-hidden group">
+                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">O VZ Digital serve para o meu nicho?</span>
+                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
+                </summary>
+                <div class="px-8 pb-8 text-slate-400 text-xs md:text-sm leading-relaxed italic">
+                    Sim! Atendemos Hamburguerias, Pizzarias, Barbeiros, Lojas de Roupas, Farmácias e qualquer negócio local que venda ou agende via WhatsApp.
+                </div>
+            </details>
         </div>
     </section>
 
-    <!-- NOVA SEÇÃO DE PREÇO ATUALIZADA -->
-    <section class="max-w-2xl mx-auto px-6 py-12">
-        <div class="glass-card p-10 md:p-14 rounded-[4rem] text-center border-violet-600/30 shadow-[0_0_80px_rgba(139,92,246,0.1)]">
-            
-            <div class="mb-12">
-                <p class="text-gray-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Criação & Configuração</p>
-                <div class="text-7xl font-black chrome-text leading-none mb-2 italic">R$ 40</div>
-                <p class="text-violet-400 text-[9px] font-black uppercase tracking-widest leading-none mt-2">Investimento único de lançamento</p>
+    <section class="max-w-xl mx-auto px-6 py-20">
+        <div class="glass-card p-10 md:p-16 rounded-[4rem] text-center border-violet-500/40 relative shadow-[0_0_100px_rgba(139,92,246,0.2)]">
+            <div class="mb-10">
+                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4 leading-none">Setup Único Profissional</p>
+                <div class="chrome-text text-8xl font-black italic tracking-tighter leading-none">R$ 40</div>
             </div>
-
-            <div class="w-full h-px bg-white/5 mb-12"></div>
-
+            <div class="w-full h-px bg-white/5 my-10"></div>
             <div class="mb-12">
-                <p class="text-gray-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Manutenção & Suporte VIP</p>
+                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4 leading-none">Manutenção & Atualizações</p>
                 <div class="flex items-center justify-center gap-2">
-                    <span class="text-5xl font-black text-white italic tracking-tighter">R$ 25</span>
-                    <span class="text-gray-500 font-black text-sm italic">/mês</span>
+                    <span class="text-6xl font-black text-white italic tracking-tighter">R$ 25</span>
+                    <span class="text-slate-500 font-bold italic text-sm">/mês</span>
                 </div>
             </div>
-            
-            <a href="https://wa.me/5581995655408?text=Olá VZ! Quero criar meu sistema por R$ 40 e garantir a manutenção de R$ 25." 
-               class="btn-chrome block w-full py-6 rounded-3xl text-sm font-black uppercase tracking-[0.2em] shadow-xl active:scale-95 transition-all">
-                COMEÇAR AGORA
+            <a href="https://wa.me/5581995655408?text=Olá! Quero meu site de pedidos por R$ 40 e garantir meu suporte mensal." 
+               class="btn-premium block w-full py-7 rounded-3xl font-black text-sm uppercase tracking-[0.4em] text-white shadow-xl transition-all">
+                GARANTIR MINHA VAGA
             </a>
-            
-            <p class="mt-8 text-[8px] text-gray-600 font-bold uppercase tracking-[0.3em] leading-relaxed">
-                Suporte WhatsApp Incluso • Alterações de Itens • Painel de Gestor
-            </p>
         </div>
     </section>
 
-    <footer class="py-12 text-center opacity-30">
-        <span class="chrome-text font-black text-[9px] italic uppercase tracking-[0.5em]">VZ DIGITAL — IMPULSIONANDO SEU IMPACTO</span>
+    <footer class="py-16 text-center border-t border-white/5 opacity-50">
+        <div class="chrome-text font-black text-2xl italic tracking-tighter uppercase mb-4 leading-none">VZ DIGITAL</div>
+        <p class="text-[8px] text-slate-500 font-black uppercase tracking-[0.5em] leading-none">Inovação Local • Digitalização de Elite</p>
     </footer>
 
 </body>
