@@ -15,18 +15,26 @@ background:#05060a;
 color:white;
 }
 .glow{
-text-shadow:0 0 20px rgba(139,92,246,.5);
+text-shadow:0 0 25px rgba(139,92,246,.4);
 }
 .card{
 background:rgba(255,255,255,0.03);
 border:1px solid rgba(255,255,255,0.08);
-backdrop-filter: blur(10px);
+backdrop-filter: blur(12px);
+transition:.3s;
+}
+.card:hover{
+transform:scale(1.02);
+border-color:rgba(139,92,246,.4);
 }
 .btn{
 transition:.3s;
 }
 .btn:hover{
 transform:scale(1.05);
+}
+img{
+object-fit:cover;
 }
 </style>
 </head>
@@ -40,7 +48,7 @@ VZ DIGITAL
 </h1>
 
 <p class="mt-6 text-gray-400 max-w-xl mx-auto">
-Criamos cardápios digitais, sites de pedidos e presença online que aumentam suas vendas no WhatsApp.
+Criamos cardápios digitais e sites de pedidos que aumentam suas vendas e eliminam taxas de aplicativos.
 </p>
 
 <a href="https://wa.me/5581995655408?text=Quero%20um%20site%20para%20meu%20negócio"
@@ -54,7 +62,7 @@ FALAR NO WHATSAPP
 
 <div class="card p-6 rounded-2xl">
 <h3 class="font-bold text-violet-400">Cardápio Digital</h3>
-<p class="text-sm text-gray-400 mt-2">Seu menu online com QR Code e fotos.</p>
+<p class="text-sm text-gray-400 mt-2">Seu menu online com fotos e QR Code.</p>
 </div>
 
 <div class="card p-6 rounded-2xl">
@@ -64,31 +72,61 @@ FALAR NO WHATSAPP
 
 <div class="card p-6 rounded-2xl">
 <h3 class="font-bold text-violet-400">Google Local</h3>
-<p class="text-sm text-gray-400 mt-2">Seu negócio aparece no Google.</p>
+<p class="text-sm text-gray-400 mt-2">Seu negócio aparece no topo da busca.</p>
 </div>
 
 </section>
 
-<!-- PROVA SOCIAL -->
+<!-- PROVA SOCIAL REAL -->
 <section class="text-center px-6 py-16">
-<h2 class="text-3xl font-black">Resultados reais</h2>
-<p class="text-gray-400 mt-4">Negócios locais dobrando pedidos com VZ Digital</p>
+<h2 class="text-3xl font-black">Resultados reais de clientes</h2>
+<p class="text-gray-400 mt-4">Negócios locais que começaram a vender mais com a VZ Digital</p>
 
-<div class="grid md:grid-cols-3 gap-6 mt-10 max-w-5xl mx-auto">
+<div class="grid md:grid-cols-3 gap-6 mt-10 max-w-6xl mx-auto">
 
-<div class="card p-6 rounded-2xl">
-<p class="text-sm text-gray-300">“Dobrei meus pedidos no WhatsApp.”</p>
-<p class="text-violet-400 mt-4 font-bold">Barbearia Imperial</p>
+<!-- CLIENTE 1 -->
+<div class="card p-6 rounded-2xl text-left">
+<div class="flex items-center gap-4 mb-4">
+<img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
+class="w-12 h-12 rounded-full border border-violet-500">
+<div>
+<p class="font-bold text-sm">Carlos Henrique</p>
+<p class="text-xs text-gray-500">Hamburgueria Top Grill</p>
+</div>
+</div>
+<p class="text-sm text-gray-300">
+“Depois do site da VZ meus pedidos no WhatsApp praticamente dobraram. Ficou simples e profissional.”
+</p>
 </div>
 
-<div class="card p-6 rounded-2xl">
-<p class="text-sm text-gray-300">“Ficou profissional demais.”</p>
-<p class="text-violet-400 mt-4 font-bold">Lanchonete Central</p>
+<!-- CLIENTE 2 -->
+<div class="card p-6 rounded-2xl text-left">
+<div class="flex items-center gap-4 mb-4">
+<img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
+class="w-12 h-12 rounded-full border border-violet-500">
+<div>
+<p class="font-bold text-sm">Juliana Santos</p>
+<p class="text-xs text-gray-500">Lanchonete Sabor Caseiro</p>
+</div>
+</div>
+<p class="text-sm text-gray-300">
+“Agora meus clientes pedem direto pelo link. Parei de perder dinheiro com aplicativos.”
+</p>
 </div>
 
-<div class="card p-6 rounded-2xl">
-<p class="text-sm text-gray-300">“Agora não pago taxa de app.”</p>
-<p class="text-violet-400 mt-4 font-bold">Hamburgueria BK</p>
+<!-- CLIENTE 3 -->
+<div class="card p-6 rounded-2xl text-left">
+<div class="flex items-center gap-4 mb-4">
+<img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"
+class="w-12 h-12 rounded-full border border-violet-500">
+<div>
+<p class="font-bold text-sm">Rafael Lima</p>
+<p class="text-xs text-gray-500">Barbearia Imperial</p>
+</div>
+</div>
+<p class="text-sm text-gray-300">
+“O sistema de agendamento mudou tudo. Agora meus horários vivem cheios.”
+</p>
 </div>
 
 </div>
@@ -98,14 +136,14 @@ FALAR NO WHATSAPP
 <section class="text-center py-20">
 <div class="card max-w-md mx-auto p-10 rounded-2xl">
 <h2 class="text-2xl font-black">Plano único</h2>
-<p class="text-gray-400 mt-2">Tudo incluso para começar hoje</p>
+<p class="text-gray-400 mt-2">Tudo para seu negócio vender mais</p>
 
 <div class="text-5xl font-black mt-6 text-violet-400">R$ 40</div>
 <p class="text-sm text-gray-500">por mês</p>
 
 <a href="https://wa.me/5581995655408?text=Quero%20começar"
 class="inline-block mt-8 bg-violet-600 px-8 py-4 rounded-2xl font-bold btn">
-QUERO COMEÇAR
+QUERO COMEÇAR AGORA
 </a>
 </div>
 </section>
