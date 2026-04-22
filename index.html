@@ -2,97 +2,77 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>VZ — Digitalização Premium</title>
 
-    <!-- Tailwind CSS (CDN Otimizada) -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Cinzel, Inter e Playfair -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --chrome-top: #f3f4f6;
-            --chrome-mid: #7c3aed;
-            --chrome-bottom: #a78bfa;
-        }
-
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #030008;
+            background-color: #05010a;
             color: #ffffff;
             margin: 0;
-            overflow-x: hidden;
+            padding: 0;
+            overflow-x: hidden; /* Evita scroll lateral */
         }
 
-        /* EFEITO CHROME METAL PURPLE CORRIGIDO */
+        /* EFEITO CHROME SUAVIZADO PARA LEITURA */
         .chrome-text {
             font-family: 'Cinzel', serif;
             background: linear-gradient(
                 180deg, 
                 #ffffff 0%, 
-                #f3f4f6 44%, 
-                #7c3aed 50%, 
-                #4c1d95 55%, 
-                #a78bfa 100%
+                #f8fafc 45%, 
+                #a78bfa 50%,   /* Cor central mais clara para clareza */
+                #7c3aed 55%, 
+                #c084fc 100%
             );
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            color: #7c3aed; /* Fallback caso o clip falhe */
-            filter: drop-shadow(0 0 10px rgba(139, 92, 246, 0.4));
-            display: inline-block; /* Garante que o gradiente aplique corretamente */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); /* Sombra para destacar do fundo */
+            display: inline-block;
         }
 
         .subtitle-italic {
             font-family: 'Playfair Display', serif;
             font-style: italic;
+            color: #d8b4fe; /* Cor mais clara para leitura no escuro */
         }
 
-        /* Melhoria de performance dos Cards */
+        /* Cards Otimizados */
         .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(139, 92, 246, 0.1);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
-        .glass-card:hover {
-            border-color: rgba(139, 92, 246, 0.5);
-            transform: translateY(-5px);
-        }
-
-        /* Animação do Botão Principal */
+        /* Botão com toque mobile melhorado */
         .btn-chrome {
-            background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
+            background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            font-weight: 900;
-            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
 
-        .btn-chrome:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 30px rgba(139, 92, 246, 0.6);
-            background: linear-gradient(135deg, #8b5cf6 0%, #5b21b6 100%);
-        }
-
-        /* Glow de Fundo */
-        .bg-glow {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at top, rgba(139, 92, 246, 0.15) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: -1;
+        /* Responsive Fixes */
+        @media (max-width: 640px) {
+            .mobile-title {
+                font-size: 3.5rem !important; /* Tamanho reduzido para não quebrar no celular */
+                line-height: 1.1 !important;
+            }
+            .mobile-padding {
+                padding-left: 1.5rem !important;
+                padding-right: 1.5rem !important;
+            }
         }
 
         html { scroll-behavior: smooth; }
@@ -100,112 +80,101 @@
 </head>
 <body class="selection:bg-violet-500/30">
 
-    <div class="bg-glow"></div>
-
-    <!-- NAVBAR -->
-    <nav class="sticky top-0 z-50 transition-all duration-300 px-6 py-6 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex justify-between items-center bg-white/5 border border-white/10 rounded-2xl p-3 px-6">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-violet-600 rounded-lg shadow-lg flex items-center justify-center font-black">V</div>
-                <span class="chrome-text text-2xl font-black italic tracking-tighter">VZ</span>
+    <!-- NAVBAR OTIMIZADA -->
+    <nav class="sticky top-0 z-50 w-full px-4 py-4 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto flex justify-between items-center bg-slate-900/50 border border-white/10 rounded-2xl p-2 px-4 md:px-6">
+            <div class="flex items-center gap-2">
+                <div class="w-7 h-7 bg-violet-600 rounded flex items-center justify-center font-black text-sm shadow-inner">V</div>
+                <span class="chrome-text text-xl font-black italic tracking-tighter">VZ</span>
             </div>
-            <a href="#pricing" class="text-[10px] font-black uppercase tracking-[0.2em] opacity-60 hover:opacity-100 transition-opacity">Preços</a>
-            <a href="https://wa.me/5581995655408?text=Olá VZ! Quero falar com um especialista." 
-               class="bg-violet-600 hover:bg-violet-500 text-white text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-tighter transition-all active:scale-95">
-                Contato
+            <a href="https://wa.me/5581995655408?text=Olá VZ! Quero crescer meu negócio." 
+               class="bg-violet-600 hover:bg-violet-500 text-white text-[9px] md:text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest transition-all">
+                CONTATO
             </a>
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
-    <header class="max-w-7xl mx-auto px-6 pt-32 pb-20 text-center">
-        <div class="mb-10">
-            <span class="text-violet-400 text-[10px] font-black uppercase tracking-[0.5em] bg-violet-500/10 px-6 py-3 rounded-full border border-violet-500/20">
-                A Revolução do Lucro Local
+    <!-- HEADER / HERO -->
+    <header class="max-w-7xl mx-auto mobile-padding pt-16 pb-12 text-center">
+        <div class="mb-8">
+            <span class="text-violet-300 text-[9px] font-bold uppercase tracking-[0.3em] bg-violet-900/30 px-4 py-2 rounded-full border border-violet-500/20">
+                LÍDER EM VENDAS LOCAIS
             </span>
         </div>
         
-        <h1 class="chrome-text text-7xl md:text-9xl font-black mb-8 leading-[0.9] block px-4 py-2">
+        <h1 class="chrome-text mobile-title text-6xl md:text-9xl font-black mb-6 leading-tight">
             MÁQUINA DE <br> VENDAS
         </h1>
 
-        <p class="subtitle-italic text-2xl md:text-3xl mb-14 max-w-3xl mx-auto text-violet-300/80 px-4">
-            Transformamos seu negócio em uma potência digital. Inovação que o seu faturamento sente na hora.
+        <p class="subtitle-italic text-xl md:text-3xl mb-12 max-w-2xl mx-auto px-2">
+            Aceleramos o crescimento da sua empresa com inteligência digital e design de elite.
         </p>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 px-4">
+        <div class="flex flex-col items-center gap-8">
             <a href="https://wa.me/5581995655408?text=Olá VZ! Quero começar agora." 
-               class="btn-chrome w-full sm:w-auto px-12 py-6 rounded-2xl text-lg shadow-2xl">
+               class="btn-chrome w-full max-w-sm sm:w-auto px-10 py-5 rounded-2xl font-black text-base md:text-lg shadow-xl active:scale-95 uppercase tracking-widest transition-transform">
                 QUERO COMEÇAR AGORA
             </a>
-            <div class="flex items-center gap-4">
-                <div class="flex -space-x-3">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" alt="User" class="w-12 h-12 rounded-full border-2 border-slate-900 shadow-xl">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" alt="User" class="w-12 h-12 rounded-full border-2 border-slate-900 shadow-xl">
+            
+            <div class="flex items-center gap-3">
+                <div class="flex -space-x-2">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" class="w-10 h-10 rounded-full border-2 border-slate-900 shadow-lg">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop" class="w-10 h-10 rounded-full border-2 border-slate-900 shadow-lg">
                 </div>
-                <div class="text-left">
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest leading-none mb-1">Empresários</p>
-                    <p class="text-xs font-black text-violet-400 uppercase tracking-tighter">já escalando com a VZ</p>
-                </div>
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest text-left leading-tight">
+                    Empresários que <br> <span class="text-violet-400">confiam na VZ</span>
+                </p>
             </div>
         </div>
     </header>
 
-    <!-- BENTO GRID -->
-    <section class="max-w-7xl mx-auto px-6 py-20">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Main Service -->
-            <div class="glass-card md:col-span-2 p-12 rounded-[3.5rem] relative overflow-hidden flex flex-col justify-center">
-                <h3 class="chrome-text text-4xl md:text-5xl font-black mb-6 uppercase italic">Site de Pedidos</h3>
-                <p class="text-gray-400 font-medium text-lg max-w-md leading-relaxed">
-                    Elimine as taxas de 27% dos apps. Tenha um sistema próprio, rápido e integrado ao seu WhatsApp para lucrar 100% livre.
-                </p>
-                <div class="absolute right-[-20px] bottom-[-20px] opacity-10 pointer-events-none">
-                    <svg class="w-64 h-64 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/></svg>
-                </div>
-            </div>
+    <!-- BENTO SERVICES -->
+    <section class="max-w-7xl mx-auto mobile-padding py-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card md:col-span-2 p-8 md:p-12 rounded-[2.5rem] flex flex-col justify-center border-violet-500/10">
+            <h3 class="chrome-text text-3xl md:text-5xl font-black mb-4 uppercase italic">Site de Pedidos</h3>
+            <p class="text-gray-300 font-medium text-base md:text-lg max-w-md">
+                Receba pedidos direto no WhatsApp sem pagar comissões. O lucro é 100% seu.
+            </p>
+        </div>
 
-            <!-- QR Code -->
-            <div class="glass-card p-10 rounded-[3.5rem] text-center flex flex-col justify-center items-center">
-                <div class="w-20 h-20 bg-violet-600/20 rounded-3xl flex items-center justify-center mb-8 border border-white/5 ring-8 ring-violet-500/5">
-                    <svg class="w-10 h-10 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
-                </div>
-                <h4 class="chrome-text text-2xl font-black uppercase italic">QR Code</h4>
-                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-4">Atendimento instantâneo de mesa.</p>
+        <div class="glass-card p-10 rounded-[2.5rem] text-center flex flex-col justify-center items-center">
+            <div class="w-16 h-16 bg-violet-600/20 rounded-2xl flex items-center justify-center mb-6 border border-violet-500/20">
+                <svg class="w-8 h-8 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
             </div>
+            <h4 class="chrome-text text-xl font-black uppercase italic">QR Code</h4>
+            <p class="text-[9px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-2">Agilidade plena para sua mesa.</p>
         </div>
     </section>
 
     <!-- PRICING -->
-    <section id="pricing" class="max-w-md mx-auto px-6 py-24">
-        <div class="glass-card p-14 rounded-[4rem] text-center relative border-violet-600/30 overflow-hidden shadow-[0_0_80px_rgba(139,92,246,0.1)]">
-            <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-violet-600 via-white/40 to-violet-600"></div>
+    <section class="max-w-md mx-auto mobile-padding py-16">
+        <div class="glass-card p-10 md:p-14 rounded-[3.5rem] text-center border-violet-500/40 relative overflow-hidden backdrop-blur-2xl">
+            <div class="absolute top-0 left-0 w-full h-1 bg-violet-600"></div>
             
-            <p class="text-gray-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4">Investimento</p>
-            <div class="flex items-center justify-center gap-2 mb-12">
-                <span class="chrome-text text-8xl font-black tracking-tighter italic leading-none">R$ 40</span>
-                <span class="text-gray-500 font-black text-xl italic">/mês</span>
+            <p class="text-gray-400 text-[10px] font-black uppercase tracking-[0.3em] mb-4">A partir de</p>
+            <div class="flex items-center justify-center gap-2 mb-10">
+                <span class="chrome-text text-7xl md:text-8xl font-black tracking-tighter italic leading-none">R$ 40</span>
+                <span class="text-gray-400 font-black text-lg italic">/mês</span>
             </div>
             
-            <a href="https://wa.me/5581995655408?text=Olá VZ! Quero garantir meu plano de 40 reais." 
-               class="btn-chrome block w-full py-6 rounded-2xl text-sm shadow-xl active:scale-95">
+            <a href="https://wa.me/5581995655408?text=Olá VZ! Quero o plano de 40 reais." 
+               class="btn-chrome block w-full py-5 rounded-2xl text-xs md:text-sm font-black uppercase tracking-widest shadow-lg active:scale-95">
                 ATIVAR MEU PAINEL
             </a>
             
-            <p class="mt-10 text-[9px] text-gray-600 font-black uppercase tracking-[0.4em] leading-relaxed">
-                Setup em menos de 48h <br> 
-                Sem fidelidade • Sem burocracia
+            <p class="mt-8 text-[8px] text-gray-500 font-bold uppercase tracking-widest opacity-80">
+                Setup em até 48h • Sem fidelidade
             </p>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="max-w-7xl mx-auto px-6 py-16 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8 opacity-50">
-        <div class="flex items-center gap-3">
-            <div class="w-6 h-6 bg-white/10 rounded-md flex items-center justify-center font-black text-[10px]">V</div>
-            <span class="chrome-text font-black text-lg italic tracking-tighter uppercase">VZ — Digital PRO</span>
+    <footer class="max-w-7xl mx-auto mobile-padding py-12 border-t border-white/5 text-center flex flex-col items-center gap-6">
+        <div class="flex items-center gap-2">
+            <div class="w-6 h-6 bg-white/10 rounded flex items-center justify-center font-black text-[10px]">V</div>
+            <span class="chrome-text font-black text-sm italic tracking-widest uppercase">VZ DIGITAL 2026</span>
         </div>
-        <p class="text-[9px] font-black uppercase tracking-[0.5em] text-gray-400">Transformando Negócios Locais em Autoridades de Venda</p>
+        <p class="text-[8px] font-bold uppercase tracking-[0.3em] text-gray-600">Performance sem limites para o seu negócio</p>
     </footer>
 
 </body>
