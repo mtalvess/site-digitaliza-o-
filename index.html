@@ -1,223 +1,119 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ - Digitalização para Negócios Locais</title>
-    <!-- Tailwind CSS 3 CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- React & Lucide Icons -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VZ Digital - Sites e Cardápios</title>
 
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; }
-        .selection-purple::selection { background: rgba(139, 92, 246, 0.3); }
-        @keyframes pulse-soft {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(139, 92, 246, 0); }
-            50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); }
-        }
-        .animate-pulse-soft { animation: pulse-soft 2s infinite ease-in-out; }
-        html { scroll-behavior: smooth; }
-    </style>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:Inter, sans-serif;
+background:#05060a;
+color:white;
+}
+.glow{
+text-shadow:0 0 20px rgba(139,92,246,.5);
+}
+.card{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter: blur(10px);
+}
+.btn{
+transition:.3s;
+}
+.btn:hover{
+transform:scale(1.05);
+}
+</style>
 </head>
-<body class="selection-purple">
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { motion, AnimatePresence } = FramerMotion;
+<body>
 
-        // Configuração
-        const WHATSAPP_NUMBER = "5581995655408";
-        const WHATSAPP_MESSAGE = encodeURIComponent("Olá VZ! Vi sua página e gostaria de começar agora a digitalizar meu negócio.");
-        const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+<!-- HERO -->
+<section class="text-center px-6 py-20">
+<h1 class="text-5xl md:text-6xl font-black glow">
+VZ DIGITAL
+</h1>
 
-        // Ícones Lucide (Helper para React)
-        const Icon = ({ name, className }) => {
-            const [iconHtml, setIconHtml] = useState("");
-            useEffect(() => {
-                if (window.lucide) {
-                    const icon = window.lucide.icons[name];
-                    if (icon) {
-                        setIconHtml(icon.toSvg({ class: className }));
-                    }
-                }
-            }, [name, className]);
-            return <span dangerouslySetInnerHTML={{ __html: iconHtml }} />;
-        };
+<p class="mt-6 text-gray-400 max-w-xl mx-auto">
+Criamos cardápios digitais, sites de pedidos e presença online que aumentam suas vendas no WhatsApp.
+</p>
 
-        const Navbar = () => (
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/5">
-                <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-violet-600/30">VZ</div>
-                        <span className="text-xl font-bold tracking-tight text-white uppercase italic">VZ</span>
-                    </div>
-                    <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
-                        <a href="#services" className="hover:text-violet-400 transition-colors">Serviços</a>
-                        <a href="#testimonials" className="hover:text-violet-400 transition-colors">Clientes</a>
-                        <a href="#pricing" className="hover:text-violet-400 transition-colors">Preços</a>
-                        <a href="#faq" className="hover:text-violet-400 transition-colors">FAQ</a>
-                    </div>
-                    <a href={WHATSAPP_LINK} className="bg-violet-600 hover:bg-violet-500 text-white px-6 py-2 rounded-full text-sm font-bold transition-all active:scale-95 shadow-lg shadow-violet-600/20">
-                        Falar com Especialista
-                    </a>
-                </div>
-            </nav>
-        );
+<a href="https://wa.me/5581995655408?text=Quero%20um%20site%20para%20meu%20negócio"
+class="inline-block mt-10 bg-violet-600 px-8 py-4 rounded-2xl font-bold btn">
+FALAR NO WHATSAPP
+</a>
+</section>
 
-        const App = () => {
-            const [faqOpen, setFaqOpen] = useState(null);
+<!-- SERVIÇOS -->
+<section class="px-6 py-10 max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
 
-            return (
-                <div className="min-h-screen px-4 md:px-8 py-20">
-                    <Navbar />
+<div class="card p-6 rounded-2xl">
+<h3 class="font-bold text-violet-400">Cardápio Digital</h3>
+<p class="text-sm text-gray-400 mt-2">Seu menu online com QR Code e fotos.</p>
+</div>
 
-                    <main className="max-w-7xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-12 gap-4">
-                        {/* HERO */}
-                        <section className="md:col-span-12 lg:col-span-8 bg-slate-900 border border-white/5 rounded-[2.5rem] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden shadow-2xl">
-                            <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
-                                <Icon name="Globe" className="w-64 h-64 text-white" />
-                            </div>
-                            <div className="relative z-10">
-                                <span className="flex items-center gap-2 text-violet-400 font-bold text-xs uppercase tracking-[0.2em] mb-6">
-                                    <span className="w-2 h-2 bg-violet-500 rounded-full animate-pulse"></span>
-                                    Líder em Presença Digital Local
-                                </span>
-                                <h1 className="text-4xl md:text-6xl font-black text-white leading-[1.1] mb-6 tracking-tight">
-                                    Transforme seu cardápio em uma <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-purple-400 underline decoration-violet-500/30 underline-offset-8">máquina de vendas.</span>
-                                </h1>
-                                <p className="text-slate-400 text-lg md:text-xl max-w-xl mb-10 font-medium">
-                                    Sites de pedidos e presença no Google para restaurantes e barbearias que querem lucrar sem taxas abusivas.
-                                </p>
-                                <div className="flex flex-col sm:flex-row items-center gap-6">
-                                    <a href={WHATSAPP_LINK} className="w-full sm:w-auto bg-violet-600 text-white px-10 py-5 rounded-2xl font-black flex items-center justify-center gap-3 hover:scale-105 transition-all shadow-xl shadow-violet-600/30 active:scale-95">
-                                        Vender via WhatsApp
-                                        <Icon name="ArrowRight" className="w-5 h-5" />
-                                    </a>
-                                    <div className="flex -space-x-3 items-center">
-                                        {[1, 2, 3].map(i => (
-                                            <div key={i} className="w-10 h-10 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] font-bold text-slate-500">
-                                                {i === 3 ? "+500" : ""}
-                                            </div>
-                                        ))}
-                                        <span className="ml-5 text-xs text-slate-500 font-bold tracking-widest uppercase italic">500+ negócios</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+<div class="card p-6 rounded-2xl">
+<h3 class="font-bold text-violet-400">Site de Pedidos</h3>
+<p class="text-sm text-gray-400 mt-2">Clientes pedem direto no WhatsApp.</p>
+</div>
 
-                        {/* PROBLEM */}
-                        <section id="problem" className="md:col-span-12 lg:col-span-4 bg-gradient-to-br from-violet-600 to-purple-800 rounded-[2.5rem] p-8 text-white flex flex-col justify-between shadow-2xl">
-                            <div>
-                                <h3 className="text-2xl font-black mb-8 leading-tight italic uppercase italic">Chega de pagar 27% para aplicativos!</h3>
-                                <div className="space-y-4">
-                                    <div className="flex items-center gap-4 bg-white/10 p-4 rounded-2xl border border-white/10 transition-transform hover:scale-[1.02]">
-                                        <span className="text-red-400 font-bold">✕</span>
-                                        <span className="text-sm font-semibold opacity-90">Sem comissões por cada pedido</span>
-                                    </div>
-                                    <div className="flex items-center gap-4 bg-white/10 p-4 rounded-2xl border border-white/10 transition-transform hover:scale-[1.02]">
-                                        <span className="text-emerald-400 font-bold">✓</span>
-                                        <span className="text-sm font-semibold opacity-100">Dinheiro direto no seu PIX</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="mt-12 bg-black/20 p-5 rounded-2xl">
-                                <p className="text-xs italic opacity-90">"A VZ salvou nossa margem de lucro. Hoje o cliente pede direto conosco."</p>
-                                <p className="text-[10px] font-black mt-3 text-violet-300 uppercase tracking-widest">— Restaurante Prime</p>
-                            </div>
-                        </section>
+<div class="card p-6 rounded-2xl">
+<h3 class="font-bold text-violet-400">Google Local</h3>
+<p class="text-sm text-gray-400 mt-2">Seu negócio aparece no Google.</p>
+</div>
 
-                        {/* SERVICES */}
-                        <section id="services" className="md:col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            {[
-                                { title: "Cardápio QR Code", icon: "UtensilsCrossed", desc: "Digitalize suas mesas." },
-                                { title: "Site de Pedidos", icon: "Smartphone", desc: "Venda direta via link." },
-                                { title: "Google Local", icon: "Search", desc: "Apareça no topo." }
-                            ].map((s, i) => (
-                                <div key={i} className="bg-slate-900 border border-white/5 rounded-[2.5rem] p-8 hover:border-violet-500/50 transition-all shadow-xl group">
-                                    <div className="mb-6 w-12 h-12 bg-violet-500/10 rounded-xl flex items-center justify-center text-violet-400 group-hover:bg-violet-600 group-hover:text-white transition-all">
-                                        <Icon name={s.icon} className="w-6 h-6" />
-                                    </div>
-                                    <h4 className="font-black text-white text-sm uppercase italic mb-2 tracking-tight">{s.title}</h4>
-                                    <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{s.desc}</p>
-                                </div>
-                            ))}
-                        </section>
+</section>
 
-                        {/* TESTIMONIALS */}
-                        <section id="testimonials" className="md:col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            {[
-                                { name: "Ricardo Silva", role: "Barbearia Imperial", content: "A VZ transformou meu agendamento.", img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" },
-                                { name: "Amanda Costa", role: "Restaurante Arte", content: "Retorno do investimento imediato.", img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop" },
-                                { name: "Bruno Oliveira", role: "Hamburgueria", content: "Dobramos nossos pedidos WhatsApp.", img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop" }
-                            ].map((t, i) => (
-                                <div key={i} className="bg-slate-900 border border-white/5 rounded-[2.5rem] p-8 shadow-xl">
-                                    <p className="text-sm italic text-slate-300 mb-6 leading-relaxed">"{t.content}"</p>
-                                    <div className="flex items-center gap-4">
-                                        <img src={t.img} className="w-10 h-10 rounded-full border-2 border-violet-500/20" />
-                                        <div>
-                                            <h5 className="text-white font-black text-[10px] uppercase italic tracking-widest">{t.name}</h5>
-                                            <p className="text-[8px] text-slate-500 uppercase font-bold">{t.role}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </section>
+<!-- PROVA SOCIAL -->
+<section class="text-center px-6 py-16">
+<h2 class="text-3xl font-black">Resultados reais</h2>
+<p class="text-gray-400 mt-4">Negócios locais dobrando pedidos com VZ Digital</p>
 
-                        {/* PRICING */}
-                        <section id="pricing" className="md:col-span-12 lg:col-span-6 bg-slate-900 border border-white/10 rounded-[2.5rem] p-12 text-white shadow-2xl relative overflow-hidden group">
-                           <div className="relative z-10">
-                                <div className="inline-block bg-violet-600/20 text-violet-400 text-[10px] font-black px-4 py-1.5 rounded-full mb-8 tracking-[0.2em] uppercase border border-violet-500/20">PLANO ÚNICO</div>
-                                <div className="flex items-baseline gap-2 mb-10">
-                                    <span className="text-7xl font-black text-white tracking-tighter">R$ 40</span>
-                                    <span className="text-xl text-slate-500 font-black italic">/mês</span>
-                                </div>
-                                <a href={WHATSAPP_LINK} className="block w-full bg-violet-600 text-white py-6 rounded-3xl text-[12px] font-black hover:bg-violet-500 transition-all text-center uppercase tracking-[0.3em] shadow-2xl shadow-violet-600/30">
-                                    Quero Começar Agora
-                                </a>
-                            </div>
-                        </section>
+<div class="grid md:grid-cols-3 gap-6 mt-10 max-w-5xl mx-auto">
 
-                        {/* FAQ */}
-                        <section id="faq" className="md:col-span-12 lg:col-span-6 bg-slate-900 border border-white/5 rounded-[2.5rem] p-12 flex flex-col justify-center shadow-xl">
-                            <h4 className="text-2xl font-black text-white mb-8 italic uppercase tracking-tighter">FAQ Rápido</h4>
-                            <div className="space-y-4">
-                                <div className="border-b border-white/5 pb-4">
-                                    <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Preciso baixar algo?</p>
-                                    <p className="text-xs text-slate-500 font-medium tracking-wide leading-relaxed">Não, seus clientes acessam direto pelo navegador através do seu link.</p>
-                                </div>
-                                <div className="p-6 bg-slate-950 border border-white/5 rounded-[2rem] text-center mt-6 shadow-inner animate-pulse-soft">
-                                    <p className="text-[10px] text-slate-600 uppercase tracking-[0.3em] font-black mb-1">Prazo de Entrega</p>
-                                    <p className="text-3xl font-black text-violet-500 italic">48 Horas</p>
-                                </div>
-                            </div>
-                        </section>
-                    </main>
+<div class="card p-6 rounded-2xl">
+<p class="text-sm text-gray-300">“Dobrei meus pedidos no WhatsApp.”</p>
+<p class="text-violet-400 mt-4 font-bold">Barbearia Imperial</p>
+</div>
 
-                    <footer className="max-w-7xl mx-auto mt-12 py-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[10px] text-slate-600 font-black uppercase tracking-widest italic leading-relaxed">
-                        <p>© 2024 VZ Digital. CNPJ 00.000.000/0001-00</p>
-                        <p>Sua Presença Digital • Nosso Algoritmo</p>
-                    </footer>
+<div class="card p-6 rounded-2xl">
+<p class="text-sm text-gray-300">“Ficou profissional demais.”</p>
+<p class="text-violet-400 mt-4 font-bold">Lanchonete Central</p>
+</div>
 
-                    {/* Mobile Floating CTA */}
-                    <div className="fixed bottom-6 left-6 right-6 z-50 md:hidden">
-                        <a href={WHATSAPP_LINK} className="flex items-center justify-center gap-3 bg-violet-600 text-white p-5 rounded-2xl font-black shadow-2xl shadow-violet-600/50 text-[10px] tracking-[0.2em] animate-pulse-soft uppercase">
-                            FALAR AGORA
-                        </a>
-                    </div>
-                </div>
-            );
-        };
+<div class="card p-6 rounded-2xl">
+<p class="text-sm text-gray-300">“Agora não pago taxa de app.”</p>
+<p class="text-violet-400 mt-4 font-bold">Hamburgueria BK</p>
+</div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+</div>
+</section>
+
+<!-- PREÇO -->
+<section class="text-center py-20">
+<div class="card max-w-md mx-auto p-10 rounded-2xl">
+<h2 class="text-2xl font-black">Plano único</h2>
+<p class="text-gray-400 mt-2">Tudo incluso para começar hoje</p>
+
+<div class="text-5xl font-black mt-6 text-violet-400">R$ 40</div>
+<p class="text-sm text-gray-500">por mês</p>
+
+<a href="https://wa.me/5581995655408?text=Quero%20começar"
+class="inline-block mt-8 bg-violet-600 px-8 py-4 rounded-2xl font-bold btn">
+QUERO COMEÇAR
+</a>
+</div>
+</section>
+
+<!-- RODAPÉ -->
+<footer class="text-center py-10 text-gray-600 text-sm">
+© 2026 VZ Digital - Todos os direitos reservados
+</footer>
+
 </body>
 </html>
