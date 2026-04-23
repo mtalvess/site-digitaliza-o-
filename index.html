@@ -9,27 +9,38 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
+html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:#020202;color:#fff;overflow-x:hidden}
+
 .chrome-text{
 font-family:'Cinzel',serif;
 background:linear-gradient(180deg,#ffffff 0%,#f8fafc 45%,#a78bfa 50%,#7c3aed 55%,#c084fc 100%);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
+
 .glass{
 background:rgba(255,255,255,0.03);
 border:1px solid rgba(139,92,246,0.2);
 backdrop-filter:blur(16px);
 transition:.3s;
 }
-.glass:hover{transform:translateY(-6px);border-color:#7c3aed}
+
+.glass:hover{
+transform:translateY(-6px);
+border-color:#7c3aed;
+}
+
 .selected{
 border:2px solid #7c3aed !important;
 box-shadow:0 0 30px rgba(124,58,237,0.5);
 }
-.hidden-section{display:none}
+
 .btn-premium{
 background:linear-gradient(135deg,#7c3aed,#4c1d95);
+transition:.3s;
 }
+
 .btn-premium:hover{
 transform:scale(1.05);
 }
@@ -39,7 +50,8 @@ transform:scale(1.05);
 <body class="min-h-screen">
 
 <!-- LANDING -->
-<section id="landing" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+<section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+
 <h1 class="chrome-text text-6xl md:text-8xl font-black mb-10 uppercase">
 VENDA MAIS.<br>TRABALHE MENOS.
 </h1>
@@ -48,16 +60,17 @@ VENDA MAIS.<br>TRABALHE MENOS.
 Site, Portfólio ou Cardápio Digital entregue em 48h.
 </p>
 
-<button onclick="irEscolha()"
-class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest">
+<a href="#escolha"
+class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest inline-block">
 COMEÇAR AGORA
-</button>
+</a>
+
 </section>
 
 <!-- ESCOLHA -->
-<section id="escolha" class="hidden-section min-h-screen flex flex-col items-center justify-center px-6 py-20">
+<section id="escolha" class="min-h-screen flex flex-col items-center justify-center px-6 py-20">
 
-<h2 class="chrome-text text-5xl font-black mb-16 uppercase">
+<h2 class="chrome-text text-5xl font-black mb-16 uppercase text-center">
 Escolha Seu Produto
 </h2>
 
@@ -89,14 +102,10 @@ class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest o
 CONTINUAR PARA PAGAMENTO
 </button>
 
-<button onclick="voltarLanding()" class="mt-6 text-slate-500 text-sm">
-Voltar
-</button>
-
 </section>
 
 <!-- ADMIN -->
-<section id="admin" class="hidden-section min-h-screen px-10 py-20">
+<section id="admin" class="min-h-screen px-10 py-20 hidden">
 
 <h2 class="chrome-text text-4xl font-black mb-10 uppercase">
 Painel Administrativo
@@ -120,20 +129,9 @@ Limpar Registros
 </section>
 
 <script>
+
 let produtoSelecionado = null;
 
-/* NAVEGAÇÃO */
-function irEscolha(){
-document.getElementById("landing").classList.add("hidden-section");
-document.getElementById("escolha").classList.remove("hidden-section");
-}
-
-function voltarLanding(){
-document.getElementById("escolha").classList.add("hidden-section");
-document.getElementById("landing").classList.remove("hidden-section");
-}
-
-/* ESCOLHA */
 function selectProduct(element,produto){
 produtoSelecionado = produto;
 document.querySelectorAll('.glass').forEach(c=>c.classList.remove('selected'));
@@ -141,7 +139,6 @@ element.classList.add('selected');
 document.getElementById("continuarBtn").classList.remove("opacity-40","cursor-not-allowed");
 }
 
-/* FINALIZAR */
 function finalizar(){
 if(!produtoSelecionado) return;
 
@@ -159,11 +156,11 @@ window.location.href="https://pay.kiwify.com.br/r8cOjsL";
 
 /* ADMIN VIA HASH */
 if(window.location.hash === "#admin"){
-document.getElementById("landing").classList.add("hidden-section");
-document.getElementById("admin").classList.remove("hidden-section");
+document.querySelector("section").style.display="none";
+document.getElementById("escolha").style.display="none";
+document.getElementById("admin").classList.remove("hidden");
 }
 
-/* LOGIN */
 function login(){
 if(document.getElementById("senha").value !== "VZ2026") return;
 
@@ -197,6 +194,7 @@ function limparPedidos(){
 localStorage.removeItem("pedidosVZ");
 mostrarPedidos();
 }
+
 </script>
 
 </body>
