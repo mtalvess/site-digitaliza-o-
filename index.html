@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ Digital — Estratégia de Alto Nível</title>
+    <title>VZ Digital — Oferta Exclusiva</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
         .text-gradient { 
             background: linear-gradient(to right, #00ff88, #00ccff);
             -webkit-background-clip: text;
@@ -42,11 +42,16 @@
             box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
             transition: all 0.2s;
         }
-
-        /* Cores de Alerta e Sucesso */
+        .promo-banner {
+            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1) 0%, rgba(5, 5, 5, 0) 100%);
+            border-left: 4px solid #00ff88;
+            padding: 24px;
+            border-radius: 0 24px 24px 0;
+            margin-bottom: 40px;
+        }
         .problem-item {
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(239, 68, 68, 0.08);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             color: #ef4444;
             padding: 16px;
             border-radius: 20px;
@@ -58,122 +63,157 @@
         }
         .solution-highlight {
             background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.4);
+            border: 1px solid rgba(0, 255, 136, 0.3);
             color: #00ff88;
-            padding: 24px;
+            padding: 32px;
             border-radius: 32px;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.05);
         }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float { animation: float 3s infinite ease-in-out; }
     </style>
 </head>
-<body class="p-6 md:p-12 overflow-x-hidden">
+<body class="p-4 md:p-12 overflow-x-hidden">
 
     <div class="max-w-7xl mx-auto w-full">
         <!-- Cabeçalho -->
-        <header class="flex justify-between items-center mb-12 md:mb-24">
+        <header class="flex justify-between items-center mb-16 md:mb-24">
             <div class="flex items-center gap-3">
-                <div class="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl">V</div>
+                <div class="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(0,255,136,0.3)]">V</div>
                 <span class="font-black text-xl tracking-tighter uppercase leading-none">VZ DIGITAL</span>
             </div>
-            <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest hover:bg-[#00ff88]/10 transition-all">WhatsApp Direto</a>
+            <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest hover:bg-[#00ff88]/10 transition-all">Contato Profissional</a>
         </header>
 
-        <!-- ESCOLHA DE PRODUTOS -->
-        <main class="grid lg:grid-cols-12 gap-16 items-start mb-40">
+        <!-- BANNER DE PROMOÇÃO -->
+        <section class="mb-12 md:mb-20">
+            <div class="promo-banner flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <span class="bg-[#00ff88] text-black text-[10px] font-black px-3 py-1 rounded-full uppercase mb-3 inline-block">Oferta por Tempo Limitado</span>
+                    <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Feche seu projeto esta semana e ganhe <span class="text-[#00ff88]">Manutenção Completa no 1º Mês</span></h2>
+                </div>
+                <a href="#produtos" class="bg-white text-black font-black uppercase text-xs px-8 py-4 rounded-xl hover:bg-[#00ff88] transition-colors whitespace-nowrap">Aproveitar agora</a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO DE PRODUTOS -->
+        <main id="produtos" class="grid lg:grid-cols-12 gap-12 md:gap-20 items-start mb-40">
+            <!-- Esquerda: Informação Dinâmica -->
             <div class="lg:col-span-5 space-y-12 lg:sticky lg:top-12">
                 <div>
                     <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
-                        Invista em <br/> <span class="text-gradient">Impacto</span>
+                        Presença <br/> de <span class="text-gradient">Elite</span>
                     </h1>
-                    <p class="text-white/30 text-lg md:text-xl max-w-sm">Design exclusivo e estratégia bruta. Escolha um produto agora:</p>
+                    <p class="text-white/30 text-lg md:text-xl max-w-sm leading-relaxed">
+                        Design sofisticado. Tecnologia de ponta. Escolha o serviço ideal para escalar sua marca:
+                    </p>
                 </div>
 
-                <div id="features-container" class="bg-white/[0.02] p-8 rounded-[32px] border border-white/5 space-y-6">
-                    <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88]">O que você recebe:</h4>
+                <!-- Detalhes do Produto Selecionado -->
+                <div id="features-container" class="bg-white/[0.02] p-8 rounded-[32px] border border-white/5 space-y-6 shadow-2xl">
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88]">Vantagens inclusas no projeto:</h4>
                     <div id="product-features" class="flex flex-wrap gap-2"></div>
                 </div>
                 
                 <div class="space-y-6">
-                    <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium">Comprar Sites</a>
-                    <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all">
-                        <i data-lucide="message-square" class="w-5 h-5 text-[#00ff88]"></i> Consultar via WhatsApp
+                    <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium animate-pulse hover:animate-none">Garantir Meu Site Agora</a>
+                    <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all justify-center lg:justify-start">
+                        <i data-lucide="message-square" class="w-5 h-5 text-[#00ff88]"></i> Consultoria VIP via WhatsApp
                     </a>
                 </div>
             </div>
 
+            <!-- Direita: Cards de Seleção -->
             <div class="lg:col-span-7 space-y-8">
                 <div class="grid sm:grid-cols-2 gap-6">
+                    <!-- Sites -->
                     <div id="card-site" class="bento-card active" onclick="selectProduct('site')">
                         <div class="flex justify-between items-start mb-16">
                             <i data-lucide="globe" class="w-12 h-12 text-[#00ff88]"></i>
-                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">Mês 1 Grátis</span>
+                            <span class="bg-[#00ff88]/20 text-[#00ff88] text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-[#00ff88]/30">Destaque</span>
                         </div>
                         <h3 class="text-3xl font-black uppercase leading-tight">Sites <br/>Institucionais</h3>
+                        <p class="text-[10px] text-white/20 font-bold uppercase mt-4 tracking-widest">Ideal para Autoridade</p>
                     </div>
+                    
+                    <!-- Cardápios -->
                     <div id="card-cardapio" class="bento-card" onclick="selectProduct('cardapio')">
                         <div class="flex justify-between items-start mb-16">
                             <i data-lucide="utensils" class="w-12 h-12 text-white/10"></i>
-                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">Mês 1 Grátis</span>
+                            <span class="bg-white/5 text-white/40 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-white/10">Performance</span>
                         </div>
                         <h3 class="text-3xl font-black uppercase leading-tight">Cardápios <br/>Digitais</h3>
+                        <p class="text-[10px] text-white/20 font-bold uppercase mt-4 tracking-widest">Focado em Delivery</p>
                     </div>
                 </div>
-                <div id="card-portfolio" class="bento-card flex justify-between items-center" onclick="selectProduct('portfolio')">
+
+                <!-- Portfólio Largo -->
+                <div id="card-portfolio" class="bento-card flex flex-col md:flex-row justify-between items-center gap-8" onclick="selectProduct('portfolio')">
                     <div class="flex items-center gap-8">
-                        <i data-lucide="briefcase" class="w-12 h-12 text-white/10"></i>
-                        <h3 class="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
+                        <div class="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center border border-white/10 shadow-inner">
+                            <i data-lucide="briefcase" class="w-10 h-10 text-white/10"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
+                            <p class="text-white/20 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Exclusivo para Profissionais Liberais</p>
+                        </div>
                     </div>
-                    <span class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs opacity-40 uppercase tracking-widest">Exclusivo</span>
+                    <div class="bg-white/5 border border-white/10 px-8 py-4 rounded-2xl font-black text-xs text-[#00ff88]/50 uppercase tracking-widest">Série VIP</div>
                 </div>
             </div>
         </main>
 
-        <!-- APRESENTAÇÃO / PROBLEMAS (VERMELHO) / SOLUÇÕES (VERDE) -->
+        <!-- SEÇÃO: APRESENTAÇÃO E DIAGNÓSTICO -->
         <section class="border-t border-white/5 pt-32 pb-40">
-            <div class="grid lg:grid-cols-2 gap-24 items-start">
+            <div class="grid lg:grid-cols-2 gap-20 items-start">
                 
                 <!-- Minha Apresentação -->
                 <div class="space-y-12">
                     <div>
-                        <span class="text-[11px] font-black uppercase tracking-[0.5em] text-[#00ff88] mb-6 block">A Mente por trás da VZ</span>
-                        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-10">Eu mato o <br/> <span class="text-gradient">amadorismo</span> <br/> da sua marca.</h2>
+                        <span class="text-[11px] font-black uppercase tracking-[0.5em] text-[#00ff88] mb-6 block">Quem Somos</span>
+                        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-10 text-gradient">Elevando o Padrão Digital.</h2>
+                        <p class="text-white/50 text-xl leading-relaxed max-w-lg mb-8">
+                            A VZ Digital não entrega apenas código. Nós projetamos ecossistemas de autoridade. Se o seu site não transmite luxo e profissionalismo, você está deixando dinheiro na mesa.
+                        </p>
                         <p class="text-white/50 text-xl leading-relaxed max-w-lg">
-                            Eu sou o estrategista da **VZ Digital**. Meu foco não é te dar um "site bonitinho", mas criar uma máquina de vendas de alta performance que impõe respeito e autoridade no mercado digital.
+                            Nossa missão é eliminar o amadorismo e garantir que sua primeira impressão digital seja inesquecível e altamente lucrativa.
                         </p>
                     </div>
 
-                    <div class="flex items-center gap-8 p-8 border border-white/10 rounded-[32px] bg-white/[0.02] shadow-2xl">
-                        <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#00ff88] to-[#00ccff] flex items-center justify-center text-black font-black text-3xl italic">VZ</div>
+                    <div class="flex items-center gap-8 p-10 border border-white/10 rounded-[40px] bg-white/[0.02] shadow-3xl">
+                        <div class="w-24 h-24 rounded-[32px] bg-gradient-to-br from-[#00ff88] to-[#00ccff] flex items-center justify-center text-black font-black text-4xl italic shadow-glow animate-float">VZ</div>
                         <div>
-                            <p class="text-lg font-black uppercase tracking-widest text-[#00ff88]">Agência VZ Digital</p>
-                            <p class="text-xs text-white/20 uppercase font-black tracking-widest mt-1">Especialista em Escabilidade Digital</p>
+                            <p class="text-xl font-black uppercase tracking-widest text-[#00ff88]">Agência VZ Digital</p>
+                            <p class="text-xs text-white/20 uppercase font-black tracking-widest mt-2 leading-none">Referência em Alta Performance</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Problemas X Soluções -->
+                <!-- Painel de Problemas e Soluções -->
                 <div class="space-y-10">
                     <div class="space-y-4">
-                        <h4 class="text-xs font-black uppercase tracking-[0.3em] text-red-500/50 mb-6">Problemas que destroem seu lucro:</h4>
-                        <div class="problem-item"><i data-lucide="x-circle"></i> Sites lentos que fazem o cliente desistir em segundos.</div>
-                        <div class="problem-item"><i data-lucide="x-circle"></i> Cardápios em PDF amadores que dificultam o pedido.</div>
-                        <div class="problem-item"><i data-lucide="x-circle"></i> Design genérico que não transmite confiança nem luxo.</div>
-                        <div class="problem-item"><i data-lucide="x-circle"></i> Presença digital invisível para o Google.</div>
+                        <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-red-500/50 mb-8">O Amadorismo custa caro:</h4>
+                        <div class="problem-item"><i data-lucide="shield-alert"></i> Sites lentos que fazem o cliente desistir.</div>
+                        <div class="problem-item"><i data-lucide="shield-alert"></i> Design antigo que não gera confiança.</div>
+                        <div class="problem-item"><i data-lucide="shield-alert"></i> Falta de mobile-first (site quebrado no celular).</div>
+                        <div class="problem-item"><i data-lucide="shield-alert"></i> Ausência de estratégia de vendas real.</div>
                     </div>
 
-                    <div class="solution-highlight space-y-6">
-                        <h4 class="text-xs font-black uppercase tracking-[0.3em] text-[#00ff88] mb-6">Minha Solução Definitiva:</h4>
-                        <p class="text-white/80 text-lg font-medium leading-relaxed italic">
-                            "Eu entrego velocidade extrema, design único e uma estrutura que funciona 24 horas por dia. Garanto que sua marca será a primeira escolha do seu cliente."
+                    <div class="solution-highlight space-y-8">
+                        <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88] mb-6">A Diferença VZ Digital:</h4>
+                        <p class="text-white text-2xl font-bold leading-tight uppercase tracking-tighter">
+                            Entregamos velocidade instantânea e um design que impõe sua marca como líder do setor.
                         </p>
-                        <div class="grid grid-cols-2 gap-4 mt-8">
-                            <div class="p-4 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-2xl text-center">
-                                <p class="text-2xl font-black">0.8s</p>
-                                <p class="text-[8px] font-bold uppercase opacity-60">Velocidade</p>
+                        <div class="grid grid-cols-2 gap-6 mt-10">
+                            <div class="p-6 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-3xl text-center">
+                                <p class="text-3xl font-black text-[#00ff88]">0.8s</p>
+                                <p class="text-[8px] font-black uppercase opacity-40 mt-1 tracking-widest">Carregamento</p>
                             </div>
-                            <div class="p-4 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-2xl text-center">
-                                <p class="text-2xl font-black">100%</p>
-                                <p class="text-[8px] font-bold uppercase opacity-60">Autoral</p>
+                            <div class="p-6 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-3xl text-center">
+                                <p class="text-3xl font-black text-[#00ff88]">100%</p>
+                                <p class="text-[8px] font-black uppercase opacity-40 mt-1 tracking-widest">Exclusivo</p>
                             </div>
                         </div>
                     </div>
@@ -181,8 +221,8 @@
             </div>
         </section>
 
-        <footer class="py-12 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.5em] text-center uppercase">
-            VZ DIGITAL © 2026 | Estúdio de Excelência Digital
+        <footer class="py-16 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.6em] text-center uppercase">
+            VZ DIGITAL © 2026 | Estúdio de Alta Performance Digital
         </footer>
     </div>
 
@@ -200,7 +240,7 @@
             },
             portfolio: {
                 name: "Portfólio Elite",
-                features: ["Foco em Autoridade", "Design Mínimalista", "Bio de Alto Impacto", "Vitrine Exclusiva", "Estratégia Pessoal"],
+                features: ["Foco em Autoridade", "Design Minimalista", "Biografia de Impacto", "Vitrine Exclusiva", "Estratégia Pessoal"],
                 msg: "Olá! Gostaria de falar sobre o Portfólio Elite Profissional."
             }
         };
@@ -211,7 +251,9 @@
             const info = productsInfo[id];
             document.querySelectorAll('.bento-card').forEach(c => c.classList.remove('active'));
             document.getElementById('card-' + id).classList.add('active');
-            document.getElementById('buy-button').innerText = "Comprar " + info.name;
+            
+            // Botão atualiza com a oferta
+            document.getElementById('buy-button').innerText = "Adquirir meu " + info.name;
             
             const featuresDiv = document.getElementById('product-features');
             featuresDiv.innerHTML = info.features.map(f => `
@@ -230,6 +272,7 @@
             lucide.createIcons();
         }
 
+        // Início
         selectProduct('site');
     </script>
 </body>
