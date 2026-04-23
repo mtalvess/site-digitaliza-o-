@@ -1,162 +1,203 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>VZ — Escala Digital Local</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VZ Digital — Sistema Premium</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;800&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #020202; color: #ffffff; overflow-x: hidden; }
-
-        .chrome-text {
-            font-family: 'Cinzel', serif;
-            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 45%, #a78bfa 50%, #7c3aed 55%, #c084fc 100%);
-            background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-            display: inline-block;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(139, 92, 246, 0.12);
-            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(139, 92, 246, 0.5);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-5px);
-        }
-
-        .btn-premium {
-            background: linear-gradient(135deg, #7c3aed 0%, #4c1d95 100%);
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.3);
-            transition: 0.3s;
-        }
-
-        .btn-premium:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 50px rgba(124, 58, 237, 0.6);
-        }
-
-        details summary::-webkit-details-marker { display:none; }
-        details[open] summary svg { transform: rotate(180deg); }
-        summary { cursor: pointer; list-style: none; }
-
-        @media (max-width: 640px) {
-            .mobile-title { font-size: 2.5rem !important; line-height: 1.1 !important; }
-        }
-    </style>
+<style>
+body{font-family:'Inter',sans-serif;background:#020202;color:#fff;overflow-x:hidden}
+.chrome-text{
+font-family:'Cinzel',serif;
+background:linear-gradient(180deg,#ffffff 0%,#f8fafc 45%,#a78bfa 50%,#7c3aed 55%,#c084fc 100%);
+-webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.glass{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(139,92,246,0.2);
+backdrop-filter:blur(16px);
+transition:.3s;
+}
+.glass:hover{transform:translateY(-6px);border-color:#7c3aed}
+.selected{
+border:2px solid #7c3aed !important;
+box-shadow:0 0 30px rgba(124,58,237,0.5);
+}
+.hidden-section{display:none}
+.btn-premium{
+background:linear-gradient(135deg,#7c3aed,#4c1d95);
+}
+.btn-premium:hover{
+transform:scale(1.05);
+}
+</style>
 </head>
-<body class="selection:bg-violet-500/30">
 
-    <nav class="sticky top-0 z-50 w-full px-6 py-6">
-        <div class="max-w-7xl mx-auto flex justify-between items-center glass-card p-3 px-8 rounded-3xl border-white/5">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-violet-600 rounded-xl flex items-center justify-center font-black text-white">V</div>
-                <span class="chrome-text text-2xl font-black italic tracking-tighter uppercase leading-none">VZ</span>
-            </div>
-            <a href="https://pay.kiwify.com.br/r8cOjsL" target="_blank" class="bg-white text-black text-[10px] font-black px-6 py-2 rounded-full uppercase tracking-tighter hover:bg-violet-600 hover:text-white transition-all">Começar Agora</a>
-        </div>
-    </nav>
+<body class="min-h-screen">
 
-    <header class="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center">
-        <h1 class="chrome-text mobile-title text-6xl md:text-[8rem] font-black mb-8 leading-[0.9] tracking-tighter uppercase">
-            VENDA MAIS. <br> TRABALHE MENOS.
-        </h1>
+<!-- LANDING -->
+<section id="landing" class="min-h-screen flex flex-col justify-center items-center text-center px-6">
+<h1 class="chrome-text text-6xl md:text-8xl font-black mb-10 uppercase">
+VENDA MAIS.<br>TRABALHE MENOS.
+</h1>
 
-        <p class="text-slate-400 text-xl md:text-3xl mb-14 max-w-4xl mx-auto font-medium leading-tight px-4">
-            O seu <span class="text-white italic">Site de Pedidos Profissional</span> entregue em 48h. Automatize suas vendas e tenha lucro real no bolso.
-        </p>
+<p class="text-slate-400 text-xl max-w-2xl mb-12">
+Site, Portfólio ou Cardápio Digital entregue em 48h.
+</p>
 
-        <a href="https://pay.kiwify.com.br/r8cOjsL" target="_blank"
-           class="btn-premium px-12 py-6 rounded-3xl font-black text-xl uppercase tracking-widest text-white shadow-2xl inline-block max-w-sm w-full transition-transform active:scale-95">
-            EU QUERO LUCRAR MAIS
-        </a>
-    </header>
+<button onclick="irEscolha()"
+class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest">
+COMEÇAR AGORA
+</button>
+</section>
 
-    <section class="max-w-7xl mx-auto px-6 py-12">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="glass-card p-10 rounded-[3rem] border-red-500/10">
-                <h4 class="text-red-400 font-black text-sm uppercase tracking-widest mb-6 italic text-center underline underline-offset-8 decoration-red-500/20">Sem o VZ Digital:</h4>
-                <p class="text-slate-500 text-xs font-semibold mb-6 flex gap-2"><span>✕</span> Perda de tempo enviando PDF manualmente.</p>
-                <p class="text-slate-500 text-xs font-semibold mb-6 flex gap-2"><span>✕</span> Cliente desiste por demora no atendimento.</p>
-                <p class="text-slate-500 text-xs font-semibold mb-6 flex gap-2"><span>✕</span> 27% de taxa para aplicativos de entrega.</p>
-            </div>
-            <div class="glass-card p-10 rounded-[3rem] border-emerald-500/20 bg-emerald-500/5">
-                <h4 class="text-emerald-400 font-black text-sm uppercase tracking-widest mb-6 italic text-center underline underline-offset-8 decoration-emerald-500/20">Com o VZ Digital:</h4>
-                <p class="text-slate-200 text-xs font-bold mb-6 flex gap-2"><span class="text-emerald-500">✓</span> Autoatendimento profissional 24h por dia.</p>
-                <p class="text-slate-200 text-xs font-bold mb-6 flex gap-2"><span class="text-emerald-400">✓</span> Pedidos organizados direto no seu Zap.</p>
-                <p class="text-slate-200 text-xs font-bold mb-6 flex gap-2"><span class="text-emerald-400">✓</span> Taxa Zero. Pix Direto. Lucro Máximo.</p>
-            </div>
-        </div>
-    </section>
+<!-- ESCOLHA -->
+<section id="escolha" class="hidden-section min-h-screen flex flex-col items-center justify-center px-6 py-20">
 
-    <section class="max-w-4xl mx-auto px-6 py-20">
-        <h2 class="chrome-text text-3xl md:text-5xl font-black text-center mb-16 uppercase italic w-full">DÚVIDAS FREQUENTES</h2>
-        
-        <div class="space-y-4 font-medium">
-            <details class="glass-card rounded-3xl overflow-hidden group">
-                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">Preciso baixar algum aplicativo?</span>
-                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
-                </summary>
-                <div class="px-8 pb-8 text-slate-400 text-xs md:text-sm leading-relaxed italic">
-                    Não! Seus clientes acessam através de um link rápido diretamente pelo navegador do celular. Não ocupa memória e é instantâneo.
-                </div>
-            </details>
+<h2 class="chrome-text text-5xl font-black mb-16 uppercase">
+Escolha Seu Produto
+</h2>
 
-            <details class="glass-card rounded-3xl overflow-hidden group border-violet-500/20 shadow-[0_0_20px_rgba(139,92,246,0.05)]">
-                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">Paga comissão por cada venda?</span>
-                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
-                </summary>
-                <div class="px-8 pb-8 text-emerald-400 text-xs md:text-sm font-bold leading-relaxed italic">
-                    Absolutamente ZERO taxas. Todo o dinheiro que o cliente paga vai 100% para você via Pix ou cartão direto na sua conta.
-                </div>
-            </details>
+<div class="grid md:grid-cols-3 gap-8 w-full max-w-6xl mb-16">
 
-            <details class="glass-card rounded-3xl overflow-hidden group">
-                <summary class="p-6 md:p-8 flex justify-between items-center bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-                    <span class="text-sm md:text-base font-black text-slate-200 uppercase italic tracking-tighter leading-none">O que está incluso na manutenção?</span>
-                    <svg class="w-5 h-5 text-violet-500 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
-                </summary>
-                <div class="px-8 pb-8 text-slate-400 text-xs md:text-sm leading-relaxed italic">
-                    Hospedagem do seu site, suporte VIP via WhatsApp e direito a alterações de preços ou fotos sempre que você precisar. Você nunca fica na mão.
-                </div>
-            </details>
-        </div>
-    </section>
+<div class="glass p-10 rounded-3xl cursor-pointer text-center"
+onclick="selectProduct(this,'Portfólio Digital')">
+<h3 class="text-2xl font-black mb-4">Portfólio Digital</h3>
+<p class="text-slate-400 text-sm">Autoridade profissional.</p>
+</div>
 
-    <section class="max-w-xl mx-auto px-6 py-20">
-        <div class="glass-card p-10 md:p-16 rounded-[4rem] text-center border-violet-500/40 relative shadow-[0_0_100px_rgba(139,92,246,0.2)]">
-            <div class="mb-10">
-                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4 leading-none">Setup Único Profissional</p>
-                <div class="chrome-text text-8xl font-black italic tracking-tighter leading-none">R$ 40</div>
-            </div>
-            <div class="w-full h-px bg-white/5 my-10"></div>
-            <div class="mb-12">
-                <p class="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] mb-4 leading-none">Manutenção & Atualizações</p>
-                <div class="flex items-center justify-center gap-2">
-                    <span class="text-6xl font-black text-white italic tracking-tighter">R$ 25</span>
-                    <span class="text-slate-500 font-bold italic text-sm">/mês</span>
-                </div>
-            </div>
-            <a href="https://pay.kiwify.com.br/r8cOjsL" target="_blank"
-               class="btn-premium block w-full py-7 rounded-3xl font-black text-sm uppercase tracking-[0.4em] text-white shadow-xl transition-all">
-                GARANTIR MINHA VAGA
-            </a>
-        </div>
-    </section>
+<div class="glass p-10 rounded-3xl cursor-pointer text-center"
+onclick="selectProduct(this,'Site Profissional')">
+<h3 class="text-2xl font-black mb-4">Site Profissional</h3>
+<p class="text-slate-400 text-sm">Presença forte online.</p>
+</div>
 
-    <footer class="py-16 text-center border-t border-white/5 opacity-50">
-        <div class="chrome-text font-black text-2xl italic tracking-tighter uppercase mb-4 leading-none">VZ DIGITAL</div>
-        <p class="text-[8px] text-slate-500 font-black uppercase tracking-[0.5em] leading-none">Inovação Local • Digitalização de Elite</p>
-    </footer>
+<div class="glass p-10 rounded-3xl cursor-pointer text-center"
+onclick="selectProduct(this,'Cardápio Digital')">
+<h3 class="text-2xl font-black mb-4">Cardápio Digital</h3>
+<p class="text-slate-400 text-sm">Venda automática no WhatsApp.</p>
+</div>
+
+</div>
+
+<button id="continuarBtn"
+onclick="finalizar()"
+class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest opacity-40 cursor-not-allowed">
+CONTINUAR PARA PAGAMENTO
+</button>
+
+<button onclick="voltarLanding()" class="mt-6 text-slate-500 text-sm">
+Voltar
+</button>
+
+</section>
+
+<!-- ADMIN -->
+<section id="admin" class="hidden-section min-h-screen px-10 py-20">
+
+<h2 class="chrome-text text-4xl font-black mb-10 uppercase">
+Painel Administrativo
+</h2>
+
+<div id="loginArea">
+<input type="password" id="senha"
+placeholder="Senha Admin"
+class="bg-gray-900 p-4 rounded-xl w-64">
+<button onclick="login()" class="btn-premium px-6 py-3 rounded-xl ml-2">
+Entrar
+</button>
+</div>
+
+<div id="painel" class="hidden mt-10 space-y-4"></div>
+
+<button onclick="limparPedidos()" class="mt-8 bg-red-600 px-6 py-3 rounded-xl text-sm font-bold">
+Limpar Registros
+</button>
+
+</section>
+
+<script>
+let produtoSelecionado = null;
+
+/* NAVEGAÇÃO */
+function irEscolha(){
+document.getElementById("landing").classList.add("hidden-section");
+document.getElementById("escolha").classList.remove("hidden-section");
+}
+
+function voltarLanding(){
+document.getElementById("escolha").classList.add("hidden-section");
+document.getElementById("landing").classList.remove("hidden-section");
+}
+
+/* ESCOLHA */
+function selectProduct(element,produto){
+produtoSelecionado = produto;
+document.querySelectorAll('.glass').forEach(c=>c.classList.remove('selected'));
+element.classList.add('selected');
+document.getElementById("continuarBtn").classList.remove("opacity-40","cursor-not-allowed");
+}
+
+/* FINALIZAR */
+function finalizar(){
+if(!produtoSelecionado) return;
+
+let pedidos = JSON.parse(localStorage.getItem("pedidosVZ")) || [];
+
+pedidos.push({
+produto: produtoSelecionado,
+data: new Date().toLocaleString()
+});
+
+localStorage.setItem("pedidosVZ", JSON.stringify(pedidos));
+
+window.location.href="https://pay.kiwify.com.br/r8cOjsL";
+}
+
+/* ADMIN VIA HASH */
+if(window.location.hash === "#admin"){
+document.getElementById("landing").classList.add("hidden-section");
+document.getElementById("admin").classList.remove("hidden-section");
+}
+
+/* LOGIN */
+function login(){
+if(document.getElementById("senha").value !== "VZ2026") return;
+
+document.getElementById("loginArea").classList.add("hidden");
+document.getElementById("painel").classList.remove("hidden");
+
+mostrarPedidos();
+}
+
+function mostrarPedidos(){
+let pedidos = JSON.parse(localStorage.getItem("pedidosVZ")) || [];
+let painel = document.getElementById("painel");
+painel.innerHTML="";
+
+if(pedidos.length === 0){
+painel.innerHTML="<p class='text-slate-500'>Nenhum pedido ainda.</p>";
+return;
+}
+
+pedidos.reverse().forEach(p=>{
+painel.innerHTML+=`
+<div class="bg-gray-900 p-6 rounded-2xl border border-violet-500/30">
+<strong>${p.produto}</strong><br>
+<small>${p.data}</small>
+</div>
+`;
+});
+}
+
+function limparPedidos(){
+localStorage.removeItem("pedidosVZ");
+mostrarPedidos();
+}
+</script>
 
 </body>
 </html>
