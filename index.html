@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ Digital — Experiência de Elite</title>
+    <title>VZ Digital — Estratégia de Alto Nível</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -24,7 +24,6 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
         }
-        .bento-card:hover { background: rgba(255, 255, 255, 0.06); transform: translateY(-4px); }
         .bento-card.active {
             border-color: #00ff88;
             background: rgba(0, 255, 136, 0.05);
@@ -43,24 +42,27 @@
             box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
             transition: all 0.2s;
         }
-        .problem-tag {
-            background: rgba(255, 50, 50, 0.1);
-            color: #ff5555;
-            padding: 12px;
-            border-radius: 16px;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
+
+        /* Cores de Alerta e Sucesso */
+        .problem-item {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            padding: 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
-            border: 1px solid rgba(255, 50, 50, 0.2);
+            gap: 12px;
         }
-        .solution-box {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, transparent 100%);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            padding: 32px;
+        .solution-highlight {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.4);
+            color: #00ff88;
+            padding: 24px;
             border-radius: 32px;
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.05);
         }
     </style>
 </head>
@@ -76,14 +78,14 @@
             <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest hover:bg-[#00ff88]/10 transition-all">WhatsApp Direto</a>
         </header>
 
-        <!-- SEÇÃO: PRODUTOS -->
-        <main class="grid lg:grid-cols-12 gap-16 items-start mb-32">
+        <!-- ESCOLHA DE PRODUTOS -->
+        <main class="grid lg:grid-cols-12 gap-16 items-start mb-40">
             <div class="lg:col-span-5 space-y-12 lg:sticky lg:top-12">
                 <div>
                     <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
                         Invista em <br/> <span class="text-gradient">Impacto</span>
                     </h1>
-                    <p class="text-white/30 text-lg md:text-xl max-w-sm">Estratégia pura. Design exclusivo. Escolha o serviço ideal ao lado.</p>
+                    <p class="text-white/30 text-lg md:text-xl max-w-sm">Design exclusivo e estratégia bruta. Escolha um produto agora:</p>
                 </div>
 
                 <div id="features-container" class="bg-white/[0.02] p-8 rounded-[32px] border border-white/5 space-y-6">
@@ -94,7 +96,7 @@
                 <div class="space-y-6">
                     <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium">Comprar Sites</a>
                     <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all">
-                        <i data-lucide="message-square" class="w-5 h-5 text-[#00ff88]"></i> Saber mais via WhatsApp
+                        <i data-lucide="message-square" class="w-5 h-5 text-[#00ff88]"></i> Consultar via WhatsApp
                     </a>
                 </div>
             </div>
@@ -121,56 +123,65 @@
                         <i data-lucide="briefcase" class="w-12 h-12 text-white/10"></i>
                         <h3 class="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
                     </div>
-                    <span class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs opacity-40 uppercase tracking-widest">Série Exclusiva</span>
+                    <span class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs opacity-40 uppercase tracking-widest">Exclusivo</span>
                 </div>
             </div>
         </main>
 
-        <!-- SEÇÃO: APRESENTAÇÃO E DIAGNÓSTICO -->
-        <section class="border-t border-white/5 pt-32 mb-32">
-            <div class="grid lg:grid-cols-2 gap-20 items-center">
-                <div class="space-y-10">
+        <!-- APRESENTAÇÃO / PROBLEMAS (VERMELHO) / SOLUÇÕES (VERDE) -->
+        <section class="border-t border-white/5 pt-32 pb-40">
+            <div class="grid lg:grid-cols-2 gap-24 items-start">
+                
+                <!-- Minha Apresentação -->
+                <div class="space-y-12">
                     <div>
-                        <span class="text-[11px] font-black uppercase tracking-[0.4em] text-[#00ff88] mb-4 block">A Mente por trás da VZ</span>
-                        <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-8">Por que confiar <br/> na minha <br/> <span class="text-gradient">Entrega?</span></h2>
+                        <span class="text-[11px] font-black uppercase tracking-[0.5em] text-[#00ff88] mb-6 block">A Mente por trás da VZ</span>
+                        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-10">Eu mato o <br/> <span class="text-gradient">amadorismo</span> <br/> da sua marca.</h2>
+                        <p class="text-white/50 text-xl leading-relaxed max-w-lg">
+                            Eu sou o estrategista da **VZ Digital**. Meu foco não é te dar um "site bonitinho", mas criar uma máquina de vendas de alta performance que impõe respeito e autoridade no mercado digital.
+                        </p>
                     </div>
-                    
-                    <p class="text-white/40 text-lg leading-relaxed">
-                        Meu nome é o rosto por trás da **VZ Digital**. Eu não sou apenas um criador de sites. Eu sou um estrategista digital focado em **Autoridade e Vendas**. 
-                    </p>
-                    
-                    <div class="flex items-center gap-6 p-6 border border-white/10 rounded-[32px] bg-white/[0.02]">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00ff88] to-[#00ccff] flex items-center justify-center text-black font-black text-2xl">VZ</div>
+
+                    <div class="flex items-center gap-8 p-8 border border-white/10 rounded-[32px] bg-white/[0.02] shadow-2xl">
+                        <div class="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#00ff88] to-[#00ccff] flex items-center justify-center text-black font-black text-3xl italic">VZ</div>
                         <div>
-                            <p class="text-sm font-black uppercase tracking-[0.2em] text-[#00ff88]">Agência VZ Digital</p>
-                            <p class="text-[10px] text-white/20 uppercase font-black tracking-[0.3em]">Eliminando o amadorismo digital</p>
+                            <p class="text-lg font-black uppercase tracking-widest text-[#00ff88]">Agência VZ Digital</p>
+                            <p class="text-xs text-white/20 uppercase font-black tracking-widest mt-1">Especialista em Escabilidade Digital</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Problemas e Soluções -->
-                <div class="space-y-6">
-                    <h4 class="text-xs font-black uppercase tracking-[0.3em] text-white/20 mb-8">O que eu resolvo para você:</h4>
-                    
-                    <div class="grid gap-4">
-                        <div class="problem-tag"><i data-lucide="x-circle" class="w-4 h-4"></i> Sites antigos que afastam clientes qualificados.</div>
-                        <div class="problem-tag"><i data-lucide="x-circle" class="w-4 h-4"></i> Cardápios em PDF pesados e difíceis de usar.</div>
-                        <div class="problem-tag"><i data-lucide="x-circle" class="w-4 h-4"></i> Falta de uma vitrine profissional na internet.</div>
+                <!-- Problemas X Soluções -->
+                <div class="space-y-10">
+                    <div class="space-y-4">
+                        <h4 class="text-xs font-black uppercase tracking-[0.3em] text-red-500/50 mb-6">Problemas que destroem seu lucro:</h4>
+                        <div class="problem-item"><i data-lucide="x-circle"></i> Sites lentos que fazem o cliente desistir em segundos.</div>
+                        <div class="problem-item"><i data-lucide="x-circle"></i> Cardápios em PDF amadores que dificultam o pedido.</div>
+                        <div class="problem-item"><i data-lucide="x-circle"></i> Design genérico que não transmite confiança nem luxo.</div>
+                        <div class="problem-item"><i data-lucide="x-circle"></i> Presença digital invisível para o Google.</div>
                     </div>
 
-                    <div class="solution-box mt-10">
-                        <h5 class="text-[#00ff88] font-black uppercase tracking-widest text-sm mb-4 flex items-center gap-3">
-                            <i data-lucide="shield-check"></i> O Diagnóstico VZ
-                        </h5>
-                        <p class="text-sm text-white/60 leading-relaxed italic">
-                            "Eu entrego velocidade extrema, design único e uma estrutura de vendas que trabalha 24 horas por dia. Sua presença digital deixará de ser um gasto para se tornar seu melhor investimento."
+                    <div class="solution-highlight space-y-6">
+                        <h4 class="text-xs font-black uppercase tracking-[0.3em] text-[#00ff88] mb-6">Minha Solução Definitiva:</h4>
+                        <p class="text-white/80 text-lg font-medium leading-relaxed italic">
+                            "Eu entrego velocidade extrema, design único e uma estrutura que funciona 24 horas por dia. Garanto que sua marca será a primeira escolha do seu cliente."
                         </p>
+                        <div class="grid grid-cols-2 gap-4 mt-8">
+                            <div class="p-4 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-2xl text-center">
+                                <p class="text-2xl font-black">0.8s</p>
+                                <p class="text-[8px] font-bold uppercase opacity-60">Velocidade</p>
+                            </div>
+                            <div class="p-4 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-2xl text-center">
+                                <p class="text-2xl font-black">100%</p>
+                                <p class="text-[8px] font-bold uppercase opacity-60">Autoral</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="mt-32 py-12 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.5em] text-center uppercase">
+        <footer class="py-12 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.5em] text-center uppercase">
             VZ DIGITAL © 2026 | Estúdio de Excelência Digital
         </footer>
     </div>
@@ -180,17 +191,17 @@
             site: {
                 name: "Sites Institucionais",
                 features: ["Fácil de Encontrar no Google", "Design de Alto Nível", "Focado em Vendas", "Suporte Exclusivo", "Perfeito no Celular"],
-                msg: "Olá! Gostaria de falar sobre o projeto de Site Institucional de Elite."
+                msg: "Olá! Gostaria de falar sobre o Site Institucional de Elite."
             },
             cardapio: {
                 name: "Cardápios Digitais",
-                features: ["WhatsApp Integrado", "Código QR Incluso", "Menu Elegante", "Fotos em Alta Definição", "Pedidos Rápidos"],
-                msg: "Olá! Gostaria de falar sobre o projeto de Cardápio Digital Sugerido."
+                features: ["WhatsApp Integrado", "Código QR Incluso", "Menu Elegante", "Fotos de Alta Qualidade", "Pedidos Rápidos"],
+                msg: "Olá! Gostaria de falar sobre o Cardápio Digital Gourmet."
             },
             portfolio: {
                 name: "Portfólio Elite",
-                features: ["Foco em Autoridade", "Design Minimalista", "Biografia de Impacto", "Vitrine Exclusiva", "Estratégia Pessoal"],
-                msg: "Olá! Gostaria de falar sobre o projeto de Portfólio Elite Profissional."
+                features: ["Foco em Autoridade", "Design Mínimalista", "Bio de Alto Impacto", "Vitrine Exclusiva", "Estratégia Pessoal"],
+                msg: "Olá! Gostaria de falar sobre o Portfólio Elite Profissional."
             }
         };
 
