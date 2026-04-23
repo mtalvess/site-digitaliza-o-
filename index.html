@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ Digital — Premium</title>
+    <title>VZ Digital — Experiência de Elite</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         .text-gradient { 
             background: linear-gradient(to right, #00ff88, #00ccff);
             -webkit-background-clip: text;
@@ -43,126 +43,135 @@
             box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
             transition: all 0.2s;
         }
-        .btn-premium:active { transform: scale(0.96); }
-        
-        @keyframes pulse {
-            0%, 100% { transform: translateY(0); opacity: 0.5; }
-            50% { transform: translateY(10px); opacity: 1; }
-        }
-        .animate-pulse-arrow { animation: pulse 2s infinite ease-in-out; }
-
-        .feature-tag {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 10px;
+        .problem-tag {
+            background: rgba(255, 50, 50, 0.1);
+            color: #ff5555;
+            padding: 12px;
+            border-radius: 16px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            border: 1px solid rgba(255, 50, 50, 0.2);
+        }
+        .solution-box {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, transparent 100%);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 32px;
+            border-radius: 32px;
         }
     </style>
 </head>
 <body class="p-6 md:p-12 overflow-x-hidden">
 
     <div class="max-w-7xl mx-auto w-full">
-        <!-- Header -->
+        <!-- Cabeçalho -->
         <header class="flex justify-between items-center mb-12 md:mb-24">
             <div class="flex items-center gap-3">
                 <div class="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl">V</div>
-                <span class="font-black text-xl tracking-tighter uppercase">VZ DIGITAL</span>
+                <span class="font-black text-xl tracking-tighter uppercase leading-none">VZ DIGITAL</span>
             </div>
-            <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest hover:bg-[#00ff88]/10 transition-all">Contato Direto</a>
+            <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest hover:bg-[#00ff88]/10 transition-all">WhatsApp Direto</a>
         </header>
 
-        <!-- Main -->
-        <main class="grid lg:grid-cols-12 gap-16 items-start">
-            
-            <!-- Left Info Panel -->
+        <!-- SEÇÃO: PRODUTOS -->
+        <main class="grid lg:grid-cols-12 gap-16 items-start mb-32">
             <div class="lg:col-span-5 space-y-12 lg:sticky lg:top-12">
                 <div>
                     <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
                         Invista em <br/> <span class="text-gradient">Impacto</span>
                     </h1>
-                    <p class="text-white/30 text-lg md:text-xl max-w-md leading-relaxed">
-                        Design de elite para marcas que buscam o topo. Selecione o serviço ao lado para ver os detalhes.
-                    </p>
+                    <p class="text-white/30 text-lg md:text-xl max-w-sm">Estratégia pura. Design exclusivo. Escolha o serviço ideal ao lado.</p>
                 </div>
 
-                <!-- Dynamic Features Display -->
-                <div id="features-container" class="space-y-4 bg-white/[0.02] p-8 rounded-[32px] border border-white/5">
-                    <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88] mb-6">O que está incluso:</h4>
-                    <div id="product-features" class="flex flex-wrap gap-3">
-                        <!-- Gerado via JS -->
-                    </div>
+                <div id="features-container" class="bg-white/[0.02] p-8 rounded-[32px] border border-white/5 space-y-6">
+                    <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88]">O que você recebe:</h4>
+                    <div id="product-features" class="flex flex-wrap gap-2"></div>
                 </div>
                 
                 <div class="space-y-6">
-                    <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium">Comprar Sites Institucionais</a>
-                    <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all group">
+                    <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium">Comprar Sites</a>
+                    <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all">
                         <i data-lucide="message-square" class="w-5 h-5 text-[#00ff88]"></i> Saber mais via WhatsApp
                     </a>
                 </div>
             </div>
 
-            <!-- Right Cards Grid -->
             <div class="lg:col-span-7 space-y-8">
-                <div class="flex flex-col gap-2 mb-8">
-                    <span class="text-[11px] font-black text-[#00ff88] tracking-[0.5em] uppercase">Escolha seu projeto</span>
-                    <div class="text-[#00ff88] animate-pulse-arrow">
-                        <i data-lucide="chevron-down" class="w-8 h-8"></i>
-                    </div>
-                </div>
-
                 <div class="grid sm:grid-cols-2 gap-6">
-                    <!-- Site Card -->
                     <div id="card-site" class="bento-card active" onclick="selectProduct('site')">
                         <div class="flex justify-between items-start mb-16">
                             <i data-lucide="globe" class="w-12 h-12 text-[#00ff88]"></i>
-                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">Mês 1 Free</span>
+                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">Mês 1 Grátis</span>
                         </div>
-                        <h3 class="text-3xl font-black uppercase leading-[0.9]">Sites <br/>Institucionais</h3>
+                        <h3 class="text-3xl font-black uppercase leading-tight">Sites <br/>Institucionais</h3>
                     </div>
-                    
-                    <!-- Cardápio Card -->
                     <div id="card-cardapio" class="bento-card" onclick="selectProduct('cardapio')">
                         <div class="flex justify-between items-start mb-16">
                             <i data-lucide="utensils" class="w-12 h-12 text-white/10"></i>
-                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">Mês 1 Free</span>
+                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest">Mês 1 Grátis</span>
                         </div>
-                        <h3 class="text-3xl font-black uppercase leading-[0.9]">Cardápios <br/>Digitais</h3>
+                        <h3 class="text-3xl font-black uppercase leading-tight">Cardápios <br/>Digitais</h3>
                     </div>
                 </div>
-                
-                <!-- Portfolio Card -->
-                <div id="card-portfolio" class="bento-card flex flex-col md:flex-row justify-between items-center gap-8" onclick="selectProduct('portfolio')">
+                <div id="card-portfolio" class="bento-card flex justify-between items-center" onclick="selectProduct('portfolio')">
                     <div class="flex items-center gap-8">
                         <i data-lucide="briefcase" class="w-12 h-12 text-white/10"></i>
-                        <div>
-                            <h3 class="text-3xl font-black uppercase leading-[0.9]">Portfólio Elite</h3>
-                            <p class="text-[10px] uppercase font-bold text-white/20 tracking-widest mt-2">Posicionamento Premium</p>
-                        </div>
+                        <h3 class="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
                     </div>
-                    <div class="bg-white/5 border border-white/10 px-10 py-5 rounded-3xl font-black text-sm tracking-[0.2em] w-full md:w-auto text-center">ELITE VIP</div>
-                </div>
-                
-                <!-- Info Banner -->
-                <div class="p-8 border border-white/5 rounded-[32px] bg-gradient-to-br from-white/[0.03] to-transparent flex items-center gap-6">
-                    <div class="w-12 h-12 rounded-2xl bg-[#00ff88]/10 flex items-center justify-center text-[#00ff88]">
-                        <i data-lucide="zap" class="w-6 h-6"></i>
-                    </div>
-                    <p class="text-[10px] font-black uppercase tracking-widest text-white/30 leading-relaxed">
-                        Após o pagamento na Kiwify, você será redirecionado imediatamente para o onboarding via WhatsApp.
-                    </p>
+                    <span class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs opacity-40 uppercase tracking-widest">Série Exclusiva</span>
                 </div>
             </div>
         </main>
 
+        <!-- SEÇÃO: APRESENTAÇÃO E DIAGNÓSTICO -->
+        <section class="border-t border-white/5 pt-32 mb-32">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
+                <div class="space-y-10">
+                    <div>
+                        <span class="text-[11px] font-black uppercase tracking-[0.4em] text-[#00ff88] mb-4 block">A Mente por trás da VZ</span>
+                        <h2 class="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-8">Por que confiar <br/> na minha <br/> <span class="text-gradient">Entrega?</span></h2>
+                    </div>
+                    
+                    <p class="text-white/40 text-lg leading-relaxed">
+                        Meu nome é o rosto por trás da **VZ Digital**. Eu não sou apenas um criador de sites. Eu sou um estrategista digital focado em **Autoridade e Vendas**. 
+                    </p>
+                    
+                    <div class="flex items-center gap-6 p-6 border border-white/10 rounded-[32px] bg-white/[0.02]">
+                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#00ff88] to-[#00ccff] flex items-center justify-center text-black font-black text-2xl">VZ</div>
+                        <div>
+                            <p class="text-sm font-black uppercase tracking-[0.2em] text-[#00ff88]">Agência VZ Digital</p>
+                            <p class="text-[10px] text-white/20 uppercase font-black tracking-[0.3em]">Eliminando o amadorismo digital</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problemas e Soluções -->
+                <div class="space-y-6">
+                    <h4 class="text-xs font-black uppercase tracking-[0.3em] text-white/20 mb-8">O que eu resolvo para você:</h4>
+                    
+                    <div class="grid gap-4">
+                        <div class="problem-tag"><i data-lucide="x-circle" class="w-4 h-4"></i> Sites antigos que afastam clientes qualificados.</div>
+                        <div class="problem-tag"><i data-lucide="x-circle" class="w-4 h-4"></i> Cardápios em PDF pesados e difíceis de usar.</div>
+                        <div class="problem-tag"><i data-lucide="x-circle" class="w-4 h-4"></i> Falta de uma vitrine profissional na internet.</div>
+                    </div>
+
+                    <div class="solution-box mt-10">
+                        <h5 class="text-[#00ff88] font-black uppercase tracking-widest text-sm mb-4 flex items-center gap-3">
+                            <i data-lucide="shield-check"></i> O Diagnóstico VZ
+                        </h5>
+                        <p class="text-sm text-white/60 leading-relaxed italic">
+                            "Eu entrego velocidade extrema, design único e uma estrutura de vendas que trabalha 24 horas por dia. Sua presença digital deixará de ser um gasto para se tornar seu melhor investimento."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <footer class="mt-32 py-12 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.5em] text-center uppercase">
-            VZ DIGITAL © 2026 | Digital Experience Studio
+            VZ DIGITAL © 2026 | Estúdio de Excelência Digital
         </footer>
     </div>
 
@@ -170,55 +179,46 @@
         const productsInfo = {
             site: {
                 name: "Sites Institucionais",
-                features: ["SEO Avançado", "Alta Conversão", "Padrão Premium", "Suporte VIP", "Mobile Ready"],
-                msg: "Olá! Gostaria de falar sobre o projeto de Site Institucional Premium."
+                features: ["Fácil de Encontrar no Google", "Design de Alto Nível", "Focado em Vendas", "Suporte Exclusivo", "Perfeito no Celular"],
+                msg: "Olá! Gostaria de falar sobre o projeto de Site Institucional de Elite."
             },
             cardapio: {
                 name: "Cardápios Digitais",
-                features: ["Gourmet Mobile", "WhatsApp Integrado", "Update em Tempo Real", "Pedido Instantâneo", "Layout Clean"],
-                msg: "Olá! Gostaria de falar sobre o projeto de Cardápio Digital Gourmet."
+                features: ["WhatsApp Integrado", "Código QR Incluso", "Menu Elegante", "Fotos em Alta Definição", "Pedidos Rápidos"],
+                msg: "Olá! Gostaria de falar sobre o projeto de Cardápio Digital Sugerido."
             },
             portfolio: {
                 name: "Portfólio Elite",
-                features: ["Autoridade Imediata", "Design Minimalista", "Showcase de Luxo", "Link Bio Premium", "Exclusividade"],
+                features: ["Foco em Autoridade", "Design Minimalista", "Biografia de Impacto", "Vitrine Exclusiva", "Estratégia Pessoal"],
                 msg: "Olá! Gostaria de falar sobre o projeto de Portfólio Elite Profissional."
             }
         };
 
+        lucide.createIcons();
+
         function selectProduct(id) {
             const info = productsInfo[id];
-            
-            // UI Update
             document.querySelectorAll('.bento-card').forEach(c => c.classList.remove('active'));
             document.getElementById('card-' + id).classList.add('active');
-
-            // Header/Button Update
             document.getElementById('buy-button').innerText = "Comprar " + info.name;
             
-            // Features Update
             const featuresDiv = document.getElementById('product-features');
             featuresDiv.innerHTML = info.features.map(f => `
-                <div class="feature-tag">
-                    <i data-lucide="check-circle-2" class="w-3 h-3 text-[#00ff88]"></i>
-                    ${f}
+                <div class="px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-[9px] font-black uppercase tracking-widest flex items-center gap-2">
+                    <i data-lucide="check" class="w-3 h-3 text-[#00ff88]"></i> ${f}
                 </div>
             `).join('');
 
-            // Icons Color Update
-            document.querySelectorAll('[data-lucide]').forEach(icon => {
-                icon.style.color = "rgba(255,255,255,0.1)";
+            document.querySelectorAll('.bento-card [data-lucide]').forEach(icon => {
+                icon.style.color = "rgba(255,255,255,0.05)";
             });
-            const activeCardIcon = document.getElementById('card-' + id).querySelector('[data-lucide]');
-            if (activeCardIcon) activeCardIcon.style.color = "#00ff88";
+            const activeIcon = document.getElementById('card-' + id).querySelector('[data-lucide]');
+            activeIcon.style.color = "#00ff88";
 
-            // WA Link Update
-            const waMsg = encodeURIComponent(info.msg);
-            document.getElementById('wa-link').href = "https://wa.me/5581995655408?text=" + waMsg;
-
+            document.getElementById('wa-link').href = "https://wa.me/5581995655408?text=" + encodeURIComponent(info.msg);
             lucide.createIcons();
         }
 
-        // Initialize
         selectProduct('site');
     </script>
 </body>
