@@ -3,198 +3,193 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VZ Digital — Sistema Premium</title>
+<title>VZ — Digitalização Premium</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
 <style>
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#020202;color:#fff;overflow-x:hidden}
+html { scroll-behavior: smooth; }
 
-.chrome-text{
-font-family:'Cinzel',serif;
-background:linear-gradient(180deg,#ffffff 0%,#f8fafc 45%,#a78bfa 50%,#7c3aed 55%,#c084fc 100%);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;
+  color: white;
 }
 
-.glass{
-background:rgba(255,255,255,0.03);
-border:1px solid rgba(139,92,246,0.2);
-backdrop-filter:blur(16px);
-transition:.3s;
+section {
+  padding: 100px 20px;
+  text-align: center;
 }
 
-.glass:hover{
-transform:translateY(-6px);
-border-color:#7c3aed;
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.selected{
-border:2px solid #7c3aed !important;
-box-shadow:0 0 30px rgba(124,58,237,0.5);
+h1 {
+  font-size: 3rem;
+  font-weight: 900;
 }
 
-.btn-premium{
-background:linear-gradient(135deg,#7c3aed,#4c1d95);
-transition:.3s;
+.subtitle {
+  opacity: 0.7;
+  max-width: 600px;
+  margin: 20px auto;
 }
 
-.btn-premium:hover{
-transform:scale(1.05);
+.btn {
+  margin-top: 40px;
+  padding: 18px 40px;
+  border-radius: 40px;
+  background: linear-gradient(45deg,#00ff88,#00ccff);
+  color: black;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: center;
+}
+
+.card {
+  background: #111;
+  padding: 40px;
+  border-radius: 20px;
+  width: 300px;
+  border: 1px solid #222;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  border-color: #00ff88;
+}
+
+.card h3 {
+  font-size: 1.4rem;
+}
+
+.features {
+  text-align: left;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-top: 15px;
+}
+
+.checkout {
+  margin-top: 60px;
+  display: none;
+}
+
+select {
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  width: 300px;
+}
+
+.footer {
+  padding: 40px;
+  opacity: 0.5;
+  font-size: 0.8rem;
 }
 </style>
 </head>
 
-<body class="min-h-screen">
+<body>
 
-<!-- LANDING -->
-<section class="min-h-screen flex flex-col justify-center items-center text-center px-6">
-
-<h1 class="chrome-text text-6xl md:text-8xl font-black mb-10 uppercase">
-VENDA MAIS.<br>TRABALHE MENOS.
-</h1>
-
-<p class="text-slate-400 text-xl max-w-2xl mb-12">
-Site, Portfólio ou Cardápio Digital entregue em 48h.
-</p>
-
-<a href="#escolha"
-class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest inline-block">
-COMEÇAR AGORA
-</a>
-
+<!-- HERO -->
+<section class="hero">
+  <h1>Transforme seu Negócio em Digital</h1>
+  <p class="subtitle">
+  Eu crio seu site profissional, cardápio digital ou portfólio estratégico pronto para vender.
+  Design premium, rápido e focado em conversão.
+  </p>
+  <a href="#produtos" class="btn">COMEÇAR AGORA</a>
 </section>
 
-<!-- ESCOLHA -->
-<section id="escolha" class="min-h-screen flex flex-col items-center justify-center px-6 py-20">
-
-<h2 class="chrome-text text-5xl font-black mb-16 uppercase text-center">
-Escolha Seu Produto
-</h2>
-
-<div class="grid md:grid-cols-3 gap-8 w-full max-w-6xl mb-16">
-
-<div class="glass p-10 rounded-3xl cursor-pointer text-center"
-onclick="selectProduct(this,'Portfólio Digital')">
-<h3 class="text-2xl font-black mb-4">Portfólio Digital</h3>
-<p class="text-slate-400 text-sm">Autoridade profissional.</p>
-</div>
-
-<div class="glass p-10 rounded-3xl cursor-pointer text-center"
-onclick="selectProduct(this,'Site Profissional')">
-<h3 class="text-2xl font-black mb-4">Site Profissional</h3>
-<p class="text-slate-400 text-sm">Presença forte online.</p>
-</div>
-
-<div class="glass p-10 rounded-3xl cursor-pointer text-center"
-onclick="selectProduct(this,'Cardápio Digital')">
-<h3 class="text-2xl font-black mb-4">Cardápio Digital</h3>
-<p class="text-slate-400 text-sm">Venda automática no WhatsApp.</p>
-</div>
-
-</div>
-
-<button id="continuarBtn"
-onclick="finalizar()"
-class="btn-premium px-12 py-6 rounded-3xl font-black uppercase tracking-widest opacity-40 cursor-not-allowed">
-CONTINUAR PARA PAGAMENTO
-</button>
-
+<!-- SOBRE -->
+<section>
+  <h2>O Que Você Recebe</h2>
+  <p class="subtitle">
+  ✔ Design exclusivo e moderno<br>
+  ✔ Layout estratégico para gerar vendas<br>
+  ✔ Versão otimizada para celular<br>
+  ✔ Entrega rápida<br>
+  ✔ Suporte direto comigo<br>
+  ✔ Ajustes finais incluídos
+  </p>
 </section>
 
-<!-- ADMIN -->
-<section id="admin" class="min-h-screen px-10 py-20 hidden">
+<!-- PRODUTOS -->
+<section id="produtos">
+  <h2>Escolha Seu Produto</h2>
 
-<h2 class="chrome-text text-4xl font-black mb-10 uppercase">
-Painel Administrativo
-</h2>
+  <div class="cards">
+    <div class="card" onclick="selecionar('Site Profissional')">
+      <h3>Site Profissional</h3>
+      <div class="features">
+        • Página moderna<br>
+        • Botão WhatsApp<br>
+        • Design estratégico<br>
+        • Estrutura pronta para vendas
+      </div>
+    </div>
 
-<div id="loginArea">
-<input type="password" id="senha"
-placeholder="Senha Admin"
-class="bg-gray-900 p-4 rounded-xl w-64">
-<button onclick="login()" class="btn-premium px-6 py-3 rounded-xl ml-2">
-Entrar
-</button>
-</div>
+    <div class="card" onclick="selecionar('Cardápio Digital')">
+      <h3>Cardápio Digital</h3>
+      <div class="features">
+        • Cardápio online interativo<br>
+        • Atualização fácil<br>
+        • Link para WhatsApp<br>
+        • Ideal para restaurantes
+      </div>
+    </div>
 
-<div id="painel" class="hidden mt-10 space-y-4"></div>
+    <div class="card" onclick="selecionar('Portfólio Digital')">
+      <h3>Portfólio Digital</h3>
+      <div class="features">
+        • Apresentação profissional<br>
+        • Galeria de trabalhos<br>
+        • Layout moderno<br>
+        • Ideal para freelancers
+      </div>
+    </div>
+  </div>
 
-<button onclick="limparPedidos()" class="mt-8 bg-red-600 px-6 py-3 rounded-xl text-sm font-bold">
-Limpar Registros
-</button>
-
+  <div class="checkout" id="checkoutArea">
+    <h3>Produto Selecionado:</h3>
+    <p id="produtoEscolhido"></p>
+    <br>
+    <a href="SEULINKKIWIFY" class="btn">FINALIZAR COMPRA</a>
+  </div>
 </section>
+
+<div class="footer">
+© 2026 VZ Digital — Todos os direitos reservados
+</div>
 
 <script>
+let produto = "";
 
-let produtoSelecionado = null;
-
-function selectProduct(element,produto){
-produtoSelecionado = produto;
-document.querySelectorAll('.glass').forEach(c=>c.classList.remove('selected'));
-element.classList.add('selected');
-document.getElementById("continuarBtn").classList.remove("opacity-40","cursor-not-allowed");
+function selecionar(nome) {
+  produto = nome;
+  document.getElementById("produtoEscolhido").innerText = nome;
+  document.getElementById("checkoutArea").style.display = "block";
 }
-
-function finalizar(){
-if(!produtoSelecionado) return;
-
-let pedidos = JSON.parse(localStorage.getItem("pedidosVZ")) || [];
-
-pedidos.push({
-produto: produtoSelecionado,
-data: new Date().toLocaleString()
-});
-
-localStorage.setItem("pedidosVZ", JSON.stringify(pedidos));
-
-window.location.href="https://pay.kiwify.com.br/r8cOjsL";
-}
-
-/* ADMIN VIA HASH */
-if(window.location.hash === "#admin"){
-document.querySelector("section").style.display="none";
-document.getElementById("escolha").style.display="none";
-document.getElementById("admin").classList.remove("hidden");
-}
-
-function login(){
-if(document.getElementById("senha").value !== "VZ2026") return;
-
-document.getElementById("loginArea").classList.add("hidden");
-document.getElementById("painel").classList.remove("hidden");
-
-mostrarPedidos();
-}
-
-function mostrarPedidos(){
-let pedidos = JSON.parse(localStorage.getItem("pedidosVZ")) || [];
-let painel = document.getElementById("painel");
-painel.innerHTML="";
-
-if(pedidos.length === 0){
-painel.innerHTML="<p class='text-slate-500'>Nenhum pedido ainda.</p>";
-return;
-}
-
-pedidos.reverse().forEach(p=>{
-painel.innerHTML+=`
-<div class="bg-gray-900 p-6 rounded-2xl border border-violet-500/30">
-<strong>${p.produto}</strong><br>
-<small>${p.data}</small>
-</div>
-`;
-});
-}
-
-function limparPedidos(){
-localStorage.removeItem("pedidosVZ");
-mostrarPedidos();
-}
-
 </script>
 
 </body>
