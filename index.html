@@ -5,124 +5,162 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VZ Digital — Premium</title>
     
-    <!-- Bibliotecas de Alta Estabilidade -->
+    <!-- Tailwind & Lucide (Garantidos) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-    <style type="text/tailwindcss">
-        @layer base {
-            body { @apply bg-[#050505] text-white font-sans; }
+    <style>
+        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; }
+        .text-gradient { 
+            background: linear-gradient(to right, #00ff88, #00ccff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .text-gradient { @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00ff88] to-[#00ccff]; }
-        .bento-card { @apply bg-white/[0.03] border border-white/10 rounded-[32px] p-8 transition-all cursor-pointer; }
-        .bento-card.active { @apply border-[#00ff88] bg-white/10 shadow-[0_0_40px_rgba(0,255,136,0.1)]; }
-        .btn-premium { @apply bg-[#00ff88] text-black font-black uppercase tracking-widest px-8 py-5 rounded-2xl block text-center shadow-lg transition-all active:scale-95; }
+        .bento-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 32px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .bento-card:hover { background: rgba(255, 255, 255, 0.06); }
+        .bento-card.active {
+            border-color: #00ff88;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 40px rgba(0, 255, 136, 0.1);
+        }
+        .btn-premium {
+            background: #00ff88;
+            color: black;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 20px 40px;
+            border-radius: 16px;
+            text-align: center;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            transition: all 0.2s;
+        }
+        .btn-premium:active { transform: scale(0.95); }
+        
+        /* Seta pulsante */
+        @keyframes pulse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+        .animate-pulse-arrow { animation: pulse 2s infinite ease-in-out; }
     </style>
 </head>
-<body>
-    <div id="root"></div>
+<body class="p-6 md:p-12">
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        const { motion, AnimatePresence } = FramerMotion;
+    <div class="max-w-7xl mx-auto w-full">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-12 md:mb-20">
+            <div class="flex items-center gap-3">
+                <div class="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl">V</div>
+                <span class="font-black text-xl tracking-tighter">VZ DIGITAL</span>
+            </div>
+            <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest">Contato</a>
+        </header>
 
-        const WHATSAPP_LINK = "https://wa.me/5581995655408";
-        const KIWIFY_LINK = "https://pay.kiwify.com.br/r8cOjsL";
-
-        const PRODUCTS = [
-            { id: 'site', name: 'Sites Institucionais', icon: 'globe', maintenance: true },
-            { id: 'cardapio', name: 'Cardápios Digitais', icon: 'utensils', maintenance: true },
-            { id: 'portfolio', name: 'Portfólio Elite', icon: 'briefcase', maintenance: false }
-        ];
-
-        function App() {
-            const [sel, setSel] = useState('site');
-            
-            // Garantia que os ícones carreguem sempre
-            useEffect(() => { 
-                if (window.lucide) {
-                    window.lucide.createIcons(); 
-                }
-            }, [sel]);
-
-            const current = PRODUCTS.find(p => p.id === sel);
-
-            return (
-                <div className="min-h-screen flex flex-col p-6 sm:p-10 max-w-7xl mx-auto">
-                    {/* Header */}
-                    <header className="flex justify-between items-center mb-16">
-                        <div className="flex items-center gap-3">
-                            <div className="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black">V</div>
-                            <span className="font-black text-xl tracking-tighter">VZ DIGITAL</span>
-                        </div>
-                        <a href={WHATSAPP_LINK} className="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase">Contato</a>
-                    </header>
-
-                    {/* Main */}
-                    <main className="grid lg:grid-cols-2 gap-16 items-center">
-                        <div className="space-y-10">
-                            <h1 className="text-6xl sm:text-8xl font-black uppercase tracking-tighter leading-none">
-                                Invista em <br/> <span className="text-gradient">Impacto</span>
-                            </h1>
-                            <p className="text-white/40 text-lg max-w-md">Digitalização bruta e sofisticada. Escolha o serviço ideal ao lado.</p>
-                            
-                            <div className="space-y-6">
-                                <a href={KIWIFY_LINK} className="btn-premium">Comprar {current.name}</a>
-                                <div className="flex flex-col gap-2">
-                                    <a href={WHATSAPP_LINK} className="text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 flex items-center gap-3 transition-all">
-                                        <i data-lucide="message-square" className="w-5 h-5"></i> Saber mais via WhatsApp
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Cards */}
-                        <div className="space-y-6">
-                            <div className="flex flex-col gap-2 mb-6">
-                                <span className="text-[11px] font-black text-[#00ff88] tracking-[0.4em] uppercase">Escolha seu produto</span>
-                                <motion.div animate={{y:[0,8,0]}} transition={{repeat:Infinity, duration:2}} className="text-[#00ff88]">
-                                    <i data-lucide="chevron-down"></i>
-                                </motion.div>
-                            </div>
-
-                            <div className="grid sm:grid-cols-2 gap-6">
-                                {PRODUCTS.slice(0,2).map(p => (
-                                    <div key={p.id} onClick={() => setSel(p.id)} className={`bento-card ${sel === p.id ? 'active' : ''}`}>
-                                        <div className="flex justify-between items-start mb-10">
-                                            <i data-lucide={p.icon} className={`w-10 h-10 ${sel === p.id ? 'text-[#00ff88]' : 'text-white/10'}`}></i>
-                                            {p.maintenance && <span className="bg-[#00ff88] text-black text-[8px] font-black px-2 py-1 rounded-full">FREE MÊS 1</span>}
-                                        </div>
-                                        <h3 className="text-3xl font-black uppercase leading-tight">{p.name}</h3>
-                                    </div>
-                                ))}
-                            </div>
-                            
-                            <div onClick={() => setSel('portfolio')} className={`bento-card flex justify-between items-center ${sel === 'portfolio' ? 'active' : ''}`}>
-                                <div className="flex items-center gap-6">
-                                    <i data-lucide="briefcase" className={`w-10 h-10 ${sel === 'portfolio' ? 'text-white' : 'text-white/10'}`}></i>
-                                    <h3 className="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
-                                </div>
-                                <span className="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs">VIP</span>
-                            </div>
-                        </div>
-                    </main>
-
-                    {/* Footer */}
-                    <footer className="mt-20 py-10 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.3em] text-center">
-                        VZ DIGITAL © 2026 | AGÊNCIA PREMIUM
-                    </footer>
+        <!-- Main -->
+        <main class="grid lg:grid-cols-2 gap-16 items-center">
+            <div class="space-y-10">
+                <div>
+                    <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-6">
+                        Invista em <br/> <span class="text-gradient">Impacto</span>
+                    </h1>
+                    <p class="text-white/40 text-lg md:text-xl max-w-md">Digitalização estratégica e design autoral. Escolha o serviço ao lado.</p>
                 </div>
-            );
-        }
+                
+                <div class="space-y-6">
+                    <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium">Comprar Sites Institucionais</a>
+                    <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all">
+                        <i data-lucide="message-square" class="w-5 h-5"></i> Saber mais via WhatsApp
+                    </a>
+                </div>
+            </div>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+            <!-- Cards Selection -->
+            <div class="space-y-6">
+                <div class="flex flex-col gap-2 mb-6">
+                    <span class="text-[11px] font-black text-[#00ff88] tracking-[0.4em] uppercase">Escolha seu produto</span>
+                    <div class="text-[#00ff88] animate-pulse-arrow">
+                        <i data-lucide="chevron-down"></i>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <!-- Site Card -->
+                    <div class="bento-card active" onclick="selectProduct('site', 'Sites Institucionais')">
+                        <div class="flex justify-between items-start mb-10">
+                            <i data-lucide="globe" class="w-10 h-10 text-[#00ff88]"></i>
+                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-2 py-1 rounded-full">FREE MÊS 1</span>
+                        </div>
+                        <h3 class="text-2xl font-black uppercase">Sites Institucionais</h3>
+                    </div>
+                    <!-- Cardápio Card -->
+                    <div class="bento-card" onclick="selectProduct('cardapio', 'Cardápios Digitais')">
+                        <div class="flex justify-between items-start mb-10">
+                            <i data-lucide="utensils" class="w-10 h-10 opacity-20"></i>
+                            <span class="bg-[#00ff88] text-black text-[8px] font-black px-2 py-1 rounded-full">FREE MÊS 1</span>
+                        </div>
+                        <h3 class="text-2xl font-black uppercase">Cardápios Digitais</h3>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Card -->
+                <div class="bento-card flex justify-between items-center" onclick="selectProduct('portfolio', 'Portfólio Elite')">
+                    <div class="flex items-center gap-6">
+                        <i data-lucide="briefcase" class="w-10 h-10 opacity-20"></i>
+                        <h3 class="text-2xl font-black uppercase">Portfólio Elite</h3>
+                    </div>
+                    <span class="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs">VIP</span>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-20 py-10 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.3em] text-center">
+            VZ DIGITAL © 2026 | AGÊNCIA PREMIUM
+        </footer>
+    </div>
+
+    <!-- Script de Lógica (Sem Babel = Sem Bugs) -->
+    <script>
+        // Iniciar ícones
+        lucide.createIcons();
+
+        function selectProduct(id, name) {
+            // Atualizar classes dos cards
+            const cards = document.querySelectorAll('.bento-card');
+            cards.forEach(card => card.classList.remove('active'));
+            
+            // Adicionar active no clicado
+            const clickedCard = event.currentTarget;
+            clickedCard.classList.add('active');
+
+            // Resetar opacidade dos ícones
+            document.querySelectorAll('[data-lucide]').forEach(icon => {
+                icon.style.opacity = "0.1";
+                icon.style.color = "white";
+            });
+
+            // Destacar ícone ativo
+            const activeIcon = clickedCard.querySelector('[data-lucide]');
+            activeIcon.style.opacity = "1";
+            if (id !== 'portfolio') activeIcon.style.color = "#00ff88";
+
+            // Atualizar Botão e Link WhatsApp
+            document.getElementById('buy-button').innerText = "Comprar " + name;
+            
+            const waMsg = encodeURIComponent("Olá! Gostaria de falar sobre o projeto de " + name + ".");
+            document.getElementById('wa-link').href = "https://wa.me/5581995655408?text=" + waMsg;
+
+            lucide.createIcons();
+        }
     </script>
 </body>
 </html>
