@@ -3,135 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ Digital — Digitalização Premium</title>
+    <title>VZ Digital — Premium</title>
     
-    <!-- Bibliotecas Diretas e Estáveis -->
+    <!-- Bibliotecas de Alta Estabilidade -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style type="text/tailwindcss">
         @layer base {
-            body { @apply bg-[#050505] text-white font-sans overflow-x-hidden; }
+            body { @apply bg-[#050505] text-white font-sans; }
         }
         .text-gradient { @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00ff88] to-[#00ccff]; }
-        .bento-card { @apply bg-white/[0.03] border border-white/10 rounded-[32px] p-8 transition-all hover:bg-white/[0.06] hover:border-[#00ff88]/30; }
-        .btn-premium { @apply bg-[#00ff88] text-black font-black uppercase tracking-widest px-8 py-5 rounded-2xl shadow-[0_0_30px_rgba(0,255,136,0.3)] hover:scale-105 active:scale-95 transition-all block text-center; }
+        .bento-card { @apply bg-white/[0.03] border border-white/10 rounded-[32px] p-8 transition-all cursor-pointer; }
+        .bento-card.active { @apply border-[#00ff88] bg-white/10 shadow-[0_0_40px_rgba(0,255,136,0.1)]; }
+        .btn-premium { @apply bg-[#00ff88] text-black font-black uppercase tracking-widest px-8 py-5 rounded-2xl block text-center shadow-lg transition-all active:scale-95; }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+        const { useState, useEffect } = React;
         const { motion, AnimatePresence } = FramerMotion;
 
         const WHATSAPP_LINK = "https://wa.me/5581995655408";
         const KIWIFY_LINK = "https://pay.kiwify.com.br/r8cOjsL";
 
         const PRODUCTS = [
-            { id: 'site', name: 'Sites Instituicionais', icon: 'globe', desc: 'Focado em autoridade e vendas.', color: 'text-[#00ff88]', focus: 'Premium', maintenance: true },
-            { id: 'cardapio', name: 'Cardápios Digitais', icon: 'utensils', desc: 'Gourmet e focado em delivery.', color: 'text-[#00ccff]', focus: 'Mobile', maintenance: true },
-            { id: 'portfolio', name: 'Portfólio Elite', icon: 'briefcase', desc: 'Autoridade imediata.', color: 'text-white/40', focus: 'Elite VIP', maintenance: false }
+            { id: 'site', name: 'Sites Institucionais', icon: 'globe', maintenance: true },
+            { id: 'cardapio', name: 'Cardápios Digitais', icon: 'utensils', maintenance: true },
+            { id: 'portfolio', name: 'Portfólio Elite', icon: 'briefcase', maintenance: false }
         ];
-
-        function SupportChat() {
-            const [isOpen, setIsOpen] = useState(false);
-            const [msg, setMsg] = useState([{ r: 'b', t: 'Olá! Sou a IA da VZ Digital. ✨ Como posso ajudar seu negócio hoje?' }]);
-            
-            return (
-                <div className="fixed bottom-6 right-6 z-[100]">
-                    <AnimatePresence>
-                        {isOpen && (
-                            <motion.div initial={{opacity:0, scale:0.9, y:20}} animate={{opacity:1, scale:1, y:0}} exit={{opacity:0, scale:0.9, y:20}} className="mb-4 w-[320px] h-[400px] bg-[#0c0c0c] border border-white/10 rounded-[24px] shadow-2xl flex flex-col overflow-hidden">
-                                <div className="p-4 bg-white/5 border-b border-white/5 flex justify-between items-center">
-                                    <span className="text-[10px] font-black tracking-widest text-[#00ff88]">VZ ASSISTENTE</span>
-                                    <button onClick={() => setIsOpen(false)}><i data-lucide="x" className="w-4 h-4"></i></button>
-                                </div>
-                                <div className="flex-1 p-4 overflow-y-auto space-y-4">
-                                    {msg.map((m, i) => (
-                                        <div key={i} className={`flex ${m.r === 'u' ? 'justify-end' : 'justify-start'}`}>
-                                            <div className={`p-3 rounded-2xl text-[11px] max-w-[80%] ${m.r === 'u' ? 'bg-[#00ff88] text-black' : 'bg-white/5'}`}>{m.t}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <div className="p-4 border-t border-white/5 text-center">
-                                    <a href={WHATSAPP_LINK} className="text-[10px] font-black text-[#00ff88] uppercase tracking-widest hover:underline">Falar com Humano no WhatsApp</a>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                    <button onClick={() => setIsOpen(!isOpen)} className="w-14 h-14 bg-[#00ff88] rounded-2xl flex items-center justify-center text-black shadow-xl">
-                        <i data-lucide="bot" className="w-8 h-8"></i>
-                    </button>
-                </div>
-            );
-        }
 
         function App() {
             const [sel, setSel] = useState('site');
-            useEffect(() => { lucide.createIcons(); }, [sel]);
+            
+            // Garantia que os ícones carreguem sempre
+            useEffect(() => { 
+                if (window.lucide) {
+                    window.lucide.createIcons(); 
+                }
+            }, [sel]);
 
             const current = PRODUCTS.find(p => p.id === sel);
 
             return (
-                <div className="min-h-screen flex flex-col px-4 sm:px-10">
-                    <SupportChat />
-                    <header className="py-8 flex justify-between items-center border-b border-white/5 mb-10">
+                <div className="min-h-screen flex flex-col p-6 sm:p-10 max-w-7xl mx-auto">
+                    {/* Header */}
+                    <header className="flex justify-between items-center mb-16">
                         <div className="flex items-center gap-3">
-                            <div className="bg-[#00ff88] text-black w-8 h-8 rounded-lg flex items-center justify-center font-black">V</div>
-                            <span className="font-black tracking-tighter uppercase">VZ DIGITAL</span>
+                            <div className="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black">V</div>
+                            <span className="font-black text-xl tracking-tighter">VZ DIGITAL</span>
                         </div>
-                        <a href={WHATSAPP_LINK} className="text-[10px] font-black text-[#00ff88] tracking-widest border border-[#00ff88]/20 px-5 py-2 rounded-full">CONTATO</a>
+                        <a href={WHATSAPP_LINK} className="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase">Contato</a>
                     </header>
 
-                    <main className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-20 items-center">
-                        <div className="space-y-8">
-                            <h1 className="text-6xl sm:text-8xl font-black uppercase tracking-tighter leading-[0.9]">
+                    {/* Main */}
+                    <main className="grid lg:grid-cols-2 gap-16 items-center">
+                        <div className="space-y-10">
+                            <h1 className="text-6xl sm:text-8xl font-black uppercase tracking-tighter leading-none">
                                 Invista em <br/> <span className="text-gradient">Impacto</span>
                             </h1>
-                            <p className="text-white/40 text-lg sm:text-xl max-w-md">Digitalização bruta e sofisticada. Escolha o serviço ideal para sua marca no menu ao lado.</p>
+                            <p className="text-white/40 text-lg max-w-md">Digitalização bruta e sofisticada. Escolha o serviço ideal ao lado.</p>
                             
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                                 <a href={KIWIFY_LINK} className="btn-premium">Comprar {current.name}</a>
-                                <a href={WHATSAPP_LINK} className="text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 flex items-center gap-2">
-                                     <i data-lucide="message-square" className="w-4 h-4"></i> Mais informações via WhatsApp
-                                </a>
+                                <div className="flex flex-col gap-2">
+                                    <a href={WHATSAPP_LINK} className="text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 flex items-center gap-3 transition-all">
+                                        <i data-lucide="message-square" className="w-5 h-5"></i> Saber mais via WhatsApp
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
+                        {/* Cards */}
                         <div className="space-y-6">
-                            <div className="flex flex-col gap-2 mb-4">
-                                <span className="text-[10px] font-black text-[#00ff88] tracking-[0.5em] uppercase">Escolha seu produto</span>
-                                <motion.div animate={{y:[0,5,0]}} transition={{repeat:Infinity, duration:1.5}}><i data-lucide="chevron-down" className="text-[#00ff88]"></i></motion.div>
+                            <div className="flex flex-col gap-2 mb-6">
+                                <span className="text-[11px] font-black text-[#00ff88] tracking-[0.4em] uppercase">Escolha seu produto</span>
+                                <motion.div animate={{y:[0,8,0]}} transition={{repeat:Infinity, duration:2}} className="text-[#00ff88]">
+                                    <i data-lucide="chevron-down"></i>
+                                </motion.div>
                             </div>
-                            
-                            <div className="grid sm:grid-cols-2 gap-4">
+
+                            <div className="grid sm:grid-cols-2 gap-6">
                                 {PRODUCTS.slice(0,2).map(p => (
-                                    <div key={p.id} onClick={() => setSel(p.id)} className={`bento-card cursor-pointer relative ${sel === p.id ? 'border-[#00ff88] bg-white/10' : ''}`}>
-                                        {p.maintenance && <span className="absolute top-4 right-4 bg-[#00ff88] text-black text-[8px] font-black px-2 py-1 rounded-full">FREE MÊS 1</span>}
-                                        <i data-lucide={p.icon} className={`w-10 h-10 mb-6 ${sel === p.id ? 'text-[#00ff88]' : 'text-white/10'}`}></i>
-                                        <h3 className="text-2xl font-black uppercase leading-tight">{p.name}</h3>
+                                    <div key={p.id} onClick={() => setSel(p.id)} className={`bento-card ${sel === p.id ? 'active' : ''}`}>
+                                        <div className="flex justify-between items-start mb-10">
+                                            <i data-lucide={p.icon} className={`w-10 h-10 ${sel === p.id ? 'text-[#00ff88]' : 'text-white/10'}`}></i>
+                                            {p.maintenance && <span className="bg-[#00ff88] text-black text-[8px] font-black px-2 py-1 rounded-full">FREE MÊS 1</span>}
+                                        </div>
+                                        <h3 className="text-3xl font-black uppercase leading-tight">{p.name}</h3>
                                     </div>
                                 ))}
                             </div>
-                            <div onClick={() => setSel('portfolio')} className={`bento-card cursor-pointer flex justify-between items-center ${sel === 'portfolio' ? 'border-white/50 bg-white/10' : ''}`}>
-                                 <div className="flex items-center gap-4">
-                                     <i data-lucide="briefcase" className="w-8 h-8 text-white/20"></i>
-                                     <h3 className="text-2xl font-black uppercase leading-tight">Portfólio Elite</h3>
-                                 </div>
-                                 <span className="bg-white/10 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest">VIP</span>
+                            
+                            <div onClick={() => setSel('portfolio')} className={`bento-card flex justify-between items-center ${sel === 'portfolio' ? 'active' : ''}`}>
+                                <div className="flex items-center gap-6">
+                                    <i data-lucide="briefcase" className={`w-10 h-10 ${sel === 'portfolio' ? 'text-white' : 'text-white/10'}`}></i>
+                                    <h3 className="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
+                                </div>
+                                <span className="bg-white/5 border border-white/10 px-6 py-3 rounded-2xl font-black text-xs">VIP</span>
                             </div>
                         </div>
                     </main>
 
-                    <footer className="mt-20 py-10 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.4em] text-center">
-                        VZ DIGITAL © 2026 | AGÊNCIA ON-LINE
+                    {/* Footer */}
+                    <footer className="mt-20 py-10 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.3em] text-center">
+                        VZ DIGITAL © 2026 | AGÊNCIA PREMIUM
                     </footer>
                 </div>
             );
