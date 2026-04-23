@@ -1,196 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VZ — Digitalização Premium</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VZ Digital — Digitalização Premium</title>
+    
+    <!-- Scripts: Tailwind 4, Lucide Icons, React, Framer Motion e Babel -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
 
-<style>
-html { scroll-behavior: smooth; }
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', sans-serif;
+            --color-brand-primary: #00ff88;
+            --color-brand-secondary: #00ccff;
+        }
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #0a0a0a;
-  color: white;
-}
+        body {
+            background-color: #050505;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-section {
-  padding: 100px 20px;
-  text-align: center;
-}
+        .bento-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
 
-.hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+        .bento-card:hover {
+            border-color: #00ff88;
+            background: rgba(255, 255, 255, 0.05);
+        }
 
-h1 {
-  font-size: 3rem;
-  font-weight: 900;
-}
+        .glow-text {
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
 
-.subtitle {
-  opacity: 0.7;
-  max-width: 600px;
-  margin: 20px auto;
-}
+        .text-gradient {
+            background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-.btn {
-  margin-top: 40px;
-  padding: 18px 40px;
-  border-radius: 40px;
-  background: linear-gradient(45deg,#00ff88,#00ccff);
-  color: black;
-  font-weight: 800;
-  text-decoration: none;
-  display: inline-block;
-  transition: 0.3s;
-}
+        .btn-premium {
+            background: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
+            color: black;
+            font-weight: 900;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px -10px rgba(0, 255, 136, 0.4);
+        }
 
-.btn:hover {
-  transform: scale(1.05);
-}
+        .btn-premium:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
 
-.cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  justify-content: center;
-}
-
-.card {
-  background: #111;
-  padding: 40px;
-  border-radius: 20px;
-  width: 300px;
-  border: 1px solid #222;
-  transition: 0.3s;
-  cursor: pointer;
-}
-
-.card:hover {
-  transform: translateY(-10px);
-  border-color: #00ff88;
-}
-
-.card h3 {
-  font-size: 1.4rem;
-}
-
-.features {
-  text-align: left;
-  font-size: 0.9rem;
-  opacity: 0.8;
-  margin-top: 15px;
-}
-
-.checkout {
-  margin-top: 60px;
-  display: none;
-}
-
-select {
-  padding: 15px;
-  border-radius: 10px;
-  border: none;
-  width: 300px;
-}
-
-.footer {
-  padding: 40px;
-  opacity: 0.5;
-  font-size: 0.8rem;
-}
-</style>
+        /* Scrollbar suave */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #00ff88; }
+    </style>
 </head>
-
 <body>
+    <div id="root"></div>
 
-<!-- HERO -->
-<section class="hero">
-  <h1>Transforme seu Negócio em Digital</h1>
-  <p class="subtitle">
-  Eu crio seu site profissional, cardápio digital ou portfólio estratégico pronto para vender.
-  Design premium, rápido e focado em conversão.
-  </p>
-  <a href="#produtos" class="btn">COMEÇAR AGORA</a>
-</section>
+    <script type="text/babel">
+        const { useState, useRef } = React;
+        const { motion, AnimatePresence } = FramerMotion;
 
-<!-- SOBRE -->
-<section>
-  <h2>O Que Você Recebe</h2>
-  <p class="subtitle">
-  ✔ Design exclusivo e moderno<br>
-  ✔ Layout estratégico para gerar vendas<br>
-  ✔ Versão otimizada para celular<br>
-  ✔ Entrega rápida<br>
-  ✔ Suporte direto comigo<br>
-  ✔ Ajustes finais incluídos
-  </p>
-</section>
+        const PRODUCTS = [
+            {
+                id: 'site',
+                name: 'Site Institucional',
+                icon: 'Globe',
+                description: 'Layouts de alto impacto para marcas que não aceitam o comum.',
+                features: ['Página moderna', 'Botão WhatsApp', 'Design estratégico', 'Otimizado para SEO'],
+                link: '#'
+            },
+            {
+                id: 'cardapio',
+                name: 'Cardápio Digital',
+                icon: 'Utensils',
+                description: 'A experiência de delivery elevada ao nível gourmet.',
+                features: ['Atualização fácil', 'Link para WhatsApp', 'Fotos otimizadas', 'Ideal para mobile'],
+                link: '#'
+            },
+            {
+                id: 'portfolio',
+                name: 'Portfólio Elite',
+                icon: 'Briefcase',
+                description: 'Apresentação profissional que converte talentos em contratos.',
+                features: ['Galeria premium', 'Layout moderno', 'Ideal para freelancer', 'Formulário direto'],
+                link: '#'
+            }
+        ];
 
-<!-- PRODUTOS -->
-<section id="produtos">
-  <h2>Escolha Seu Produto</h2>
+        function App() {
+            const [selectedId, setSelectedId] = useState(null);
+            const selectedProduct = PRODUCTS.find(p => p.id === selectedId);
+            const productRef = useRef(null);
 
-  <div class="cards">
-    <div class="card" onclick="selecionar('Site Profissional')">
-      <h3>Site Profissional</h3>
-      <div class="features">
-        • Página moderna<br>
-        • Botão WhatsApp<br>
-        • Design estratégico<br>
-        • Estrutura pronta para vendas
-      </div>
-    </div>
+            const scroll = () => productRef.current?.scrollIntoView({ behavior: 'smooth' });
 
-    <div class="card" onclick="selecionar('Cardápio Digital')">
-      <h3>Cardápio Digital</h3>
-      <div class="features">
-        • Cardápio online interativo<br>
-        • Atualização fácil<br>
-        • Link para WhatsApp<br>
-        • Ideal para restaurantes
-      </div>
-    </div>
+            return (
+                <div className="min-h-screen p-4 md:p-10">
+                    {/* NAV */}
+                    <nav className="max-w-7xl mx-auto flex justify-between items-center mb-16">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-gradient-to-br from-[#00ff88] to-[#00ccff] rounded-xl flex items-center justify-center font-black text-black text-xl">V</div>
+                            <span className="text-xl font-bold tracking-tighter uppercase">VZ DIGITAL</span>
+                        </div>
+                        <div className="hidden md:flex gap-10 text-[10px] uppercase tracking-[0.2em] font-bold opacity-40">
+                            <a href="#" className="hover:opacity-100 transition-opacity">Serviços</a>
+                            <a href="#" className="hover:opacity-100 transition-opacity">Processo</a>
+                            <a href="#" className="hover:opacity-100 transition-opacity">Portfólio</a>
+                            <a href="#" className="text-[#00ff88] hover:opacity-100">Contato</a>
+                        </div>
+                    </nav>
 
-    <div class="card" onclick="selecionar('Portfólio Digital')">
-      <h3>Portfólio Digital</h3>
-      <div class="features">
-        • Apresentação profissional<br>
-        • Galeria de trabalhos<br>
-        • Layout moderno<br>
-        • Ideal para freelancers
-      </div>
-    </div>
-  </div>
+                    <main className="max-w-7xl mx-auto space-y-6">
+                        {/* GRID PRINCIPAL */}
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            {/* HERO */}
+                            <motion.div 
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="bento-card md:col-span-2 md:row-span-2 flex flex-col justify-end min-h-[450px] p-10"
+                            >
+                                <div className="text-[#00ff88] text-[10px] font-black uppercase tracking-[0.4em] mb-4">Digitalização Premium</div>
+                                <h1 className="text-4xl md:text-6xl font-black leading-[1.1] mb-6 glow-text tracking-tighter uppercase">
+                                    Transforme seu negócio em <span className="text-[#00ff88]">Autoridade</span>
+                                </h1>
+                                <p className="text-white/60 mb-10 max-w-sm leading-relaxed">
+                                    Designs estratégicos focados em conversão e experiência premium para o seu crescimento digital.
+                                </p>
+                                <button onClick={scroll} className="btn-premium w-fit">Iniciar Projeto</button>
+                            </motion.div>
 
-  <div class="checkout" id="checkoutArea">
-    <h3>Produto Selecionado:</h3>
-    <p id="produtoEscolhido"></p>
-    <br>
-    <a href="SEULINKKIWIFY" class="btn">FINALIZAR COMPRA</a>
-  </div>
-</section>
+                            {/* MOBILE CARD */}
+                            <div className="bento-card flex flex-col gap-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-[#00ccff]">
+                                    <i data-lucide="smartphone"></i>
+                                </div>
+                                <h3 className="font-bold text-xl uppercase tracking-tighter">Otimizado Mobile</h3>
+                                <p className="text-sm opacity-40">Performance impecável em qualquer tela.</p>
+                            </div>
 
-<div class="footer">
-© 2026 VZ Digital — Todos os direitos reservados
-</div>
+                            {/* SPEED CARD */}
+                            <div className="bento-card flex flex-col gap-4">
+                                <div className="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center text-[#00ff88]">
+                                    <i data-lucide="zap"></i>
+                                </div>
+                                <h3 className="font-bold text-xl uppercase tracking-tighter">Velocidade</h3>
+                                <p className="text-sm opacity-40">Foco total em Core Web Vitals e SEO.</p>
+                            </div>
 
-<script>
-let produto = "";
+                            {/* STATS */}
+                            <div className="bento-card flex flex-col items-center justify-center text-center">
+                                <span className="text-5xl font-black text-[#00ff88] glow-text">+150</span>
+                                <span className="text-[10px] uppercase font-bold opacity-30 mt-2 tracking-widest">Projetos Entregues</span>
+                            </div>
 
-function selecionar(nome) {
-  produto = nome;
-  document.getElementById("produtoEscolhido").innerText = nome;
-  document.getElementById("checkoutArea").style.display = "block";
-}
-</script>
+                            {/* PORTFOLIO ACCENT */}
+                            <div className="bento-card flex flex-col justify-between">
+                                <div className="flex justify-between items-center opacity-20">
+                                    <i data-lucide="briefcase"></i>
+                                    <i data-lucide="arrow-right" className="w-4"></i>
+                                </div>
+                                <div>
+                                    <h3 className="font-bold uppercase tracking-tighter">Portfólios Elite</h3>
+                                    <p className="text-xs opacity-40">Destaque sua carreira.</p>
+                                </div>
+                            </div>
+                        </div>
 
+                        {/* PRODUTOS */}
+                        <section id="produtos" ref={productRef} className="pt-32 pb-20">
+                            <div className="mb-16">
+                                <span className="text-[#00ff88] text-[10px] font-black uppercase tracking-[0.4em]">Soluções</span>
+                                <h2 className="text-4xl font-black tracking-tighter uppercase mt-2">Escolha seu <span className="text-gradient">Produto</span></h2>
+                            </div>
+
+                            <div className="grid md:grid-cols-3 gap-6">
+                                {PRODUCTS.map(prod => (
+                                    <div 
+                                        key={prod.id}
+                                        onClick={() => setSelectedId(prod.id)}
+                                        className={`bento-card cursor-pointer group ${selectedId === prod.id ? 'border-[#00ff88] bg-white/5' : ''}`}
+                                    >
+                                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-10 transition-all ${selectedId === prod.id ? 'bg-[#00ff88] text-black' : 'bg-white/5 text-white/40'}`}>
+                                            <i data-lucide={prod.icon.toLowerCase()}></i>
+                                        </div>
+                                        <h3 className="text-2xl font-black uppercase tracking-tight mb-4">{prod.name}</h3>
+                                        <p className="text-sm opacity-40 mb-8">{prod.description}</p>
+                                        <ul className="space-y-4 border-t border-white/5 pt-8">
+                                            {prod.features.map((f, i) => (
+                                                <li key={i} className="flex items-center gap-3 text-xs opacity-40 group-hover:opacity-80 transition-all">
+                                                    <div className="w-1.5 h-1.5 bg-[#00ff88] rounded-full"></div>
+                                                    {f}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* CHECKOUT */}
+                            <AnimatePresence>
+                                {selectedId && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, y: 30 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="bento-card mt-12 max-w-3xl mx-auto text-center py-16 relative overflow-hidden"
+                                    >
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00ff88] to-[#00ccff]"></div>
+                                        <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#00ff88] mb-4 block">Confirmação</span>
+                                        <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-12 glow-text">{selectedProduct.name}</h3>
+                                        <div className="flex justify-center gap-10 mb-12 opacity-80">
+                                            <div>
+                                                <p className="text-[10px] uppercase opacity-40 mb-1">Padrão</p>
+                                                <p className="text-2xl font-black">PREMIUM</p>
+                                            </div>
+                                            <div className="w-px h-10 bg-white/10"></div>
+                                            <div>
+                                                <p className="text-[10px] uppercase opacity-40 mb-1">Prazo</p>
+                                                <p className="text-2xl font-black">7 DIAS</p>
+                                            </div>
+                                        </div>
+                                        <a href={selectedProduct.link} className="btn-premium inline-block">Finalizar Agora</a>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </section>
+                    </main>
+
+                    {/* FOOTER */}
+                    <footer className="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] uppercase tracking-widest opacity-30 font-bold">
+                        <div>© 2026 VZ DIGITAL AGENCY</div>
+                        <div className="flex gap-8">
+                            <span>Status: <span className="text-[#00ff88]">● LIVE</span></span>
+                        </div>
+                    </footer>
+                </div>
+            );
+        }
+
+        // Render e Icon Refresh
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+        setTimeout(() => lucide.createIcons(), 500);
+    </script>
 </body>
 </html>
