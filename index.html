@@ -1,87 +1,94 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ | web & designer — Estúdio de Elite</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Framer Motion -->
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>VZ | web & designer — Presença Digital de Elite</title>
     
+    <!-- Scripts: React, Framer Motion, Tailwind, Lucide -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'luxury-black': '#050505',
                         'gold-champagne': '#D4C3A3',
-                        'glass': 'rgba(255, 255, 255, 0.03)',
+                        'luxury-black': '#050505',
                     },
                     fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
                         sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
                     },
                 }
             }
         }
     </script>
 
-    <style>
+    <style type="text/css">
         body {
             background-color: #050505;
-            color: white;
+            color: #F0F0F0;
             overflow-x: hidden;
-            font-family: 'Inter', sans-serif;
-        }
-        .text-glow-gold {
-            text-shadow: 0 0 30px rgba(212, 195, 163, 0.4);
         }
         .bg-glass {
-            backdrop-filter: blur(20px);
-            background: rgba(255, 255, 255, 0.02);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+        .glow-purple {
+            background: radial-gradient(circle, rgba(88, 28, 135, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+        .glow-navy {
+            background: radial-gradient(circle, rgba(49, 46, 129, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+        }
         .btn-gold {
-            background: #D4C3A3;
+            background-color: #D4C3A3;
             color: #050505;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 2.5rem;
             border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
         }
         .btn-gold:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(212, 195, 163, 0.2);
-            background: #e5d9c3;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(212, 195, 163, 0.2);
         }
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #050505; }
-        ::-webkit-scrollbar-thumb { background: #D4C3A3; border-radius: 10px; }
+        .text-glow-gold {
+            text-shadow: 0 0 30px rgba(212, 195, 163, 0.3);
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
-    <script type="text/javascript">
-        const { motion, AnimatePresence } = window.framerMotion;
+    <script type="text/babel">
+        const { useState, useEffect, useLayoutEffect } = React;
+        const Motion = window.Motion || window.framerMotion || window.FramerMotion;
+        const { motion, AnimatePresence } = Motion;
 
-        const Icon = ({ name, className = "" }) => {
-            return `<i data-lucide="${name}" class="${className}"></i>`;
+        // Custom Icon Component to work with Lucide CDN
+        const Icon = ({ name, className = "w-6 h-6" }) => {
+            useLayoutEffect(() => {
+                if (window.lucide) {
+                    window.lucide.createIcons();
+                }
+            }, [name]);
+            return <i data-lucide={name} className={className}></i>;
         };
 
-        const App = () => {
-            const [currentPage, setCurrentPage] = React.useState('selection');
-
-            React.useEffect(() => {
-                lucide.createIcons();
-            }, [currentPage]);
+        function App() {
+            const [currentPage, setCurrentPage] = useState('selection');
 
             const services = [
                 {
@@ -90,7 +97,7 @@
                     icon: "globe",
                 },
                 {
-                    title: "Gastro Tech",
+                    title: "Cardápios Digitais",
                     description: "Experiência mobile impecável para o setor gastronômico.",
                     icon: "utensils",
                 },
@@ -103,12 +110,13 @@
 
             const SelectionScreen = () => (
                 <motion.div 
-                    initial={{ opacity: 0 }} 
+                    initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    className="min-h-screen flex flex-col items-center justify-center p-6 space-y-12 relative"
+                    exit={{ opacity: 0 }}
+                    className="min-h-screen flex flex-col items-center justify-center p-6 space-y-12 relative overflow-hidden"
                 >
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,195,163,0.05),transparent_50%)]" />
-                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 glow-purple -z-10 opacity-20 blur-3xl" />
+                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 glow-purple -z-10 opacity-20 blur-3xl animate-pulse" />
                     
                     <div className="text-center space-y-8 relative z-10">
                         <motion.div 
@@ -130,37 +138,47 @@
                     </div>
 
                     <div className="w-full max-w-sm space-y-5 relative z-10">
+                        <div className="text-center mb-4">
+                            <span className="text-[10px] text-white/40 uppercase tracking-[0.4em] font-bold">Disponibilidade Limitada: 2 projetos/mês</span>
+                        </div>
+
                         <a href="https://wa.me/5581995655408" target="_blank" className="w-full bg-glass border border-white/10 p-7 rounded-[32px] flex items-center justify-between group transition-all duration-700 backdrop-blur-3xl hover:translate-y-[-4px]">
                             <div className="flex items-center gap-5">
-                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'message-circle', className: 'w-7 h-7 text-[#25D366]' }) }} />
+                                <div className="w-14 h-14 bg-[#25D366]/10 rounded-2xl flex items-center justify-center group-hover:bg-[#25D366]/20 transition-all duration-500">
+                                    <Icon name="message-circle" className="w-7 h-7 text-[#25D366]" />
+                                </div>
                                 <div className="text-left">
-                                    <span className="block text-base font-bold uppercase tracking-widest text-white/90">WhatsApp</span>
-                                    <span className="block text-[9px] text-white/30 uppercase tracking-[0.3em] mt-1">Consultoria Estratégica</span>
+                                    <span className="block text-base font-bold uppercase tracking-widest text-white/90">Solicitar Orçamento</span>
+                                    <span className="block text-[9px] text-white/30 uppercase tracking-[0.3em] mt-1">Direct Premium</span>
                                 </div>
                             </div>
-                            <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'external-link', className: 'w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all' }) }} />
+                            <Icon name="external-link" className="w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all" />
                         </a>
 
                         <button onClick={() => setCurrentPage('presentation')} className="w-full bg-glass border border-white/10 p-7 rounded-[32px] flex items-center justify-between group transition-all duration-700 backdrop-blur-3xl hover:translate-y-[-4px]">
                             <div className="flex items-center gap-5">
-                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'presentation', className: 'w-7 h-7 text-gold-champagne' }) }} />
+                                <div className="w-14 h-14 bg-gold-champagne/5 rounded-2xl flex items-center justify-center group-hover:bg-gold-champagne/15 transition-all duration-500">
+                                    <Icon name="award" className="w-7 h-7 text-gold-champagne" />
+                                </div>
                                 <div className="text-left">
-                                    <span className="block text-base font-bold uppercase tracking-widest text-white/90">Manifesto</span>
+                                    <span className="block text-base font-bold uppercase tracking-widest text-white/90">O Manifesto</span>
                                     <span className="block text-[9px] text-white/30 uppercase tracking-[0.3em] mt-1">Visão VZ | web & designer</span>
                                 </div>
                             </div>
-                            <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'arrow-right', className: 'w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all group-hover:translate-x-1' }) }} />
+                            <Icon name="arrow-right" className="w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all group-hover:translate-x-1" />
                         </button>
 
                         <button onClick={() => setCurrentPage('site')} className="w-full bg-gold-champagne p-7 rounded-[32px] flex items-center justify-between group transition-all shadow-[0_40px_80px_rgba(212,195,163,0.15)] hover:shadow-[0_40px_100px_rgba(212,195,163,0.25)] hover:scale-[1.03] duration-700">
                             <div className="flex items-center gap-5 text-luxury-black">
-                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'globe', className: 'w-7 h-7' }) }} />
+                                <div className="w-14 h-14 bg-luxury-black/10 rounded-2xl flex items-center justify-center">
+                                    <Icon name="globe" className="w-7 h-7" />
+                                </div>
                                 <div className="text-left">
-                                    <span className="block text-base font-bold uppercase tracking-widest leading-none">Site Oficial</span>
-                                    <span className="block text-[9px] opacity-50 uppercase tracking-[0.3em] mt-2 font-black">Design de Elite</span>
+                                    <span className="block text-base font-bold uppercase tracking-widest leading-none">Estúdio VZ</span>
+                                    <span className="block text-[9px] opacity-50 uppercase tracking-[0.3em] mt-2 font-black">Performance & Luxo</span>
                                 </div>
                             </div>
-                            <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'arrow-right', className: 'w-5 h-5 text-luxury-black/30 group-hover:translate-x-2 transition-transform' }) }} />
+                            <Icon name="arrow-right" className="w-5 h-5 text-luxury-black/30 group-hover:translate-x-2 transition-transform" />
                         </button>
                     </div>
                     
@@ -170,10 +188,20 @@
                 </motion.div>
             );
 
-            const Presentation = () => (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen flex flex-col md:flex-row items-center justify-center p-6 md:p-24 gap-12 relative overflow-hidden">
-                    <button onClick={() => setCurrentPage('selection')} className="fixed top-8 right-8 z-50 p-4 bg-white/5 rounded-full hover:bg-white/10 transition-all group">
-                        <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'x', className: 'w-8 h-8' }) }} />
+            const PresentationScreen = () => (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 bg-luxury-black p-8 flex flex-col md:flex-row items-center justify-center gap-16 overflow-hidden"
+                >
+                    <div className="absolute inset-0 opacity-[0.03] -z-10">
+                        <div className="absolute inset-0 bg-[radial-gradient(#D4C3A3_1px,transparent_1px)] [background-size:40px_40px]" />
+                    </div>
+                    
+                    <button onClick={() => setCurrentPage('selection')} className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors z-50 group flex items-center gap-3">
+                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Voltar</span>
+                        <Icon name="x" className="w-8 h-8" />
                     </button>
 
                     <div className="w-full max-w-xl space-y-12 relative z-10 text-center md:text-left">
@@ -181,20 +209,18 @@
                             <span className="text-gold-champagne text-xs font-bold uppercase tracking-[0.5em] px-4 py-1.5 border border-gold-champagne/30 rounded-full inline-block backdrop-blur-md bg-gold-champagne/5">VZ | web & designer</span>
                             <h2 className="font-serif text-4xl md:text-7xl leading-none text-white tracking-tighter">Supremacia <br/><span className="italic font-normal text-gold-champagne">Digital.</span></h2>
                         </div>
-                        <p className="text-white/70 text-lg md:text-2xl font-light font-serif italic leading-relaxed max-w-2xl">
-                            Interfaces comuns são <span className="line-through decoration-red-600/60 font-medium text-white">ignoradas</span>. O luxo é magnético. Nós erguemos <span className="border-b border-gold-champagne/50">monumentos digitais</span> onde a estética gera poder.
-                        </p>
+                        <p className="text-white/70 text-lg md:text-2xl font-light font-serif italic leading-relaxed max-w-2xl">Interfaces comuns são <span className="line-through decoration-red-600/60 font-medium text-white">ignoradas</span>. O luxo é magnético. Nós erguemos <span className="border-b border-gold-champagne/50">monumentos digitais</span> onde a estética gera poder.</p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl">
-                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'zap', className: 'w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0' }) }} />
-                                <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Ultra Performance</p>
+                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl hover:border-gold-champagne/30 transition-all duration-700">
+                                <Icon name="zap" className="w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0" />
+                                <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Ultra Performance VZ</p>
                                 <p className="text-xs text-white/40 leading-relaxed font-light">Performance máxima em qualquer dispositivo.</p>
                             </div>
-                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl">
-                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'shield-check', className: 'w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0' }) }} />
+                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl hover:border-gold-champagne/30 transition-all duration-700">
+                                <Icon name="shield-check" className="w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0" />
                                 <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Curadoria Única</p>
-                                <p className="text-xs text-white/40 leading-relaxed font-light">Design estratégico sem o uso de templates.</p>
+                                <p className="text-xs text-white/40 leading-relaxed font-light transition-all">Design estratégico sem o uso de templates.</p>
                             </div>
                         </div>
                     </div>
@@ -202,17 +228,17 @@
                     <div className="w-full max-w-sm aspect-square relative flex items-center justify-center">
                         <motion.div animate={{ rotate: 360, scale: [1, 1.2, 1] }} transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }} className="w-full h-full border border-gold-champagne/10 rounded-[60px] absolute rotate-45" />
                         <motion.div animate={{ rotate: -360, scale: [1.3, 1, 1.3] }} transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }} className="w-4/5 h-4/5 border border-gold-champagne/20 rounded-[50px] absolute" />
-                        <div className="text-center">
+                        <div className="text-center relative z-10">
                             <div className="text-8xl font-serif italic text-gold-champagne drop-shadow-2xl">VZ</div>
-                            <div className="text-[12px] font-bold uppercase tracking-widest text-white/30 mt-4">Design de Elite</div>
+                            <div className="text-[12px] font-bold uppercase tracking-[0.7em] text-white/30 mt-4">Design de Elite</div>
                         </div>
                     </div>
                 </motion.div>
             );
 
             const MainSite = () => (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen relative p-6">
-                    <nav className="container mx-auto py-8 flex justify-between items-center group">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen relative p-6 bg-luxury-black">
+                    <nav className="container mx-auto py-8 flex justify-between items-center group relative z-10">
                         <button onClick={() => setCurrentPage('selection')} className="flex items-center gap-4">
                             <div className="w-14 h-14 border border-gold-champagne/40 flex items-center justify-center font-bold text-xl text-gold-champagne hover:bg-gold-champagne hover:text-luxury-black transition-all duration-500 rounded-lg">VZ</div>
                             <div className="hidden md:block text-left">
@@ -223,35 +249,58 @@
                         <a href="https://wa.me/5581995655408" target="_blank" className="bg-glass px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 hover:border-gold-champagne transition-all">Falar com Especialista</a>
                     </nav>
 
-                    <div className="container mx-auto mt-12 bg-glass p-8 md:p-20 rounded-[48px] border border-white/10 shadow-3xl space-y-12 backdrop-blur-3xl">
+                    <div className="container mx-auto mt-12 bg-glass p-8 md:p-20 rounded-[48px] border border-white/10 shadow-3xl space-y-12 backdrop-blur-3xl relative z-10 overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-gold-champagne/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-10" />
+
                         <div className="text-center md:text-left space-y-6">
                             <span className="text-gold-champagne text-xs font-bold uppercase tracking-[0.6em] block">Estúdio Digital de Elite | VZ</span>
-                            <h1 className="font-serif text-5xl md:text-8xl leading-none text-white tracking-tighter">Sua Presença <span className="italic font-normal text-gold-champagne">Digital com</span> <br className="hidden md:block" /> Autoridade Máxima.</h1>
-                            <p className="text-white/40 text-lg md:text-xl max-w-2xl leading-relaxed font-light">Projetamos ecossistemas de autoridade para marcas que exigem o topo. Design exclusivo, tecnologia de luxo e conversão estratégica.</p>
+                            <h1 className="font-serif text-5xl md:text-8xl leading-none text-white tracking-tighter">Sua Presença <span className="italic font-normal text-gold-champagne">Digital com</span> <br className="hidden md:block" /> <span className="text-glow-gold">Autoridade Máxima.</span></h1>
+                            <div className="flex flex-col md:flex-row items-center gap-6 justify-center md:justify-start">
+                                <p className="text-white/40 text-lg md:text-xl max-w-2xl leading-relaxed text-center md:text-left font-light">
+                                    Projetamos <span className="text-white/80 font-medium italic">ecossistemas de autoridade</span> para marcas que exigem o topo. Design exclusivo, tecnologia de luxo e conversão estratégica.
+                                </p>
+                                <div className="bg-gold-champagne/10 border border-gold-champagne/20 px-6 py-4 rounded-2xl backdrop-blur-xl">
+                                    <span className="block text-[10px] text-gold-champagne font-bold uppercase tracking-widest">Status</span>
+                                    <span className="block text-white font-serif italic text-lg tracking-wide">Últimas 2 vagas/mês</span>
+                                </div>
+                            </div>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8 pb-12">
                             {services.map((s, i) => (
                                 <div key={i} className="bg-white/[0.03] border border-white/5 p-10 rounded-[32px] text-center md:text-left hover:border-gold-champagne/40 transition-all duration-500">
-                                    <div dangerouslySetInnerHTML={{ __html: Icon({ name: s.icon, className: 'w-10 h-10 text-gold-champagne mb-6 mx-auto md:mx-0' }) }} />
+                                    <Icon name={s.icon} className="w-10 h-10 text-gold-champagne mb-6 mx-auto md:mx-0" />
                                     <h3 className="font-serif text-2xl mb-3 text-white">{s.title}</h3>
                                     <p className="text-white/40 text-sm font-light leading-relaxed">{s.description}</p>
                                 </div>
                             ))}
                         </div>
 
+                        <div className="grid md:grid-cols-2 gap-8 mt-12">
+                            <div className="bg-white/[0.03] rounded-[40px] p-10 border border-white/5 relative overflow-hidden group">
+                                <Icon name="smartphone" className="absolute -bottom-10 -right-10 w-40 h-40 text-gold-champagne/10 rotate-12 group-hover:scale-125 transition-transform duration-700" />
+                                <h2 className="font-serif text-3xl mb-4 text-white">Mobile First</h2>
+                                <p className="text-white/40 text-sm leading-relaxed max-w-xs">Projetado especificamente para converter clientes que navegam pelo Instagram e WhatsApp.</p>
+                            </div>
+                            <div className="bg-white/[0.03] rounded-[40px] p-10 border border-white/5 relative overflow-hidden group">
+                                <Icon name="zap" className="absolute -bottom-10 -right-10 w-40 h-40 text-gold-champagne/10 rotate-12 group-hover:scale-125 transition-transform duration-700" />
+                                <h2 className="font-serif text-3xl mb-4 text-white">Alta Performance</h2>
+                                <p className="text-white/40 text-sm leading-relaxed max-w-xs">Infraestrutura robusta para garantir velocidade e estabilidade total em qualquer dispositivo.</p>
+                            </div>
+                        </div>
+
                         <div className="flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/10 pt-10">
                             <div className="flex items-center gap-6">
                                 <div className="flex items-center gap-3 text-white/30 text-xs font-bold uppercase tracking-[0.2em] border-r border-white/10 pr-6">
-                                    <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'shield-check', className: 'w-6 h-6 text-gold-champagne' }) }} />
+                                    <Icon name="shield-check" className="w-6 h-6 text-gold-champagne" />
                                     Performance VZ
                                 </div>
                                 <div className="flex items-center gap-2 text-white/30 text-xs font-bold uppercase tracking-[0.2em]">
-                                    <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'zap', className: 'w-5 h-5 text-gold-champagne' }) }} />
+                                    <Icon name="zap" className="w-5 h-5 text-gold-champagne" />
                                     0.8s Load
                                 </div>
                             </div>
-                            <a href="https://wa.me/5581995655408" target="_blank" className="btn-gold px-12 py-5 text-center text-sm shadow-2xl">Reservar Consultoria Estratégica</a>
+                            <a href="https://wa.me/5581995655408" target="_blank" className="btn-gold px-12 py-5 text-center text-sm shadow-2xl w-full md:w-auto">Reservar Consultoria Estratégica</a>
                         </div>
                     </div>
 
@@ -262,34 +311,21 @@
             );
 
             return (
-                <div className="overflow-x-hidden">
-                    {currentPage === 'selection' && <SelectionScreen />}
-                    {currentPage === 'presentation' && <Presentation />}
-                    {currentPage === 'site' && <MainSite />}
+                <div className="min-h-screen relative">
+                    <div className="fixed top-[-10%] right-[-10%] w-[50%] h-[50%] glow-purple -z-10" />
+                    <div className="fixed bottom-[-10%] left-[-10%] w-[50%] h-[50%] glow-navy -z-10" />
+
+                    <AnimatePresence mode="wait">
+                        {currentPage === 'selection' && <SelectionScreen key="selection" />}
+                        {currentPage === 'presentation' && <PresentationScreen key="presentation" />}
+                        {currentPage === 'site' && <MainSite key="site" />}
+                    </AnimatePresence>
                 </div>
             );
-        };
-
-        const root = document.getElementById('root');
-        const reactRoot = (props) => {
-            const [state, setState] = React.useState(0);
-            return React.createElement(App, props);
-        };
-        
-        // Setup React
-        const script = document.createElement('script');
-        script.src = 'https://unpkg.com/react@18/umd/react.development.js';
-        script.onload = () => {
-            const domScript = document.createElement('script');
-            domScript.src = 'https://unpkg.com/react-dom@18/umd/react-dom.development.js';
-            domScript.onload = () => {
-                const rootElement = ReactDOM.createRoot(document.getElementById('root'));
-                rootElement.render(React.createElement(App));
-            }
-            document.head.appendChild(domScript);
         }
-        document.head.appendChild(script);
 
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
 </body>
 </html>
