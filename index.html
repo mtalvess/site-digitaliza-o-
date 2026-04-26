@@ -3,70 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ | web & designer — Presença Digital de Elite</title>
+    <title>VZ | Design Digital Estratégico & Identidade de Luxo</title>
     
-    <!-- Scripts: React, Framer Motion, Tailwind, Lucide -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- React & Motion -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-    <script src="https://unpkg.com/lucide@0.344.0/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'gold-champagne': '#D4C3A3',
-                        'luxury-black': '#050505',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                }
-            }
+    <style>
+        :root {
+            --luxury-black: #050505;
+            --gold-champagne: #D4C3A3;
         }
-    </script>
-
-    <style type="text/css">
+        
         body {
-            background-color: #050505;
-            color: #F0F0F0;
+            background-color: var(--luxury-black);
+            color: white;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
+
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Space Grotesk', sans-serif; }
+
         .bg-glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
         }
-        .glow-purple {
-            background: radial-gradient(circle, rgba(88, 28, 135, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-        }
-        .glow-navy {
-            background: radial-gradient(circle, rgba(49, 46, 129, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
-        }
+
+        .text-gold-champagne { color: var(--gold-champagne); }
+        .bg-gold-champagne { background-color: var(--gold-champagne); }
+        .border-gold-champagne { border-color: var(--gold-champagne); }
+
         .btn-gold {
-            background-color: #D4C3A3;
-            color: #050505;
-            padding: 1rem 2.5rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 700;
+            background: var(--gold-champagne);
+            color: var(--luxury-black);
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            transition: all 0.3s;
+            letter-spacing: 0.2em;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 9999px;
+            cursor: pointer;
         }
+
         .btn-gold:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(212, 195, 163, 0.2);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(212, 195, 163, 0.2);
+            background: white;
         }
-        .text-glow-gold {
-            text-shadow: 0 0 30px rgba(212, 195, 163, 0.3);
-        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--luxury-black); }
+        ::-webkit-scrollbar-thumb { background: rgba(212, 195, 163, 0.2); border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -74,10 +74,9 @@
 
     <script type="text/babel">
         const { useState, useEffect, useLayoutEffect } = React;
-        const Motion = window.Motion || window.framerMotion || window.FramerMotion;
+        const Motion = window.FramerMotion;
         const { motion, AnimatePresence } = Motion;
 
-        // Custom Icon Component to work with Lucide CDN
         const Icon = ({ name, className = "w-6 h-6" }) => {
             useLayoutEffect(() => {
                 if (window.lucide) {
@@ -87,52 +86,63 @@
             return <i data-lucide={name} className={className}></i>;
         };
 
-        function App() {
+        const App = () => {
             const [currentPage, setCurrentPage] = useState('selection');
 
             const services = [
                 {
-                    title: "Sites Premium",
-                    description: "Interfaces exclusivas focadas em conversão e luxo visual.",
+                    title: "Landing Pages de Elite",
+                    description: "Arquitetura persuasiva e design sob medida para converter seu tráfego em clientes de alto ticket.",
                     icon: "globe",
                 },
                 {
-                    title: "Cardápios Digitais",
-                    description: "Experiência mobile impecável para o setor gastronômico.",
-                    icon: "utensils",
+                    title: "Identidade Visual Premium",
+                    description: "Construção de marcas memoráveis que exalam autoridade e sofisticação.",
+                    icon: "palette",
                 },
                 {
-                    title: "Identidade Visual",
-                    description: "Criação de marcas memoráveis que transmitem luxo e autoridade instantânea.",
-                    icon: "palette",
+                    title: "Cardápios Digitais de Luxo",
+                    description: "A joia tecnológica para o setor gastronômico premium. Experiência fluida e magnética.",
+                    icon: "utensils",
                 }
             ];
 
-            const SelectionScreen = () => (
-                <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="min-h-screen flex flex-col items-center justify-center p-6 space-y-12 relative overflow-hidden"
-                >
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,195,163,0.05),transparent_50%)]" />
-                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 glow-purple -z-10 opacity-20 blur-3xl animate-pulse" />
-                    
-                    <div className="text-center space-y-8 relative z-10">
+            const portfolio = [
+                {
+                    title: "Landing Pages",
+                    tag: "Arquitetura de Conversão",
+                    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426",
+                    description: "Engenharia visual focada em transformar cliques em faturamento real."
+                },
+                {
+                    title: "Identidade Visual",
+                    tag: "Branding de Luxo",
+                    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=2000",
+                    description: "A alma da sua marca traduzida em formas, tons e tipografias de elite."
+                },
+                {
+                    title: "Cardápios Digitais",
+                    tag: "User Experience Premium",
+                    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=2070",
+                    description: "Sua gastronomia apresentada com a sofisticação tecnológica que seu cliente exige."
+                }
+            ];
+
+            const SelectionPage = () => (
+                <div className="min-h-screen flex flex-col items-center justify-center p-6 space-y-16">
+                    <div className="flex flex-col items-center gap-6 relative z-10">
                         <motion.div 
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            whileHover={{ scale: 1.1, rotate: 5 }}
-                            className="w-24 h-24 border-2 border-gold-champagne flex items-center justify-center font-bold text-4xl text-gold-champagne mx-auto mb-8 relative group cursor-pointer bg-gold-champagne/5 backdrop-blur-3xl shadow-[0_0_50px_rgba(212,195,163,0.1)] transition-all duration-500 rounded-2xl"
+                            className="w-24 h-24 border-2 border-gold-champagne/40 flex items-center justify-center font-bold text-4xl text-gold-champagne rounded-3xl relative"
                         >
                             VZ
-                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full animate-ping" />
                             <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full" />
                         </motion.div>
-                        <h1 className="font-serif text-5xl md:text-6xl tracking-[0.3em] uppercase text-white drop-shadow-[0_10px_30px_rgba(0,0,0,1)] text-center">VZ | web & designer</h1>
+                        <h1 className="font-serif text-5xl md:text-6xl tracking-[0.3em] uppercase text-white text-center">VZ | web & designer</h1>
                         <div className="flex items-center justify-center gap-3">
                             <div className="h-[1px] w-8 bg-gold-champagne/30" />
-                            <p className="text-gold-champagne/80 text-sm font-bold uppercase tracking-[0.6em] animate-pulse">Estrategista Digital de Elite</p>
+                            <p className="text-gold-champagne/80 text-sm font-bold uppercase tracking-[0.6em] animate-pulse">Design Digital Estratégico & Identidade de Luxo</p>
                             <div className="h-[1px] w-8 bg-gold-champagne/30" />
                         </div>
                     </div>
@@ -165,7 +175,7 @@
                                     <span className="block text-[9px] text-white/30 uppercase tracking-[0.3em] mt-1">Visão VZ | web & designer</span>
                                 </div>
                             </div>
-                            <Icon name="arrow-right" className="w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all group-hover:translate-x-1" />
+                            <Icon name="arrow-right" className="w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all" />
                         </button>
 
                         <button onClick={() => setCurrentPage('site')} className="w-full bg-gold-champagne p-7 rounded-[32px] flex items-center justify-between group transition-all shadow-[0_40px_80px_rgba(212,195,163,0.15)] hover:shadow-[0_40px_100px_rgba(212,195,163,0.25)] hover:scale-[1.03] duration-700">
@@ -181,30 +191,26 @@
                             <Icon name="arrow-right" className="w-5 h-5 text-luxury-black/30 group-hover:translate-x-2 transition-transform" />
                         </button>
                     </div>
-                    
-                    <footer className="text-[11px] font-bold text-white/20 uppercase tracking-[1em] pt-12 relative z-10 text-center">
-                        VZ | web & designer — © 2026 — TODOS OS DIREITOS RESERVADOS
-                    </footer>
-                </motion.div>
+                </div>
             );
 
-            const PresentationScreen = () => (
+            const PresentationPage = () => (
                 <motion.div 
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-50 bg-luxury-black p-8 flex flex-col md:flex-row items-center justify-center gap-16 overflow-hidden"
+                    className="fixed inset-0 z-50 bg-luxury-black p-8 flex flex-col md:flex-row items-center justify-center gap-16 overflow-y-auto"
                 >
                     <div className="absolute inset-0 opacity-[0.03] -z-10">
                         <div className="absolute inset-0 bg-[radial-gradient(#D4C3A3_1px,transparent_1px)] [background-size:40px_40px]" />
                     </div>
                     
-                    <button onClick={() => setCurrentPage('selection')} className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors z-50 group flex items-center gap-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">Voltar</span>
-                        <Icon name="x" className="w-8 h-8" />
+                    <button onClick={() => setCurrentPage('selection')} className="fixed top-8 right-8 text-white/40 hover:text-white z-[60] group flex items-center gap-3 bg-white/5 backdrop-blur-xl p-3 rounded-2xl border border-white/10">
+                        <span className="text-[10px] font-bold uppercase tracking-widest px-2">Voltar ao Início</span>
+                        <Icon name="x" className="w-5 h-5" />
                     </button>
 
-                    <div className="w-full max-w-xl space-y-12 relative z-10 text-center md:text-left">
+                    <div className="w-full max-w-xl space-y-12 relative z-10 text-center md:text-left pt-20 md:pt-0">
                         <div className="space-y-4">
                             <span className="text-gold-champagne text-xs font-bold uppercase tracking-[0.5em] px-4 py-1.5 border border-gold-champagne/30 rounded-full inline-block backdrop-blur-md bg-gold-champagne/5">VZ | web & designer</span>
                             <h2 className="font-serif text-4xl md:text-7xl leading-none text-white tracking-tighter">Supremacia <br/><span className="italic font-normal text-gold-champagne">Digital.</span></h2>
@@ -212,49 +218,46 @@
                         <p className="text-white/70 text-lg md:text-2xl font-light font-serif italic leading-relaxed max-w-2xl">Interfaces comuns são <span className="line-through decoration-red-600/60 font-medium text-white">ignoradas</span>. O luxo é magnético. Nós erguemos <span className="border-b border-gold-champagne/50">monumentos digitais</span> onde a estética gera poder.</p>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl hover:border-gold-champagne/30 transition-all duration-700">
-                                <Icon name="zap" className="w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0" />
-                                <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Ultra Performance VZ</p>
-                                <p className="text-xs text-white/40 leading-relaxed font-light">Performance máxima em qualquer dispositivo.</p>
+                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl">
+                                <h3 className="font-serif text-2xl">O Veredito</h3>
+                                <p className="text-white/40 text-xs leading-relaxed">No mercado premium, você não é avaliado pelo que diz, mas por como se apresenta. Se seu site não impõe respeito, você já perdeu a venda.</p>
                             </div>
-                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl hover:border-gold-champagne/30 transition-all duration-700">
-                                <Icon name="shield-check" className="w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0" />
-                                <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Curadoria Única</p>
-                                <p className="text-xs text-white/40 leading-relaxed font-light transition-all">Design estratégico sem o uso de templates.</p>
+                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl">
+                                <h3 className="font-serif text-2xl">A Missão</h3>
+                                <p className="text-white/40 text-xs leading-relaxed">Transformar negócios promissores em referências inquestionáveis de autoridade através do design estratégico de alto ticket.</p>
                             </div>
-                        </div>
-                    </div>
-
-                    <div className="w-full max-w-sm aspect-square relative flex items-center justify-center">
-                        <motion.div animate={{ rotate: 360, scale: [1, 1.2, 1] }} transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }} className="w-full h-full border border-gold-champagne/10 rounded-[60px] absolute rotate-45" />
-                        <motion.div animate={{ rotate: -360, scale: [1.3, 1, 1.3] }} transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }} className="w-4/5 h-4/5 border border-gold-champagne/20 rounded-[50px] absolute" />
-                        <div className="text-center relative z-10">
-                            <div className="text-8xl font-serif italic text-gold-champagne drop-shadow-2xl">VZ</div>
-                            <div className="text-[12px] font-bold uppercase tracking-[0.7em] text-white/30 mt-4">Design de Elite</div>
                         </div>
                     </div>
                 </motion.div>
             );
 
             const MainSite = () => (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen relative p-6 bg-luxury-black">
-                    <nav className="container mx-auto py-8 flex justify-between items-center group relative z-10">
-                        <button onClick={() => setCurrentPage('selection')} className="flex items-center gap-4">
-                            <div className="w-14 h-14 border border-gold-champagne/40 flex items-center justify-center font-bold text-xl text-gold-champagne hover:bg-gold-champagne hover:text-luxury-black transition-all duration-500 rounded-lg">VZ</div>
-                            <div className="hidden md:block text-left">
-                                <span className="font-serif text-xl tracking-widest uppercase block text-white group-hover:text-gold-champagne transition-colors">VZ | web & designer</span>
-                                <span className="text-[8px] uppercase tracking-[0.4em] text-white/20 block">Soluções de Alto Padrão</span>
-                            </div>
-                        </button>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen relative p-6 bg-luxury-black overflow-x-hidden">
+                    <nav className="container mx-auto py-8 flex justify-between items-center group">
+                        <div className="flex items-center gap-8">
+                            <button onClick={() => setCurrentPage('selection')} className="flex items-center gap-4">
+                                <div className="w-14 h-14 border border-gold-champagne/40 flex items-center justify-center font-bold text-xl text-gold-champagne hover:bg-gold-champagne hover:text-luxury-black transition-all duration-500 rounded-lg">VZ</div>
+                                <div className="hidden md:block text-left">
+                                    <span className="font-serif text-xl tracking-widest uppercase block text-white group-hover:text-gold-champagne transition-colors">VZ | web & designer</span>
+                                    <span className="text-[8px] uppercase tracking-[0.4em] text-white/20 block">Soluções de Alto Padrão</span>
+                                </div>
+                            </button>
+                            
+                            <button 
+                                onClick={() => setCurrentPage('selection')}
+                                className="hidden md:flex items-center gap-2 text-white/30 hover:text-gold-champagne transition-colors text-[10px] font-bold uppercase tracking-widest border-l border-white/10 pl-8 h-8"
+                            >
+                                ← Voltar
+                            </button>
+                        </div>
                         <a href="https://wa.me/5581995655408" target="_blank" className="bg-glass px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 hover:border-gold-champagne transition-all">Falar com Especialista</a>
                     </nav>
 
-                    <div className="container mx-auto mt-12 bg-glass p-8 md:p-20 rounded-[48px] border border-white/10 shadow-3xl space-y-12 backdrop-blur-3xl relative z-10 overflow-hidden group">
+                    <div className="container mx-auto mt-12 bg-glass p-8 md:p-20 rounded-[48px] border border-white/10 shadow-3xl space-y-12 backdrop-blur-3xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-br from-gold-champagne/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-10" />
-
                         <div className="text-center md:text-left space-y-6">
                             <span className="text-gold-champagne text-xs font-bold uppercase tracking-[0.6em] block">Estúdio Digital de Elite | VZ</span>
-                            <h1 className="font-serif text-5xl md:text-8xl leading-none text-white tracking-tighter">Sua Presença <span className="italic font-normal text-gold-champagne">Digital com</span> <br className="hidden md:block" /> <span className="text-glow-gold">Autoridade Máxima.</span></h1>
+                            <h1 className="font-serif text-5xl md:text-8xl leading-none text-white tracking-tighter">Sua Presença <span className="italic font-normal text-gold-champagne">Digital com</span> <br className="hidden md:block" /> <span className="text-gold-champagne filter drop-shadow-[0_0_20px_rgba(212,195,163,0.3)]">Autoridade Máxima.</span></h1>
                             <div className="flex flex-col md:flex-row items-center gap-6 justify-center md:justify-start">
                                 <p className="text-white/40 text-lg md:text-xl max-w-2xl leading-relaxed text-center md:text-left font-light">
                                     Projetamos <span className="text-white/80 font-medium italic">ecossistemas de autoridade</span> para marcas que exigem o topo. Design exclusivo, tecnologia de luxo e conversão estratégica.
@@ -276,35 +279,104 @@
                             ))}
                         </div>
 
-                        <div className="grid md:grid-cols-2 gap-8 mt-12">
-                            <div className="bg-white/[0.03] rounded-[40px] p-10 border border-white/5 relative overflow-hidden group">
-                                <Icon name="smartphone" className="absolute -bottom-10 -right-10 w-40 h-40 text-gold-champagne/10 rotate-12 group-hover:scale-125 transition-transform duration-700" />
-                                <h2 className="font-serif text-3xl mb-4 text-white">Mobile First</h2>
-                                <p className="text-white/40 text-sm leading-relaxed max-w-xs">Projetado especificamente para converter clientes que navegam pelo Instagram e WhatsApp.</p>
-                            </div>
-                            <div className="bg-white/[0.03] rounded-[40px] p-10 border border-white/5 relative overflow-hidden group">
-                                <Icon name="zap" className="absolute -bottom-10 -right-10 w-40 h-40 text-gold-champagne/10 rotate-12 group-hover:scale-125 transition-transform duration-700" />
-                                <h2 className="font-serif text-3xl mb-4 text-white">Alta Performance</h2>
-                                <p className="text-white/40 text-sm leading-relaxed max-w-xs">Infraestrutura robusta para garantir velocidade e estabilidade total em qualquer dispositivo.</p>
-                            </div>
-                        </div>
-
                         <div className="flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/10 pt-10">
-                            <div className="flex items-center gap-6">
-                                <div className="flex items-center gap-3 text-white/30 text-xs font-bold uppercase tracking-[0.2em] border-r border-white/10 pr-6">
-                                    <Icon name="shield-check" className="w-6 h-6 text-gold-champagne" />
-                                    Performance VZ
+                            <div className="flex items-center gap-6 text-white/30 text-[10px] font-bold uppercase tracking-widest">
+                                <div className="flex items-center gap-2 border-r border-white/10 pr-6">
+                                    <Icon name="shield-check" className="w-5 h-5 text-gold-champagne" /> Performance VZ
                                 </div>
-                                <div className="flex items-center gap-2 text-white/30 text-xs font-bold uppercase tracking-[0.2em]">
-                                    <Icon name="zap" className="w-5 h-5 text-gold-champagne" />
-                                    0.8s Load
+                                <div className="flex items-center gap-2">
+                                    <Icon name="zap" className="w-4 h-4 text-gold-champagne" /> 0.8s Load
                                 </div>
                             </div>
-                            <a href="https://wa.me/5581995655408" target="_blank" className="btn-gold px-12 py-5 text-center text-sm shadow-2xl w-full md:w-auto">Reservar Consultoria Estratégica</a>
+                            <a href="https://wa.me/5581995655408" target="_blank" className="btn-gold px-12 py-5 text-center text-sm shadow-2xl">Reservar Consultoria Estratégica</a>
                         </div>
                     </div>
 
-                    <footer className="py-12 text-[11px] font-bold text-white/20 text-center uppercase tracking-[1em] border-t border-white/5 mt-20">
+                    <div className="container mx-auto py-24 space-y-16">
+                        <div className="text-center space-y-4">
+                            <span className="text-gold-champagne text-[10px] font-black uppercase tracking-[0.4em]">Nosso Portfolio</span>
+                            <h2 className="font-serif text-4xl md:text-7xl text-white">Onde a Estética Encontra <br/><span className="italic font-normal text-gold-champagne">a Performance.</span></h2>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8 text-left">
+                            {portfolio.map((item, i) => (
+                                <motion.div key={i} whileHover={{ y: -10 }} className="group relative overflow-hidden rounded-[40px] bg-glass border border-white/5 aspect-[4/5] bg-luxury-black">
+                                    <img src={item.image} alt={item.title} className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 group-hover:opacity-70 transition-all duration-1000" />
+                                    <div className="absolute inset-x-0 bottom-0 p-10 bg-gradient-to-t from-luxury-black via-luxury-black/80 to-transparent space-y-4">
+                                        <span className="text-gold-champagne text-[9px] font-bold uppercase tracking-[0.3em] bg-gold-champagne/10 px-3 py-1 rounded-full border border-gold-champagne/20">{item.tag}</span>
+                                        <h3 className="font-serif text-3xl text-white">{item.title}</h3>
+                                        <p className="text-white/40 text-xs leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-500">{item.description}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div className="container mx-auto py-24 border-t border-white/5">
+                        <div className="grid md:grid-cols-2 gap-20 items-center">
+                            <div className="text-left space-y-8">
+                                <span className="text-gold-champagne text-[10px] font-black uppercase tracking-[0.4em]">Por que VZ?</span>
+                                <h2 className="font-serif text-4xl md:text-7xl text-white leading-tight">Não Vendemos Sites. <br/><span className="italic font-normal text-gold-champagne">Vendemos Poder.</span></h2>
+                                <p className="text-white/40 text-lg leading-relaxed font-light">
+                                    No mercado de alto luxo, a primeira impressão é o veredito final. Se o seu site parece comum, você será precificado como comum. Nós elevamos sua narrativa visual para o patamar da exclusividade.
+                                </p>
+                                
+                                <div className="space-y-6">
+                                    <div className="flex items-start gap-5">
+                                        <div className="w-12 h-12 bg-gold-champagne/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                            <Icon name="star" className="w-6 h-6 text-gold-champagne" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-1">Ecossistemas de Elite</h4>
+                                            <p className="text-white/30 text-xs leading-relaxed">Conectamos seu branding, tecnologia e estratégia em um só lugar.</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-start gap-5">
+                                        <div className="w-12 h-12 bg-gold-champagne/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                                            <Icon name="cpu" className="w-6 h-6 text-gold-champagne" />
+                                        </div>
+                                        <div>
+                                            <h4 className="text-white font-bold text-sm uppercase tracking-widest mb-1">Tecnologia Invisível</h4>
+                                            <p className="text-white/30 text-xs leading-relaxed">Código limpo e assustadoramente rápido para o setor premium.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="relative">
+                                <div className="aspect-square bg-gold-champagne/5 rounded-[60px] border border-gold-champagne/20 flex items-center justify-center overflow-hidden">
+                                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=2070')] bg-cover opacity-10 grayscale" />
+                                    <div className="text-[180px] font-serif italic text-gold-champagne/20 select-none">VZ</div>
+                                </div>
+                                <div className="absolute -bottom-10 -left-10 bg-glass backdrop-blur-3xl border border-white/10 p-8 rounded-[40px] shadow-2xl">
+                                    <span className="block text-4xl font-serif text-white">99%</span>
+                                    <span className="block text-[9px] text-white/40 uppercase tracking-widest">Satisfação Elite</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-8 mt-12 mb-24 container mx-auto text-left">
+                        <div className="bg-white/[0.03] rounded-[40px] p-10 border border-white/5 relative overflow-hidden group">
+                            <Icon name="smartphone" className="absolute -bottom-10 -right-10 w-40 h-40 text-gold-champagne/10 rotate-12 group-hover:scale-125 transition-transform duration-700" />
+                            <h2 className="font-serif text-3xl mb-4 text-white">Mobile First</h2>
+                            <p className="text-white/40 text-sm leading-relaxed max-w-xs">Projetado especificamente para converter clientes que navegam pelo Instagram e WhatsApp.</p>
+                        </div>
+                        <div className="bg-white/[0.03] rounded-[40px] p-10 border border-white/5 relative overflow-hidden group">
+                            <Icon name="zap" className="absolute -bottom-10 -right-10 w-40 h-40 text-gold-champagne/10 rotate-12 group-hover:scale-125 transition-transform duration-700" />
+                            <h2 className="font-serif text-3xl mb-4 text-white">Alta Performance</h2>
+                            <p className="text-white/40 text-sm leading-relaxed max-w-xs">Infraestrutura robusta para garantir velocidade e estabilidade total em qualquer dispositivo.</p>
+                        </div>
+                    </div>
+
+                    <div className="container mx-auto py-24 text-center space-y-12 bg-gold-champagne/5 rounded-[60px] border border-gold-champagne/10 mb-24">
+                        <div className="space-y-4">
+                            <h2 className="font-serif text-4xl md:text-7xl text-white">Pronto para Dominar <br/><span className="italic font-normal text-gold-champagne">o seu Mercado?</span></h2>
+                            <p className="text-white/40 max-w-xl mx-auto text-lg font-light">Não deixe sua autoridade ao acaso. Reserve sua vaga para o próximo mês.</p>
+                        </div>
+                        <a href="https://wa.me/5581995655408" target="_blank" className="btn-gold inline-block px-16 py-6 text-base shadow-2xl">Quero Minha Presença de Elite</a>
+                    </div>
+
+                    <footer className="py-12 text-[11px] font-bold text-white/20 text-center uppercase tracking-[1em] border-t border-white/5">
                         VZ | web & designer — © 2026 — TODOS OS DIREITOS RESERVADOS
                     </footer>
                 </motion.div>
@@ -312,17 +384,14 @@
 
             return (
                 <div className="min-h-screen relative">
-                    <div className="fixed top-[-10%] right-[-10%] w-[50%] h-[50%] glow-purple -z-10" />
-                    <div className="fixed bottom-[-10%] left-[-10%] w-[50%] h-[50%] glow-navy -z-10" />
-
                     <AnimatePresence mode="wait">
-                        {currentPage === 'selection' && <SelectionScreen key="selection" />}
-                        {currentPage === 'presentation' && <PresentationScreen key="presentation" />}
+                        {currentPage === 'selection' && <SelectionPage key="sel" />}
+                        {currentPage === 'presentation' && <PresentationPage key="pres" />}
                         {currentPage === 'site' && <MainSite key="site" />}
                     </AnimatePresence>
                 </div>
             );
-        }
+        };
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
