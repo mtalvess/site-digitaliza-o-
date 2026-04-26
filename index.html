@@ -3,151 +3,293 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ | web & designer</title>
-    
-    <!-- Design & Typography -->
+    <title>VZ | web & designer — Estúdio de Elite</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'luxury-black': '#050505',
+                        'gold-champagne': '#D4C3A3',
+                        'glass': 'rgba(255, 255, 255, 0.03)',
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
 
     <style>
-        :root {
-            --gold: #D4C3A3;
-            --black: #050505;
-        }
-        body { 
-            background-color: var(--black); 
-            color: #F0F0F0; 
-            font-family: 'Inter', sans-serif; 
-            margin: 0;
+        body {
+            background-color: #050505;
+            color: white;
             overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
         }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        
-        /* Glassmorphism */
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+        .text-glow-gold {
+            text-shadow: 0 0 30px rgba(212, 195, 163, 0.4);
         }
-
-        /* Glow Effects */
-        .glow-purple {
-            background: radial-gradient(circle, rgba(88, 28, 135, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+        .bg-glass {
+            backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .glow-navy {
-            background: radial-gradient(circle, rgba(49, 46, 129, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
-        }
-
-        /* Buttons */
         .btn-gold {
-            background: var(--gold);
-            color: var(--black);
-            box-shadow: 0 10px 30px rgba(212, 195, 163, 0.2);
-            transition: all 0.3s ease;
+            background: #D4C3A3;
+            color: #050505;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 9999px;
         }
-        .btn-gold:hover { transform: scale(1.03); filter: brightness(1.1); }
-        
-        .link-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .btn-gold:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(212, 195, 163, 0.2);
+            background: #e5d9c3;
         }
-        .link-card:hover { 
-            border-color: rgba(212, 195, 163, 0.4);
-            background: rgba(255, 255, 255, 0.05);
-            transform: translateY(-2px);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-in { animation: fadeIn 0.6s ease forwards; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #D4C3A3; border-radius: 10px; }
     </style>
 </head>
-<body class="min-h-screen relative">
+<body>
+    <div id="root"></div>
 
-    <!-- Background -->
-    <div class="fixed top-[-10%] right-[-10%] w-full h-full glow-purple -z-10"></div>
-    <div class="fixed bottom-[-10%] left-[-10%] w-full h-full glow-navy -z-10"></div>
+    <script type="text/javascript">
+        const { motion, AnimatePresence } = window.framerMotion;
 
-    <div class="max-w-md mx-auto px-6 py-16 flex flex-col items-center justify-center min-h-screen">
+        const Icon = ({ name, className = "" }) => {
+            return `<i data-lucide="${name}" class="${className}"></i>`;
+        };
+
+        const App = () => {
+            const [currentPage, setCurrentPage] = React.useState('selection');
+
+            React.useEffect(() => {
+                lucide.createIcons();
+            }, [currentPage]);
+
+            const services = [
+                {
+                    title: "Sites Premium",
+                    description: "Interfaces exclusivas focadas em conversão e luxo visual.",
+                    icon: "globe",
+                },
+                {
+                    title: "Gastro Tech",
+                    description: "Experiência mobile impecável para o setor gastronômico.",
+                    icon: "utensils",
+                },
+                {
+                    title: "Identidade Visual",
+                    description: "Criação de marcas memoráveis que transmitem luxo e autoridade instantânea.",
+                    icon: "palette",
+                }
+            ];
+
+            const SelectionScreen = () => (
+                <motion.div 
+                    initial={{ opacity: 0 }} 
+                    animate={{ opacity: 1 }}
+                    className="min-h-screen flex flex-col items-center justify-center p-6 space-y-12 relative"
+                >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(212,195,163,0.05),transparent_50%)]" />
+                    <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 glow-purple -z-10 opacity-20 blur-3xl" />
+                    
+                    <div className="text-center space-y-8 relative z-10">
+                        <motion.div 
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            whileHover={{ scale: 1.1, rotate: 5 }}
+                            className="w-24 h-24 border-2 border-gold-champagne flex items-center justify-center font-bold text-4xl text-gold-champagne mx-auto mb-8 relative group cursor-pointer bg-gold-champagne/5 backdrop-blur-3xl shadow-[0_0_50px_rgba(212,195,163,0.1)] transition-all duration-500 rounded-2xl"
+                        >
+                            VZ
+                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full animate-ping" />
+                            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-600 rounded-full" />
+                        </motion.div>
+                        <h1 className="font-serif text-5xl md:text-6xl tracking-[0.3em] uppercase text-white drop-shadow-[0_10px_30px_rgba(0,0,0,1)] text-center">VZ | web & designer</h1>
+                        <div className="flex items-center justify-center gap-3">
+                            <div className="h-[1px] w-8 bg-gold-champagne/30" />
+                            <p className="text-gold-champagne/80 text-sm font-bold uppercase tracking-[0.6em] animate-pulse">Estrategista Digital de Elite</p>
+                            <div className="h-[1px] w-8 bg-gold-champagne/30" />
+                        </div>
+                    </div>
+
+                    <div className="w-full max-w-sm space-y-5 relative z-10">
+                        <a href="https://wa.me/5581995655408" target="_blank" className="w-full bg-glass border border-white/10 p-7 rounded-[32px] flex items-center justify-between group transition-all duration-700 backdrop-blur-3xl hover:translate-y-[-4px]">
+                            <div className="flex items-center gap-5">
+                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'message-circle', className: 'w-7 h-7 text-[#25D366]' }) }} />
+                                <div className="text-left">
+                                    <span className="block text-base font-bold uppercase tracking-widest text-white/90">WhatsApp</span>
+                                    <span className="block text-[9px] text-white/30 uppercase tracking-[0.3em] mt-1">Consultoria Estratégica</span>
+                                </div>
+                            </div>
+                            <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'external-link', className: 'w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all' }) }} />
+                        </a>
+
+                        <button onClick={() => setCurrentPage('presentation')} className="w-full bg-glass border border-white/10 p-7 rounded-[32px] flex items-center justify-between group transition-all duration-700 backdrop-blur-3xl hover:translate-y-[-4px]">
+                            <div className="flex items-center gap-5">
+                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'presentation', className: 'w-7 h-7 text-gold-champagne' }) }} />
+                                <div className="text-left">
+                                    <span className="block text-base font-bold uppercase tracking-widest text-white/90">Manifesto</span>
+                                    <span className="block text-[9px] text-white/30 uppercase tracking-[0.3em] mt-1">Visão VZ | web & designer</span>
+                                </div>
+                            </div>
+                            <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'arrow-right', className: 'w-5 h-5 text-white/10 group-hover:text-gold-champagne transition-all group-hover:translate-x-1' }) }} />
+                        </button>
+
+                        <button onClick={() => setCurrentPage('site')} className="w-full bg-gold-champagne p-7 rounded-[32px] flex items-center justify-between group transition-all shadow-[0_40px_80px_rgba(212,195,163,0.15)] hover:shadow-[0_40px_100px_rgba(212,195,163,0.25)] hover:scale-[1.03] duration-700">
+                            <div className="flex items-center gap-5 text-luxury-black">
+                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'globe', className: 'w-7 h-7' }) }} />
+                                <div className="text-left">
+                                    <span className="block text-base font-bold uppercase tracking-widest leading-none">Site Oficial</span>
+                                    <span className="block text-[9px] opacity-50 uppercase tracking-[0.3em] mt-2 font-black">Design de Elite</span>
+                                </div>
+                            </div>
+                            <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'arrow-right', className: 'w-5 h-5 text-luxury-black/30 group-hover:translate-x-2 transition-transform' }) }} />
+                        </button>
+                    </div>
+                    
+                    <footer className="text-[11px] font-bold text-white/20 uppercase tracking-[1em] pt-12 relative z-10 text-center">
+                        VZ | web & designer — © 2026 — TODOS OS DIREITOS RESERVADOS
+                    </footer>
+                </motion.div>
+            );
+
+            const Presentation = () => (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen flex flex-col md:flex-row items-center justify-center p-6 md:p-24 gap-12 relative overflow-hidden">
+                    <button onClick={() => setCurrentPage('selection')} className="fixed top-8 right-8 z-50 p-4 bg-white/5 rounded-full hover:bg-white/10 transition-all group">
+                        <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'x', className: 'w-8 h-8' }) }} />
+                    </button>
+
+                    <div className="w-full max-w-xl space-y-12 relative z-10 text-center md:text-left">
+                        <div className="space-y-4">
+                            <span className="text-gold-champagne text-xs font-bold uppercase tracking-[0.5em] px-4 py-1.5 border border-gold-champagne/30 rounded-full inline-block backdrop-blur-md bg-gold-champagne/5">VZ | web & designer</span>
+                            <h2 className="font-serif text-4xl md:text-7xl leading-none text-white tracking-tighter">Supremacia <br/><span className="italic font-normal text-gold-champagne">Digital.</span></h2>
+                        </div>
+                        <p className="text-white/70 text-lg md:text-2xl font-light font-serif italic leading-relaxed max-w-2xl">
+                            Interfaces comuns são <span className="line-through decoration-red-600/60 font-medium text-white">ignoradas</span>. O luxo é magnético. Nós erguemos <span className="border-b border-gold-champagne/50">monumentos digitais</span> onde a estética gera poder.
+                        </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl">
+                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'zap', className: 'w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0' }) }} />
+                                <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Ultra Performance</p>
+                                <p className="text-xs text-white/40 leading-relaxed font-light">Performance máxima em qualquer dispositivo.</p>
+                            </div>
+                            <div className="p-8 border border-white/5 rounded-[32px] bg-white/[0.03] space-y-3 backdrop-blur-2xl">
+                                <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'shield-check', className: 'w-7 h-7 text-gold-champagne mb-2 mx-auto md:mx-0' }) }} />
+                                <p className="text-sm font-bold uppercase tracking-[0.2em] text-white/90">Curadoria Única</p>
+                                <p className="text-xs text-white/40 leading-relaxed font-light">Design estratégico sem o uso de templates.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="w-full max-w-sm aspect-square relative flex items-center justify-center">
+                        <motion.div animate={{ rotate: 360, scale: [1, 1.2, 1] }} transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }} className="w-full h-full border border-gold-champagne/10 rounded-[60px] absolute rotate-45" />
+                        <motion.div animate={{ rotate: -360, scale: [1.3, 1, 1.3] }} transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }} className="w-4/5 h-4/5 border border-gold-champagne/20 rounded-[50px] absolute" />
+                        <div className="text-center">
+                            <div className="text-8xl font-serif italic text-gold-champagne drop-shadow-2xl">VZ</div>
+                            <div className="text-[12px] font-bold uppercase tracking-widest text-white/30 mt-4">Design de Elite</div>
+                        </div>
+                    </div>
+                </motion.div>
+            );
+
+            const MainSite = () => (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="min-h-screen relative p-6">
+                    <nav className="container mx-auto py-8 flex justify-between items-center group">
+                        <button onClick={() => setCurrentPage('selection')} className="flex items-center gap-4">
+                            <div className="w-14 h-14 border border-gold-champagne/40 flex items-center justify-center font-bold text-xl text-gold-champagne hover:bg-gold-champagne hover:text-luxury-black transition-all duration-500 rounded-lg">VZ</div>
+                            <div className="hidden md:block text-left">
+                                <span className="font-serif text-xl tracking-widest uppercase block text-white group-hover:text-gold-champagne transition-colors">VZ | web & designer</span>
+                                <span className="text-[8px] uppercase tracking-[0.4em] text-white/20 block">Soluções de Alto Padrão</span>
+                            </div>
+                        </button>
+                        <a href="https://wa.me/5581995655408" target="_blank" className="bg-glass px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest border border-white/20 hover:border-gold-champagne transition-all">Falar com Especialista</a>
+                    </nav>
+
+                    <div className="container mx-auto mt-12 bg-glass p-8 md:p-20 rounded-[48px] border border-white/10 shadow-3xl space-y-12 backdrop-blur-3xl">
+                        <div className="text-center md:text-left space-y-6">
+                            <span className="text-gold-champagne text-xs font-bold uppercase tracking-[0.6em] block">Estúdio Digital de Elite | VZ</span>
+                            <h1 className="font-serif text-5xl md:text-8xl leading-none text-white tracking-tighter">Sua Presença <span className="italic font-normal text-gold-champagne">Digital com</span> <br className="hidden md:block" /> Autoridade Máxima.</h1>
+                            <p className="text-white/40 text-lg md:text-xl max-w-2xl leading-relaxed font-light">Projetamos ecossistemas de autoridade para marcas que exigem o topo. Design exclusivo, tecnologia de luxo e conversão estratégica.</p>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8 pb-12">
+                            {services.map((s, i) => (
+                                <div key={i} className="bg-white/[0.03] border border-white/5 p-10 rounded-[32px] text-center md:text-left hover:border-gold-champagne/40 transition-all duration-500">
+                                    <div dangerouslySetInnerHTML={{ __html: Icon({ name: s.icon, className: 'w-10 h-10 text-gold-champagne mb-6 mx-auto md:mx-0' }) }} />
+                                    <h3 className="font-serif text-2xl mb-3 text-white">{s.title}</h3>
+                                    <p className="text-white/40 text-sm font-light leading-relaxed">{s.description}</p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="flex flex-col md:flex-row items-center justify-between gap-10 border-t border-white/10 pt-10">
+                            <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-3 text-white/30 text-xs font-bold uppercase tracking-[0.2em] border-r border-white/10 pr-6">
+                                    <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'shield-check', className: 'w-6 h-6 text-gold-champagne' }) }} />
+                                    Performance VZ
+                                </div>
+                                <div className="flex items-center gap-2 text-white/30 text-xs font-bold uppercase tracking-[0.2em]">
+                                    <div dangerouslySetInnerHTML={{ __html: Icon({ name: 'zap', className: 'w-5 h-5 text-gold-champagne' }) }} />
+                                    0.8s Load
+                                </div>
+                            </div>
+                            <a href="https://wa.me/5581995655408" target="_blank" className="btn-gold px-12 py-5 text-center text-sm shadow-2xl">Reservar Consultoria Estratégica</a>
+                        </div>
+                    </div>
+
+                    <footer className="py-12 text-[11px] font-bold text-white/20 text-center uppercase tracking-[1em] border-t border-white/5 mt-20">
+                        VZ | web & designer — © 2026 — TODOS OS DIREITOS RESERVADOS
+                    </footer>
+                </motion.div>
+            );
+
+            return (
+                <div className="overflow-x-hidden">
+                    {currentPage === 'selection' && <SelectionScreen />}
+                    {currentPage === 'presentation' && <Presentation />}
+                    {currentPage === 'site' && <MainSite />}
+                </div>
+            );
+        };
+
+        const root = document.getElementById('root');
+        const reactRoot = (props) => {
+            const [state, setState] = React.useState(0);
+            return React.createElement(App, props);
+        };
         
-        <!-- Profile Header -->
-        <header class="text-center mb-12 animate-in" style="animation-delay: 0.1s;">
-            <div class="w-20 h-20 border-2 border-[#D4C3A3] flex items-center justify-center font-bold text-3xl text-[#D4C3A3] mx-auto mb-6 shadow-[0_0_30px_rgba(212,195,163,0.2)]">
-                VZ
-            </div>
-            <h1 class="font-serif text-3xl tracking-widest uppercase mb-2">VZ | web & designer</h1>
-            <p class="text-[#D4C3A3]/60 text-[10px] font-bold uppercase tracking-[0.4em]">High-End Digital Strategist</p>
-        </header>
+        // Setup React
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/react@18/umd/react.development.js';
+        script.onload = () => {
+            const domScript = document.createElement('script');
+            domScript.src = 'https://unpkg.com/react-dom@18/umd/react-dom.development.js';
+            domScript.onload = () => {
+                const rootElement = ReactDOM.createRoot(document.getElementById('root'));
+                rootElement.render(React.createElement(App));
+            }
+            document.head.appendChild(domScript);
+        }
+        document.head.appendChild(script);
 
-        <!-- Links Container -->
-        <main class="w-full space-y-4 animate-in" style="animation-delay: 0.2s;">
-            
-            <!-- WhatsApp -->
-            <a href="https://wa.me/5581995655408" target="_blank" class="glass link-card w-full p-5 rounded-2xl flex items-center justify-between group">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-green-500/10 rounded-full flex items-center justify-center">
-                        <i data-lucide="message-circle" class="text-green-500 w-5 h-5"></i>
-                    </div>
-                    <span class="text-xs font-bold uppercase tracking-widest text-white/80">WhatsApp Business</span>
-                </div>
-                <i data-lucide="external-link" class="w-4 h-4 text-white/10 group-hover:text-[#D4C3A3]"></i>
-            </a>
-
-            <!-- Agendar Consultoria (Call to Action Principal) -->
-            <a href="https://wa.me/5581995655408?text=Quero+marcar+uma+consultoria+VIP" class="btn-gold w-full p-5 rounded-2xl flex items-center justify-between group">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-black/10 rounded-full flex items-center justify-center">
-                        <i data-lucide="calendar" class="text-black w-5 h-5"></i>
-                    </div>
-                    <span class="text-xs font-bold uppercase tracking-widest">Agendar Consultoria</span>
-                </div>
-                <i data-lucide="arrow-right" class="w-4 h-4 text-black/30 group-hover:translate-x-1 transition-transform"></i>
-            </a>
-
-            <!-- Portfólio de Elite -->
-            <a href="https://seu-portfolio.com" class="glass link-card w-full p-5 rounded-2xl flex items-center justify-between group">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-[#D4C3A3]/10 rounded-full flex items-center justify-center">
-                        <i data-lucide="globe" class="text-[#D4C3A3] w-5 h-5"></i>
-                    </div>
-                    <span class="text-xs font-bold uppercase tracking-widest text-white/80">Ver Portfólio de Luxo</span>
-                </div>
-                <i data-lucide="arrow-right" class="w-4 h-4 text-white/10 group-hover:text-[#D4C3A3]"></i>
-            </a>
-
-            <!-- Apresentação VIP (Serviços) -->
-            <div class="pt-8 pb-4 text-center">
-                <p class="text-[9px] font-bold uppercase tracking-[0.4em] text-white/20 mb-6">Nossas Especialidades</p>
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="glass p-4 rounded-xl flex flex-col items-center">
-                        <i data-lucide="layout" class="w-4 h-4 text-[#D4C3A3] mb-2"></i>
-                        <span class="text-[8px] font-bold uppercase text-white/40">Sites Premium</span>
-                    </div>
-                    <div class="glass p-4 rounded-xl flex flex-col items-center">
-                        <i data-lucide="smartphone" class="w-4 h-4 text-[#D4C3A3] mb-2"></i>
-                        <span class="text-[8px] font-bold uppercase text-white/40">Mobile First</span>
-                    </div>
-                    <div class="glass p-4 rounded-xl flex flex-col items-center">
-                        <i data-lucide="zap" class="w-4 h-4 text-[#D4C3A3] mb-2"></i>
-                        <span class="text-[8px] font-bold uppercase text-white/40">Performance</span>
-                    </div>
-                </div>
-            </div>
-
-        </main>
-
-        <footer class="mt-16 text-[9px] font-bold text-white/10 uppercase tracking-[0.6em] animate-in" style="animation-delay: 0.4s;">
-            curated by vz digital © 2026
-        </footer>
-
-    </div>
-
-    <script>
-        // Inicializa os ícones do Lucide
-        lucide.createIcons();
     </script>
 </body>
 </html>
