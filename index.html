@@ -3,277 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VZ Digital — Oferta Exclusiva</title>
+    <title>VZ | web & designer</title>
     
+    <!-- Tailwind CSS 4 -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body { background-color: #050505; color: white; font-family: 'Inter', sans-serif; scroll-behavior: smooth; overflow-x: hidden; }
-        .text-gradient { 
-            background: linear-gradient(to right, #00ff88, #00ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        :root {
+            --gold-champagne: #D4C3A3;
+            --luxury-black: #050505;
         }
-        .bento-card {
+        body { 
+            background-color: var(--luxury-black); 
+            color: #F0F0F0; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            margin: 0;
+        }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        
+        .bg-glass {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            padding: 32px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
+            backdrop-filter: blur(15px);
         }
-        .bento-card.active {
-            border-color: #00ff88;
-            background: rgba(0, 255, 136, 0.05);
-            box-shadow: 0 0 50px rgba(0, 255, 136, 0.1);
+        
+        .text-glow-gold {
+            text-shadow: 0 0 20px rgba(212, 195, 163, 0.4);
+            color: var(--gold-champagne);
         }
-        .btn-premium {
-            background: #00ff88;
-            color: black;
+
+        .glow-purple {
+            background: radial-gradient(circle, rgba(88, 28, 135, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+            position: fixed;
+            z-index: -1;
+        }
+
+        .glow-navy {
+            background: radial-gradient(circle, rgba(49, 46, 129, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+            position: fixed;
+            z-index: -1;
+        }
+
+        .btn-gold {
+            background-color: var(--gold-champagne);
+            color: var(--luxury-black);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            padding: 24px 40px;
-            border-radius: 20px;
-            text-align: center;
-            display: block;
-            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.2);
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .promo-banner {
-            background: linear-gradient(90deg, rgba(0, 255, 136, 0.1) 0%, rgba(5, 5, 5, 0) 100%);
-            border-left: 4px solid #00ff88;
-            padding: 24px;
-            border-radius: 0 24px 24px 0;
-            margin-bottom: 40px;
+        .btn-gold:hover {
+            transform: scale(1.05);
+            background-color: white;
         }
-        .problem-item {
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            color: #ef4444;
-            padding: 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+
+        .page-fade {
+            animation: fadeIn 0.6s ease-out forwards;
         }
-        .solution-highlight {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            color: #00ff88;
-            padding: 32px;
-            border-radius: 32px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .animate-float { animation: float 3s infinite ease-in-out; }
+        
+        .hide { display: none !important; }
     </style>
 </head>
-<body class="p-4 md:p-12 overflow-x-hidden">
+<body>
 
-    <div class="max-w-7xl mx-auto w-full">
-        <!-- Cabeçalho -->
-        <header class="flex justify-between items-center mb-16 md:mb-24">
-            <div class="flex items-center gap-3">
-                <div class="bg-[#00ff88] text-black w-10 h-10 rounded-xl flex items-center justify-center font-black text-xl shadow-[0_0_20px_rgba(0,255,136,0.3)]">V</div>
-                <span class="font-black text-xl tracking-tighter uppercase leading-none">VZ DIGITAL</span>
-            </div>
-            <a href="https://wa.me/5581995655408" class="text-[10px] font-black text-[#00ff88] border border-[#00ff88]/30 px-6 py-2 rounded-full uppercase tracking-widest hover:bg-[#00ff88]/10 transition-all">Contato Profissional</a>
-        </header>
+    <!-- Glows Persistentes -->
+    <div class="glow-purple top-[-10%] right-[-10%] w-[60%] h-[60%] animate-pulse"></div>
+    <div class="glow-navy bottom-[-10%] left-[-10%] w-[60%] h-[60%]"></div>
 
-        <!-- BANNER DE PROMOÇÃO -->
-        <section class="mb-12 md:mb-20">
-            <div class="promo-banner flex flex-col md:flex-row items-center justify-between gap-6">
-                <div>
-                    <span class="bg-[#00ff88] text-black text-[10px] font-black px-3 py-1 rounded-full uppercase mb-3 inline-block">Oferta por Tempo Limitado</span>
-                    <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tight">Feche seu projeto esta semana e ganhe <span class="text-[#00ff88]">Manutenção Completa no 1º Mês</span></h2>
-                </div>
-                <a href="#produtos" class="bg-white text-black font-black uppercase text-xs px-8 py-4 rounded-xl hover:bg-[#00ff88] transition-colors whitespace-nowrap">Aproveitar agora</a>
-            </div>
-        </section>
+    <!-- TELA 1: SELEÇÃO (LINK IN BIO) -->
+    <div id="selection-page" class="min-h-screen flex flex-col items-center justify-center p-6 space-y-12 page-fade">
+        <div class="text-center space-y-4">
+            <div class="w-16 h-16 border-2 border-[--gold-champagne] flex items-center justify-center font-bold text-2xl text-[--gold-champagne] mx-auto mb-6">VZ</div>
+            <h1 class="font-serif text-3xl tracking-widest uppercase">VZ | web & designer</h1>
+            <p class="text-[--gold-champagne] opacity-60 text-xs font-bold uppercase tracking-[0.3em]">High-End Digital Strategist</p>
+        </div>
 
-        <!-- SEÇÃO DE PRODUTOS -->
-        <main id="produtos" class="grid lg:grid-cols-12 gap-12 md:gap-20 items-start mb-40">
-            <!-- Esquerda: Informação Dinâmica -->
-            <div class="lg:col-span-5 space-y-12 lg:sticky lg:top-12">
-                <div>
-                    <h1 class="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85] mb-8">
-                        Presença <br/> de <span class="text-gradient">Elite</span>
-                    </h1>
-                    <p class="text-white/30 text-lg md:text-xl max-w-sm leading-relaxed">
-                        Design sofisticado. Tecnologia de ponta. Escolha o serviço ideal para escalar sua marca:
-                    </p>
-                </div>
-
-                <!-- Detalhes do Produto Selecionado -->
-                <div id="features-container" class="bg-white/[0.02] p-8 rounded-[32px] border border-white/5 space-y-6 shadow-2xl">
-                    <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88]">Vantagens inclusas no projeto:</h4>
-                    <div id="product-features" class="flex flex-wrap gap-2"></div>
-                </div>
-                
-                <div class="space-y-6">
-                    <a id="buy-button" href="https://pay.kiwify.com.br/r8cOjsL" class="btn-premium animate-pulse hover:animate-none">Garantir Meu Site Agora</a>
-                    <a id="wa-link" href="https://wa.me/5581995655408" class="flex items-center gap-4 text-[11px] font-black uppercase tracking-widest opacity-30 hover:opacity-100 transition-all justify-center lg:justify-start">
-                        <i data-lucide="message-square" class="w-5 h-5 text-[#00ff88]"></i> Consultoria VIP via WhatsApp
-                    </a>
-                </div>
-            </div>
-
-            <!-- Direita: Cards de Seleção -->
-            <div class="lg:col-span-7 space-y-8">
-                <div class="grid sm:grid-cols-2 gap-6">
-                    <!-- Sites -->
-                    <div id="card-site" class="bento-card active" onclick="selectProduct('site')">
-                        <div class="flex justify-between items-start mb-16">
-                            <i data-lucide="globe" class="w-12 h-12 text-[#00ff88]"></i>
-                            <span class="bg-[#00ff88]/20 text-[#00ff88] text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-[#00ff88]/30">Destaque</span>
-                        </div>
-                        <h3 class="text-3xl font-black uppercase leading-tight">Sites <br/>Institucionais</h3>
-                        <p class="text-[10px] text-white/20 font-bold uppercase mt-4 tracking-widest">Ideal para Autoridade</p>
+        <div class="w-full max-w-sm space-y-4">
+            <a href="https://wa.me/5581995655408" target="_blank" class="w-full bg-glass p-5 rounded-2xl flex items-center justify-between group transition-all hover:border-[--gold-champagne]/40">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-[#25D366]/20 rounded-full flex items-center justify-center">
+                        <i data-lucide="message-circle" class="w-5 h-5 text-[#25D366]"></i>
                     </div>
-                    
-                    <!-- Cardápios -->
-                    <div id="card-cardapio" class="bento-card" onclick="selectProduct('cardapio')">
-                        <div class="flex justify-between items-start mb-16">
-                            <i data-lucide="utensils" class="w-12 h-12 text-white/10"></i>
-                            <span class="bg-white/5 text-white/40 text-[8px] font-black px-3 py-1.5 rounded-full uppercase border border-white/10">Performance</span>
-                        </div>
-                        <h3 class="text-3xl font-black uppercase leading-tight">Cardápios <br/>Digitais</h3>
-                        <p class="text-[10px] text-white/20 font-bold uppercase mt-4 tracking-widest">Focado em Delivery</p>
+                    <span class="text-sm font-bold uppercase tracking-widest text-white/80">WhatsApp Business</span>
+                </div>
+                <i data-lucide="external-link" class="w-4 h-4 text-white/20"></i>
+            </a>
+
+            <button onclick="navigate('presentation')" class="w-full bg-glass p-5 rounded-2xl flex items-center justify-between group transition-all hover:border-[--gold-champagne]/40">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-[--gold-champagne]/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="presentation" class="w-5 h-5 text-[--gold-champagne]"></i>
+                    </div>
+                    <span class="text-sm font-bold uppercase tracking-widest text-white/80">Apresentação VIP</span>
+                </div>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-white/20"></i>
+            </button>
+
+            <button onclick="navigate('site')" class="w-full btn-gold p-5 rounded-2xl flex items-center justify-between group">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-black/10 rounded-full flex items-center justify-center">
+                        <i data-lucide="globe" class="w-5 h-5 text-black"></i>
+                    </div>
+                    <span class="text-sm font-bold uppercase tracking-widest">Site Oficial</span>
+                </div>
+                <i data-lucide="arrow-right" class="w-4 h-4 text-black/30"></i>
+            </button>
+        </div>
+
+        <footer class="text-[10px] font-bold text-white/10 uppercase tracking-[0.5em] pt-12">Curated by VZ Digital</footer>
+    </div>
+
+    <!-- TELA 2: APRESENTAÇÃO -->
+    <div id="presentation-page" class="fixed inset-0 z-50 bg-[#050505] p-8 flex flex-col md:flex-row items-center justify-center gap-12 hide">
+        <button onclick="navigate('selection')" class="absolute top-8 right-8 text-white/20 hover:text-white">
+            <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+        <div class="w-full max-w-lg space-y-8 page-fade">
+            <span class="text-[--gold-champagne] text-xs font-bold uppercase tracking-[0.4em]">Expertise</span>
+            <h2 class="font-serif text-5xl md:text-7xl leading-tight">Elevando o <br/><span class="italic font-normal text-glow-gold">Padrão Digital.</span></h2>
+            <p class="text-white/50 text-xl leading-relaxed">Sua autoridade é medida pelo seu posicionamento digital. Nós garantimos que o seu seja impecável.</p>
+            <div class="grid gap-4">
+                <div class="flex items-center gap-4 p-4 bg-glass rounded-xl"><i data-lucide="zap" class="text-[--gold-champagne]"></i><span class="text-xs font-bold uppercase">Load Time 0.8s</span></div>
+            </div>
+        </div>
+        <div class="w-full max-w-sm aspect-[3/4] bg-glass rounded-[40px] overflow-hidden shadow-2xl">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover grayscale brightness-75">
+        </div>
+    </div>
+
+    <!-- TELA 3: SITE PRINCIPAL -->
+    <div id="site-page" class="min-h-screen hide page-fade">
+        <nav class="container mx-auto px-6 py-8 flex justify-between items-center">
+            <button onclick="navigate('selection')" class="flex items-center gap-3">
+                <div class="w-10 h-10 border border-[--gold-champagne] flex items-center justify-center font-bold text-lg text-[--gold-champagne]">V</div>
+                <span class="font-serif text-xl tracking-widest uppercase">VZ | web & designer</span>
+            </button>
+        </nav>
+
+        <section class="container mx-auto px-6 pt-4 pb-24">
+            <div class="bg-glass p-8 md:p-12 rounded-[40px] space-y-6">
+                <h1 class="font-serif text-4xl md:text-7xl leading-tight text-center md:text-left">
+                    Sua Presença <span class="italic font-normal">Digital com</span> <br/> 
+                    <span class="text-glow-gold">Autoridade.</span>
+                </h1>
+
+                <!-- Grade de Serviços Compacta -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12">
+                    <div class="bg-white/5 p-6 rounded-3xl text-center md:text-left">
+                        <i data-lucide="globe" class="w-8 h-8 text-[--gold-champagne] mx-auto md:mx-0 mb-4"></i>
+                        <h3 class="font-serif text-xl mb-2">Sites Premium</h3>
+                        <p class="text-white/30 text-xs italic">Interfaces exclusivas.</p>
+                    </div>
+                    <div class="bg-white/5 p-6 rounded-3xl text-center md:text-left">
+                        <i data-lucide="utensils" class="w-8 h-8 text-[--gold-champagne] mx-auto md:mx-0 mb-4"></i>
+                        <h3 class="font-serif text-xl mb-2">Cardápios</h3>
+                        <p class="text-white/30 text-xs italic">Mobile first gourmet.</p>
+                    </div>
+                    <div class="bg-white/5 p-6 rounded-3xl text-center md:text-left">
+                        <i data-lucide="trending-up" class="w-8 h-8 text-[--gold-champagne] mx-auto md:mx-0 mb-4"></i>
+                        <h3 class="font-serif text-xl mb-2">Consultoria</h3>
+                        <p class="text-white/30 text-xs italic">Vendas de alto valor.</p>
                     </div>
                 </div>
 
-                <!-- Portfólio Largo -->
-                <div id="card-portfolio" class="bento-card flex flex-col md:flex-row justify-between items-center gap-8" onclick="selectProduct('portfolio')">
-                    <div class="flex items-center gap-8">
-                        <div class="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center border border-white/10 shadow-inner">
-                            <i data-lucide="briefcase" class="w-10 h-10 text-white/10"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-3xl font-black uppercase leading-tight">Portfólio Elite</h3>
-                            <p class="text-white/20 text-[10px] font-black uppercase tracking-[0.2em] mt-2">Exclusivo para Profissionais Liberais</p>
-                        </div>
-                    </div>
-                    <div class="bg-white/5 border border-white/10 px-8 py-4 rounded-2xl font-black text-xs text-[#00ff88]/50 uppercase tracking-widest">Série VIP</div>
+                <div class="pt-12 text-center md:text-left">
+                    <a href="https://wa.me/5581995655408" class="btn-gold px-12 py-5 rounded-full inline-block">Reservar Agora</a>
                 </div>
             </div>
-        </main>
 
-        <!-- SEÇÃO: APRESENTAÇÃO E DIAGNÓSTICO -->
-        <section class="border-t border-white/5 pt-32 pb-40">
-            <div class="grid lg:grid-cols-2 gap-20 items-start">
-                
-                <!-- Minha Apresentação -->
-                <div class="space-y-12">
+            <!-- Dashboard Mini Info -->
+            <div class="grid md:grid-cols-2 gap-6 mt-8">
+                <div class="bg-glass p-8 rounded-[32px] flex items-center justify-between">
                     <div>
-                        <span class="text-[11px] font-black uppercase tracking-[0.5em] text-[#00ff88] mb-6 block">Quem Somos</span>
-                        <h2 class="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-10 text-gradient">Elevando o Padrão Digital.</h2>
-                        <p class="text-white/50 text-xl leading-relaxed max-w-lg mb-8">
-                            A VZ Digital não entrega apenas código. Nós projetamos ecossistemas de autoridade. Se o seu site não transmite luxo e profissionalismo, você está deixando dinheiro na mesa.
-                        </p>
-                        <p class="text-white/50 text-xl leading-relaxed max-w-lg">
-                            Nossa missão é eliminar o amadorismo e garantir que sua primeira impressão digital seja inesquecível e altamente lucrativa.
-                        </p>
+                        <p class="text-[--gold-champagne] font-serif text-3xl">100%</p>
+                        <p class="text-white/20 text-[8px] font-bold uppercase tracking-widest">Exclusividade</p>
                     </div>
-
-                    <div class="flex items-center gap-8 p-10 border border-white/10 rounded-[40px] bg-white/[0.02] shadow-3xl">
-                        <div class="w-24 h-24 rounded-[32px] bg-gradient-to-br from-[#00ff88] to-[#00ccff] flex items-center justify-center text-black font-black text-4xl italic shadow-glow animate-float">VZ</div>
-                        <div>
-                            <p class="text-xl font-black uppercase tracking-widest text-[#00ff88]">Agência VZ Digital</p>
-                            <p class="text-xs text-white/20 uppercase font-black tracking-widest mt-2 leading-none">Referência em Alta Performance</p>
-                        </div>
-                    </div>
+                    <i data-lucide="shield-check" class="text-white/10 w-12 h-12"></i>
                 </div>
-
-                <!-- Painel de Problemas e Soluções -->
-                <div class="space-y-10">
-                    <div class="space-y-4">
-                        <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-red-500/50 mb-8">O Amadorismo custa caro:</h4>
-                        <div class="problem-item"><i data-lucide="shield-alert"></i> Sites lentos que fazem o cliente desistir.</div>
-                        <div class="problem-item"><i data-lucide="shield-alert"></i> Design antigo que não gera confiança.</div>
-                        <div class="problem-item"><i data-lucide="shield-alert"></i> Falta de mobile-first (site quebrado no celular).</div>
-                        <div class="problem-item"><i data-lucide="shield-alert"></i> Ausência de estratégia de vendas real.</div>
+                <div class="bg-glass p-8 rounded-[32px] flex items-center justify-between">
+                    <div>
+                        <p class="text-[--gold-champagne] font-serif text-3xl">24h</p>
+                        <p class="text-white/20 text-[8px] font-bold uppercase tracking-widest">Suporte VIP</p>
                     </div>
-
-                    <div class="solution-highlight space-y-8">
-                        <h4 class="text-[10px] font-black uppercase tracking-[0.4em] text-[#00ff88] mb-6">A Diferença VZ Digital:</h4>
-                        <p class="text-white text-2xl font-bold leading-tight uppercase tracking-tighter">
-                            Entregamos velocidade instantânea e um design que impõe sua marca como líder do setor.
-                        </p>
-                        <div class="grid grid-cols-2 gap-6 mt-10">
-                            <div class="p-6 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-3xl text-center">
-                                <p class="text-3xl font-black text-[#00ff88]">0.8s</p>
-                                <p class="text-[8px] font-black uppercase opacity-40 mt-1 tracking-widest">Carregamento</p>
-                            </div>
-                            <div class="p-6 border border-[#00ff88]/20 bg-[#00ff88]/5 rounded-3xl text-center">
-                                <p class="text-3xl font-black text-[#00ff88]">100%</p>
-                                <p class="text-[8px] font-black uppercase opacity-40 mt-1 tracking-widest">Exclusivo</p>
-                            </div>
-                        </div>
-                    </div>
+                    <i data-lucide="zap" class="text-white/10 w-12 h-12"></i>
                 </div>
             </div>
         </section>
 
-        <footer class="py-16 border-t border-white/5 text-[10px] font-black opacity-20 tracking-[0.6em] text-center uppercase">
-            VZ DIGITAL © 2026 | Estúdio de Alta Performance Digital
-        </footer>
+        <footer class="py-12 text-[10px] font-bold text-white/10 text-center uppercase tracking-[0.8em]">VZ | web & designer — 2026</footer>
     </div>
 
     <script>
-        const productsInfo = {
-            site: {
-                name: "Sites Institucionais",
-                features: ["Fácil de Encontrar no Google", "Design de Alto Nível", "Focado em Vendas", "Suporte Exclusivo", "Perfeito no Celular"],
-                msg: "Olá! Gostaria de falar sobre o Site Institucional de Elite."
-            },
-            cardapio: {
-                name: "Cardápios Digitais",
-                features: ["WhatsApp Integrado", "Código QR Incluso", "Menu Elegante", "Fotos de Alta Qualidade", "Pedidos Rápidos"],
-                msg: "Olá! Gostaria de falar sobre o Cardápio Digital Gourmet."
-            },
-            portfolio: {
-                name: "Portfólio Elite",
-                features: ["Foco em Autoridade", "Design Minimalista", "Biografia de Impacto", "Vitrine Exclusiva", "Estratégia Pessoal"],
-                msg: "Olá! Gostaria de falar sobre o Portfólio Elite Profissional."
-            }
-        };
-
+        // Inicializa ícones
         lucide.createIcons();
 
-        function selectProduct(id) {
-            const info = productsInfo[id];
-            document.querySelectorAll('.bento-card').forEach(c => c.classList.remove('active'));
-            document.getElementById('card-' + id).classList.add('active');
-            
-            // Botão atualiza com a oferta
-            document.getElementById('buy-button').innerText = "Adquirir meu " + info.name;
-            
-            const featuresDiv = document.getElementById('product-features');
-            featuresDiv.innerHTML = info.features.map(f => `
-                <div class="px-4 py-2 bg-white/5 rounded-xl border border-white/10 text-[9px] font-black uppercase tracking-widest flex items-center gap-2">
-                    <i data-lucide="check" class="w-3 h-3 text-[#00ff88]"></i> ${f}
-                </div>
-            `).join('');
-
-            document.querySelectorAll('.bento-card [data-lucide]').forEach(icon => {
-                icon.style.color = "rgba(255,255,255,0.05)";
+        // Lógica de Navegação Simple
+        function navigate(pageId) {
+            const pages = ['selection-page', 'presentation-page', 'site-page'];
+            pages.forEach(id => {
+                document.getElementById(id).classList.add('hide');
             });
-            const activeIcon = document.getElementById('card-' + id).querySelector('[data-lucide]');
-            activeIcon.style.color = "#00ff88";
-
-            document.getElementById('wa-link').href = "https://wa.me/5581995655408?text=" + encodeURIComponent(info.msg);
+            document.getElementById(pageId + '-page').classList.remove('hide');
+            
+            // Scroll para o topo ao mudar página
+            window.scrollTo(0, 0);
+            
+            // Recriar ícones se necessário
             lucide.createIcons();
         }
-
-        // Início
-        selectProduct('site');
     </script>
 </body>
 </html>
