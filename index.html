@@ -1,962 +1,1402 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VZ | Web & Designer Premium</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIOFY — Sua Bio. Seu Ecossistema Tech.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #051937;
+    --navy-mid: #071f42;
+    --navy-light: #0a2755;
+    --cyan: #00C2FF;
+    --cyan-dim: rgba(0,194,255,0.15);
+    --cyan-glow: 0 0 20px rgba(0,194,255,0.6), 0 0 40px rgba(0,194,255,0.3);
+    --cyan-glow-sm: 0 0 12px rgba(0,194,255,0.5);
+    --white: #FFFFFF;
+    --white-dim: rgba(255,255,255,0.7);
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(0,194,255,0.2);
+    --glass-hover: rgba(255,255,255,0.1);
+    --radius: 16px;
+    --radius-lg: 24px;
+    --transition: all 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
 
-  <!-- Framer Motion via LazyMotion (bundle reduzido) -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  html { scroll-behavior: smooth; }
 
-  <style>
-    /* ── TOKENS ─────────────────────────────────────────────── */
-    :root {
-      --gold: #D4C3A3;
-      --black: #0A0A0A;
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
 
-      /* Escala modular 1.333 */
-      --step-0: clamp(1rem,   0.95rem + 0.26vw, 1.125rem);
-      --step-1: clamp(1.2rem, 1.1rem  + 0.52vw, 1.5rem);
-      --step-2: clamp(1.5rem, 1.3rem  + 1vw,    2rem);
-      --step-3: clamp(2rem,   1.6rem  + 2vw,    3rem);
-      --step-4: clamp(3rem,   2rem    + 5vw,     7rem);
+  /* === BACKGROUND MESH === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,194,255,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(0,80,180,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 40% at 50% 50%, rgba(5,25,55,0.4) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-      /* Tracking */
-      --track-hero:  -0.04em;
-      --track-title: -0.02em;
-      --track-label:  0.35em;
+  /* Noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
 
-      /* Leading */
-      --lead-display: 1.0;
-      --lead-heading: 1.15;
-      --lead-body:    1.75;
-    }
+  /* === PAGES === */
+  .page {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    animation: fadeSlideIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
 
-    /* ── RESET & BASE ───────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--black);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: var(--step-0);
-      line-height: var(--lead-body);
-      overflow-x: hidden;
-    }
+  .page.active { display: flex; flex-direction: column; }
 
-    /* ── CURSOR MAGNÉTICO ───────────────────────────────────── */
-    @media (pointer: fine) {
-      * { cursor: none !important; }
-    }
-    .cursor-dot,
-    .cursor-ring {
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
-      will-change: transform;
-    }
-    .cursor-dot {
-      width: 6px; height: 6px;
-      background: var(--gold);
-      border-radius: 50%;
-      margin: -3px 0 0 -3px;
-      transition: opacity .2s;
-    }
-    .cursor-ring {
-      width: 36px; height: 36px;
-      border: 1px solid rgba(212,195,163,.5);
-      border-radius: 50%;
-      margin: -18px 0 0 -18px;
-      transition: transform .15s ease,
-                  width .4s ease,
-                  height .4s ease,
-                  border-color .3s,
-                  mix-blend-mode .2s;
-    }
-    .cursor-ring.magnetic {
-      mix-blend-mode: difference;
-      border-color: #fff;
-    }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
-    /* ── MESH BACKGROUND ────────────────────────────────────── */
-    .mesh-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .mesh-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      will-change: transform;
-      animation: float-orb linear infinite;
-    }
-    @keyframes float-orb {
-      0%   { transform: translate(0,0)       scale(1); }
-      33%  { transform: translate(3%,5%)     scale(1.05); }
-      66%  { transform: translate(-2%,3%)    scale(0.97); }
-      100% { transform: translate(0,0)       scale(1); }
-    }
-    /* Grain noise overlay */
-    .grain {
-      position: absolute;
-      inset: 0;
-      opacity: .025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 128px;
-    }
+  /* === LOGO / HEADER === */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px;
+    position: relative;
+  }
 
-    /* ── GLASSMORPHISM AVANÇADO ─────────────────────────────── */
-    .glass {
-      background: linear-gradient(135deg,
-        rgba(255,255,255,.04) 0%,
-        rgba(255,255,255,.01) 100%
-      );
-      backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
-      -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
-      border: 1px solid transparent;
-      background-clip: padding-box;
-      box-shadow:
-        inset 0  1px 0 rgba(255,255,255,.08),
-        inset 0 -1px 0 rgba(0,0,0,.2),
-              0 32px 64px rgba(0,0,0,.4),
-              0 0 0 1px rgba(212,195,163,.06);
-    }
+  .logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-    /* ── CARD TILT 3D + BRILHO ──────────────────────────────── */
-    .card-luxury {
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform .4s cubic-bezier(.23,1,.32,1);
-    }
-    .card-luxury::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(
-        600px circle at var(--mx,50%) var(--my,50%),
-        rgba(212,195,163,.08),
-        transparent 40%
-      );
-      border-radius: inherit;
-      opacity: 0;
-      transition: opacity .4s;
-      pointer-events: none;
-    }
-    .card-luxury:hover::after { opacity: 1; }
+  .logo-mark {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--cyan) 0%, #0078c8 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+    color: var(--navy);
+    box-shadow: var(--cyan-glow-sm);
+    position: relative;
+    overflow: hidden;
+  }
 
-    /* ── TIPOGRAFIA ─────────────────────────────────────────── */
-    .type-serif   { font-family: 'Playfair Display', serif; }
-    .type-display {
-      font-family: 'Playfair Display', serif;
-      font-weight: 400;
-      letter-spacing: var(--track-hero);
-      line-height:    var(--lead-display);
-    }
-    .type-label {
-      font-family: 'Inter', sans-serif;
-      font-size: .625rem;
-      font-weight: 700;
-      letter-spacing: var(--track-label);
-      text-transform: uppercase;
-    }
-    .text-gold  { color: var(--gold); }
-    .text-muted { color: rgba(255,255,255,.4); }
+  .logo-mark::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    animation: shimmer 4s infinite 2s;
+  }
 
-    /* ── BOTÕES ─────────────────────────────────────────────── */
-    .btn-gold {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--black);
-      font-weight: 800;
-      font-size: .75rem;
-      text-transform: uppercase;
-      letter-spacing: .2em;
-      border-radius: 9999px;
-      padding: 1.25rem 3rem;
-      transition: transform .5s cubic-bezier(.4,0,.2,1),
-                  box-shadow .5s cubic-bezier(.4,0,.2,1);
-      text-decoration: none;
-    }
-    .btn-gold:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 20px 40px rgba(212,195,163,.3);
-    }
+  @keyframes shimmer {
+    to { transform: translateX(100%); }
+  }
 
-    /* ── SCROLLBAR ──────────────────────────────────────────── */
-    ::-webkit-scrollbar              { width: 6px; }
-    ::-webkit-scrollbar-track        { background: var(--black); }
-    ::-webkit-scrollbar-thumb        { background: rgba(212,195,163,.2); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover  { background: var(--gold); }
+  .logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
 
-    /* ── ANIMAÇÕES REVEAL (CSS fallback p/ mobile) ──────────── */
-    @keyframes fade-up {
-      from { opacity:0; transform:translateY(32px); filter:blur(6px); }
-      to   { opacity:1; transform:translateY(0);    filter:blur(0); }
-    }
-    .fade-up {
-      opacity: 0;
-      animation: fade-up .8s cubic-bezier(.16,1,.3,1) forwards;
-    }
-    .delay-1 { animation-delay: .12s; }
-    .delay-2 { animation-delay: .24s; }
-    .delay-3 { animation-delay: .36s; }
-    .delay-4 { animation-delay: .48s; }
-    .delay-5 { animation-delay: .60s; }
-  </style>
+  .logo-sub {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-top: -4px;
+    font-weight: 500;
+  }
+
+  /* === STEP NAV === */
+  .step-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 5px 8px;
+    backdrop-filter: blur(10px);
+  }
+
+  .step-dot {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: var(--transition);
+    border: 1px solid transparent;
+    color: rgba(255,255,255,0.35);
+    background: transparent;
+    user-select: none;
+  }
+
+  .step-dot:hover {
+    color: var(--white);
+    border-color: rgba(0,194,255,0.4);
+    background: rgba(0,194,255,0.08);
+    transform: scale(1.1);
+  }
+
+  .step-dot.active {
+    background: linear-gradient(135deg, var(--cyan), #0095d4);
+    color: var(--navy);
+    box-shadow: var(--cyan-glow-sm);
+    border-color: transparent;
+    transform: scale(1.05);
+  }
+
+  .step-dot.done {
+    color: var(--cyan);
+    border-color: rgba(0,194,255,0.3);
+    background: rgba(0,194,255,0.06);
+  }
+
+  .step-sep {
+    width: 10px;
+    height: 1px;
+    background: rgba(0,194,255,0.2);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    height: 2px;
+    background: rgba(0,194,255,0.15);
+    position: relative;
+    margin: 0 24px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), #0078c8);
+    border-radius: 2px;
+    box-shadow: var(--cyan-glow-sm);
+    transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* === CONTENT WRAPPER === */
+  .content {
+    flex: 1;
+    padding: 28px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* === TYPOGRAPHY === */
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(26px, 7vw, 34px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+  }
+
+  h1 em {
+    font-style: normal;
+    color: var(--cyan);
+    text-shadow: 0 0 30px rgba(0,194,255,0.4);
+  }
+
+  h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 6vw, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+
+  h2 em { font-style: normal; color: var(--cyan); }
+
+  .lead {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--white-dim);
+    font-weight: 400;
+  }
+
+  /* === GLASS CARD === */
+  .glass-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,194,255,0.4), transparent);
+  }
+
+  /* === QUIZ (PAGE 1) === */
+  .quiz-question {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    color: var(--white);
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .quiz-btn {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .quiz-btn:hover, .quiz-btn.selected {
+    background: var(--cyan-dim);
+    border-color: var(--cyan);
+    box-shadow: var(--cyan-glow-sm);
+    transform: translateY(-2px);
+  }
+
+  .quiz-btn.yes { }
+  .quiz-btn.no { }
+
+  /* === PRIMARY CTA BUTTON === */
+  .cta-btn {
+    display: block;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, var(--cyan) 0%, #0095d4 100%);
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--navy);
+    cursor: pointer;
+    text-align: center;
+    box-shadow: var(--cyan-glow);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.25) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .cta-btn:hover::before { transform: translateX(100%); }
+  .cta-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(0,194,255,0.8), 0 0 60px rgba(0,194,255,0.4);
+  }
+
+  .cta-btn:active { transform: translateY(-1px); }
+
+  /* Pulse animation */
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: var(--cyan-glow); }
+    50% { box-shadow: 0 0 40px rgba(0,194,255,0.9), 0 0 70px rgba(0,194,255,0.5); }
+  }
+
+  .cta-btn.pulse { animation: pulse-glow 2.5s ease-in-out infinite; }
+
+  /* === COMPARISON CHART (PAGE 2) === */
+  .compare-table {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+  }
+
+  .compare-header {
+    padding: 12px;
+    text-align: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .compare-header.bad { background: rgba(255,60,60,0.12); color: #ff6060; }
+  .compare-header.good { background: rgba(0,194,255,0.12); color: var(--cyan); }
+
+  .compare-row {
+    display: contents;
+  }
+
+  .compare-cell {
+    padding: 12px 14px;
+    font-size: 13px;
+    line-height: 1.4;
+    background: var(--glass);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .compare-cell.bad {
+    background: rgba(255,60,60,0.05);
+    color: rgba(255,255,255,0.6);
+  }
+
+  .compare-cell.good {
+    background: rgba(0,194,255,0.05);
+    color: var(--white);
+  }
+
+  .compare-cell .icon { font-size: 16px; flex-shrink: 0; }
+
+  /* Speed bar */
+  .speed-bar-wrap { margin-top: 4px; }
+  .speed-label { font-size: 11px; color: var(--white-dim); margin-bottom: 6px; }
+  .speed-track { background: rgba(255,255,255,0.08); border-radius: 4px; height: 8px; overflow: hidden; }
+  .speed-fill { height: 100%; border-radius: 4px; }
+  .speed-fill.slow { width: 85%; background: linear-gradient(90deg, #ff6060, #ff9900); }
+  .speed-fill.fast {
+    width: 12%;
+    background: linear-gradient(90deg, var(--cyan), #00ff88);
+    box-shadow: 0 0 8px rgba(0,194,255,0.6);
+    animation: speed-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes speed-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  /* Benefits list */
+  .benefit-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+  }
+
+  .benefit-item:hover {
+    border-color: rgba(0,194,255,0.4);
+    background: var(--glass-hover);
+  }
+
+  .benefit-icon {
+    width: 36px;
+    height: 36px;
+    background: var(--cyan-dim);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    border: 1px solid rgba(0,194,255,0.2);
+  }
+
+  .benefit-text strong {
+    display: block;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  .benefit-text span {
+    font-size: 12px;
+    color: var(--white-dim);
+    line-height: 1.4;
+  }
+
+  /* === TESTIMONIALS (PAGE 3) === */
+  .testimonial-grid { display: flex; flex-direction: column; gap: 14px; }
+
+  .testimonial-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 18px;
+    backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+  }
+
+  .testimonial-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,194,255,0.3), transparent);
+  }
+
+  .testimonial-card:hover {
+    border-color: rgba(0,194,255,0.35);
+    transform: translateY(-2px);
+  }
+
+  .stars {
+    color: #FFD700;
+    font-size: 13px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .testimonial-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--navy);
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 2px solid rgba(0,194,255,0.3);
+    box-shadow: 0 0 10px rgba(0,194,255,0.15);
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+
+  .avatar.a1 { background: linear-gradient(135deg, var(--cyan), #00e5ff); }
+  .avatar.a2 { background: linear-gradient(135deg, #a78bfa, #7c3aed); }
+  .avatar.a3 { background: linear-gradient(135deg, #34d399, #059669); }
+
+  .author-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .author-role {
+    font-size: 11px;
+    color: var(--cyan);
+    margin-top: 1px;
+  }
+
+  /* Seals */
+  .seals {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .seal {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 14px 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+  }
+
+  .seal:hover { border-color: rgba(0,194,255,0.4); }
+
+  .seal-icon { font-size: 22px; margin-bottom: 6px; }
+
+  .seal-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    line-height: 1.3;
+  }
+
+  /* === OFFER (PAGE 4) === */
+  .price-card {
+    background: linear-gradient(135deg, rgba(0,194,255,0.08) 0%, rgba(0,120,200,0.06) 100%);
+    border: 1px solid rgba(0,194,255,0.3);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    box-shadow: 0 0 20px rgba(0,194,255,0.5);
+  }
+
+  .price-old {
+    font-size: 14px;
+    color: rgba(255,255,255,0.4);
+    text-decoration: line-through;
+    margin-bottom: 4px;
+  }
+
+  .price-new {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 10vw, 48px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .price-new span {
+    font-size: 22px;
+    color: var(--cyan);
+    vertical-align: super;
+    font-size: 20px;
+  }
+
+  .price-tag {
+    display: inline-block;
+    background: rgba(0,194,255,0.15);
+    border: 1px solid rgba(0,194,255,0.3);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .price-desc {
+    font-size: 13px;
+    color: var(--white-dim);
+    line-height: 1.5;
+  }
+
+  /* Scarcity */
+  .scarcity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 100, 50, 0.1);
+    border: 1px solid rgba(255,100,50,0.3);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+
+  .scarcity-dot {
+    width: 10px;
+    height: 10px;
+    background: #ff6432;
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: blink 1.2s ease-in-out infinite;
+    box-shadow: 0 0 8px rgba(255,100,50,0.6);
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .scarcity-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: rgba(255,255,255,0.9);
+  }
+
+  .scarcity-text strong { color: #ff8060; font-family: 'Syne', sans-serif; }
+
+  /* What's included */
+  .includes { display: flex; flex-direction: column; gap: 8px; }
+
+  .include-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .check {
+    width: 20px;
+    height: 20px;
+    background: var(--cyan-dim);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--cyan);
+    flex-shrink: 0;
+    border: 1px solid rgba(0,194,255,0.2);
+  }
+
+  /* FAQ */
+  .faq { display: flex; flex-direction: column; gap: 8px; }
+
+  .faq-item {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+  }
+
+  .faq-q {
+    padding: 14px 16px;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    transition: var(--transition);
+    user-select: none;
+  }
+
+  .faq-q:hover { color: var(--cyan); }
+
+  .faq-arrow {
+    width: 20px;
+    height: 20px;
+    background: var(--cyan-dim);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+    color: var(--cyan);
+    transition: var(--transition);
+    border: 1px solid rgba(0,194,255,0.2);
+  }
+
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+  .faq-a {
+    display: none;
+    padding: 0 16px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--white-dim);
+    border-top: 1px solid var(--glass-border);
+    padding-top: 12px;
+  }
+
+  .faq-item.open .faq-a { display: block; }
+
+  /* WhatsApp CTA */
+  .wa-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(37,211,102,0.5), 0 0 40px rgba(37,211,102,0.25);
+    transition: var(--transition);
+    text-transform: uppercase;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .wa-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+
+  .wa-btn:hover::before { transform: translateX(100%); }
+  .wa-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0 30px rgba(37,211,102,0.7), 0 0 60px rgba(37,211,102,0.35);
+  }
+
+  .wa-icon { font-size: 22px; }
+
+  /* Trust line */
+  .trust-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+  }
+
+  /* Section label */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    font-weight: 600;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(0,194,255,0.3), transparent);
+  }
+
+  /* Floating particles */
+  .particles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--cyan);
+    border-radius: 50%;
+    opacity: 0;
+    animation: float-up var(--dur) ease-in infinite;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes float-up {
+    0% { opacity: 0; transform: translateY(0) scale(0); }
+    10% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+    90% { opacity: 0.1; transform: translateY(calc(-100vh + 100px)) scale(0.5); }
+    100% { opacity: 0; transform: translateY(-100vh) scale(0); }
+  }
+
+  /* === UTILITY === */
+  .mt-4 { margin-top: 4px; }
+  .mt-8 { margin-top: 8px; }
+  .text-center { text-align: center; }
+  .text-cyan { color: var(--cyan); }
+  .font-syne { font-family: 'Syne', sans-serif; }
+
+  /* Scan line decoration */
+  .scan-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,194,255,0.3), transparent);
+    margin: 4px 0;
+  }
+
+  /* Corner decoration */
+  .corner-deco {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    opacity: 0.4;
+  }
+
+  .corner-deco.tl { top: 8px; left: 8px; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+  .corner-deco.tr { top: 8px; right: 8px; border-top: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+  .corner-deco.bl { bottom: 8px; left: 8px; border-bottom: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+  .corner-deco.br { bottom: 8px; right: 8px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+
+  /* Metrics bar */
+  .metrics-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--glass-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+  }
+
+  .metric {
+    background: var(--glass);
+    padding: 14px 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .metric-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--cyan);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+    color: var(--white-dim);
+    line-height: 1.3;
+  }
+
+  /* Page-specific accents */
+  .page-accent {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.12;
+  }
+
+  /* Responsive max-width */
+  @media (min-width: 480px) {
+    .content { padding: 32px 32px 40px; }
+    h1 { font-size: 36px; }
+  }
+
+  @media (min-width: 768px) {
+    .content { max-width: 520px; }
+  }
+</style>
 </head>
 <body>
 
-  <!-- ── CURSOR ─────────────────────────────────────────────── -->
-  <div class="cursor-dot"  id="cd"></div>
-  <div class="cursor-ring" id="cr"></div>
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
 
-  <!-- ── MESH BACKGROUND ────────────────────────────────────── -->
-  <div class="mesh-bg" aria-hidden="true">
-    <div class="mesh-orb" style="
-      background:radial-gradient(ellipse,rgba(212,195,163,.12) 0%,transparent 70%);
-      width:80vw;height:80vw;top:-20%;left:-10%;animation-duration:18s;"></div>
-    <div class="mesh-orb" style="
-      background:radial-gradient(ellipse,rgba(212,195,163,.06) 0%,transparent 70%);
-      width:60vw;height:60vw;bottom:-10%;right:-5%;animation-duration:24s;animation-delay:-8s;"></div>
-    <div class="mesh-orb" style="
-      background:radial-gradient(ellipse,rgba(255,255,255,.04) 0%,transparent 70%);
-      width:40vw;height:40vw;top:40%;left:55%;animation-duration:30s;animation-delay:-15s;"></div>
-    <div class="grain"></div>
+<!-- ════════════════════════════════════════
+     PAGE 1 — THE HOOK
+════════════════════════════════════════ -->
+<div class="page active" id="page1">
+  <div class="page-accent" style="width:300px;height:300px;background:var(--cyan);top:-80px;right:-80px;"></div>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-mark">BF</div>
+      <div>
+        <div class="logo-text">BIOFY</div>
+        <div class="logo-sub">Digital Ecosystem</div>
+      </div>
+    </div>
+    <div class="step-nav"><button class="step-dot active" onclick="goTo(1)" title="Etapa 1">1</button><div class="step-sep"></div><button class="step-dot " onclick="goTo(2)" title="Etapa 2">2</button><div class="step-sep"></div><button class="step-dot " onclick="goTo(3)" title="Etapa 3">3</button><div class="step-sep"></div><button class="step-dot " onclick="goTo(4)" title="Etapa 4">4</button></div>
   </div>
 
-  <div id="root"></div>
+  <div class="progress-bar" style="margin-bottom:8px;">
+    <div class="progress-fill" style="width:25%"></div>
+  </div>
 
-  <script type="text/babel" data-presets="env,react">
-    const { useState, useEffect, useRef, useLayoutEffect } = React;
+  <div class="content">
+    <div>
+      <div class="eyebrow">⚡ Diagnóstico rápido</div>
+      <h1 style="margin-top:10px;">O link na sua bio é uma <em>PONTE</em> ou um <em>MURO</em>?</h1>
+      <p class="lead" style="margin-top:12px;">Em menos de 3 segundos, o seu visitante decide ficar ou ir embora. Seu link está fazendo esse trabalho — ou sabotando você?</p>
+    </div>
 
-    /* ── FRAMER MOTION DETECTION ──────────────────────────── */
-    const getMotion = () => {
-      const lib = window.Motion || window.framerMotion
-               || window.framer_motion || window.FramerMotion;
-      if (lib) return { motion: lib.motion || lib, AnimatePresence: lib.AnimatePresence };
-      return {
-        motion: new Proxy({}, {
-          get: (_, prop) => ({ initial,animate,exit,transition,
-            whileHover,whileTap,whileInView,viewport,...rest }) =>
-            React.createElement(prop, rest)
-        }),
-        AnimatePresence: ({ children }) => <>{children}</>
-      };
-    };
-    const { motion, AnimatePresence } = getMotion();
+    <!-- Metrics -->
+    <div class="metrics-bar">
+      <div class="metric">
+        <div class="metric-num">73%</div>
+        <div class="metric-label">abandonam links lentos</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">3x</div>
+        <div class="metric-label">mais cliques com design</div>
+      </div>
+      <div class="metric">
+        <div class="metric-num">&lt;1s</div>
+        <div class="metric-label">velocidade BIOFY</div>
+      </div>
+    </div>
 
-    /* ── LUCIDE ICON ──────────────────────────────────────── */
-    const Icon = ({ name, style }) => {
-      useLayoutEffect(() => {
-        window.lucide?.createIcons?.();
-      }, [name]);
-      return <i data-lucide={name} style={{ width:24, height:24, ...style }} />;
-    };
+    <!-- Quiz -->
+    <div class="glass-card">
+      <div class="corner-deco tl"></div>
+      <div class="corner-deco tr"></div>
+      <div class="corner-deco bl"></div>
+      <div class="corner-deco br"></div>
+      <p class="quiz-question">🔍 Sua página atual demora mais de 3 segundos para carregar?</p>
+      <div class="quiz-options">
+        <button class="quiz-btn yes" onclick="selectQuiz(this, 'sim')">✅ SIM</button>
+        <button class="quiz-btn no" onclick="selectQuiz(this, 'nao')">😬 NÃO</button>
+      </div>
+      <div id="quiz-feedback" style="margin-top:14px;display:none;font-size:13px;line-height:1.5;color:rgba(255,255,255,0.75);border-top:1px solid var(--glass-border);padding-top:12px;"></div>
+    </div>
 
-    /* ── CURSOR MAGNÉTICO ─────────────────────────────────── */
-    const MagneticCursor = () => {
-      const dot  = useRef(null);
-      const ring = useRef(null);
-      const pos  = useRef({ x:0, y:0 });
-      const rp   = useRef({ x:0, y:0 });
-      const raf  = useRef(null);
+    <button class="cta-btn pulse" onclick="goTo(2)">
+      ⚡ Analisar meu potencial de vendas
+    </button>
 
-      useEffect(() => {
-        const isFine = window.matchMedia('(pointer:fine)').matches;
-        if (!isFine) return;
+    <p class="trust-line">🔒 Análise gratuita · Sem compromisso · 100% seguro</p>
+  </div>
+</div>
 
-        const onMove = e => { pos.current = { x: e.clientX, y: e.clientY }; };
-        const lerp   = (a, b, t) => a + (b - a) * t;
+<!-- ════════════════════════════════════════
+     PAGE 2 — A DOR TÉCNICA
+════════════════════════════════════════ -->
+<div class="page" id="page2">
+  <div class="page-accent" style="width:250px;height:250px;background:#0055ff;bottom:50px;left:-60px;"></div>
 
-        const tick = () => {
-          if (!dot.current || !ring.current) return;
-          rp.current.x = lerp(rp.current.x, pos.current.x, .08);
-          rp.current.y = lerp(rp.current.y, pos.current.y, .08);
-          dot.current.style.transform  = `translate(${pos.current.x}px,${pos.current.y}px)`;
-          ring.current.style.transform = `translate(${rp.current.x}px,${rp.current.y}px)`;
-          raf.current = requestAnimationFrame(tick);
-        };
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-mark">BF</div>
+      <div>
+        <div class="logo-text">BIOFY</div>
+        <div class="logo-sub">Digital Ecosystem</div>
+      </div>
+    </div>
+    <div class="step-nav"><button class="step-dot done" onclick="goTo(1)" title="Etapa 1">1</button><div class="step-sep"></div><button class="step-dot active" onclick="goTo(2)" title="Etapa 2">2</button><div class="step-sep"></div><button class="step-dot " onclick="goTo(3)" title="Etapa 3">3</button><div class="step-sep"></div><button class="step-dot " onclick="goTo(4)" title="Etapa 4">4</button></div>
+  </div>
 
-        const onEnter = e => {
-          const r  = e.currentTarget.getBoundingClientRect();
-          const cx = r.left + r.width / 2;
-          const cy = r.top  + r.height / 2;
-          ring.current.style.transform = `translate(${cx}px,${cy}px) scale(2.5)`;
-          ring.current.classList.add('magnetic');
-        };
-        const onLeave = () => ring.current.classList.remove('magnetic');
+  <div class="progress-bar">
+    <div class="progress-fill" style="width:50%"></div>
+  </div>
 
-        window.addEventListener('mousemove', onMove);
-        document.querySelectorAll('[data-magnetic]').forEach(el => {
-          el.addEventListener('mouseenter', onEnter);
-          el.addEventListener('mouseleave', onLeave);
-        });
-        raf.current = requestAnimationFrame(tick);
-        return () => {
-          window.removeEventListener('mousemove', onMove);
-          cancelAnimationFrame(raf.current);
-        };
-      }, []);
+  <div class="content">
+    <div>
+      <div class="eyebrow">🚀 Tecnologia de ponta</div>
+      <h2 style="margin-top:10px;">Sua marca merece a <em>velocidade da luz.</em></h2>
+      <p class="lead" style="margin-top:10px;">Cada milissegundo conta. Veja a diferença entre uma presença digital comum e o ecossistema BIOFY.</p>
+    </div>
 
-      return null; // elementos já estão no HTML estático
-    };
+    <!-- Comparison -->
+    <div class="glass-card" style="padding:0;overflow:hidden;">
+      <div class="compare-table">
+        <div class="compare-header bad">🐌 Link Comum</div>
+        <div class="compare-header good">⚡ BIOFY</div>
+        <div class="compare-cell bad"><span class="icon">⏱️</span><div>3–8s de carregamento</div></div>
+        <div class="compare-cell good"><span class="icon">⚡</span><div><strong>&lt;1s</strong> Netlify Edge</div></div>
+        <div class="compare-cell bad"><span class="icon">📱</span><div>Template genérico</div></div>
+        <div class="compare-cell good"><span class="icon">✨</span><div>Design exclusivo</div></div>
+        <div class="compare-cell bad"><span class="icon">📉</span><div>Invisível no Google</div></div>
+        <div class="compare-cell good"><span class="icon">🎯</span><div>SEO indexado</div></div>
+        <div class="compare-cell bad"><span class="icon">❌</span><div>Sem SSL seguro</div></div>
+        <div class="compare-cell good"><span class="icon">🔒</span><div>SSL incluso</div></div>
+      </div>
 
-    /* ── CARD TILT HOOK ───────────────────────────────────── */
-    const useTilt = () => {
-      const ref = useRef(null);
-      useEffect(() => {
-        const el = ref.current;
-        if (!el) return;
-        const onMove = e => {
-          const r  = el.getBoundingClientRect();
-          const x  = ((e.clientX - r.left) / r.width  - .5) * 14;
-          const y  = ((e.clientY - r.top)  / r.height - .5) * -14;
-          const mx = ((e.clientX - r.left) / r.width)  * 100;
-          const my = ((e.clientY - r.top)  / r.height) * 100;
-          el.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg)`;
-          el.style.setProperty('--mx', `${mx}%`);
-          el.style.setProperty('--my', `${my}%`);
-          el.style.willChange = 'transform';
-        };
-        const onLeave = () => {
-          el.style.transform  = 'perspective(800px) rotateY(0deg) rotateX(0deg)';
-          el.style.willChange = 'auto';
-        };
-        el.addEventListener('mousemove', onMove);
-        el.addEventListener('mouseleave', onLeave);
-        return () => {
-          el.removeEventListener('mousemove', onMove);
-          el.removeEventListener('mouseleave', onLeave);
-        };
-      }, []);
-      return ref;
-    };
-
-    /* ── FRAMER VARIANTS ──────────────────────────────────── */
-    const container = {
-      hidden: {},
-      visible: { transition: { staggerChildren: .12, delayChildren: .2 } }
-    };
-    const itemReveal = {
-      hidden:  { opacity: 0, y: 32, filter: 'blur(6px)' },
-      visible: {
-        opacity: 1, y: 0, filter: 'blur(0px)',
-        transition: { duration: .8, ease: [.16,1,.3,1] }
-      }
-    };
-    const wordReveal = {
-      hidden:  { opacity: 0, y: '110%', rotate: 4 },
-      visible: {
-        opacity: 1, y: '0%', rotate: 0,
-        transition: { duration: .6, ease: [.22,1,.36,1] }
-      }
-    };
-
-    /* ── SPLIT TITLE ──────────────────────────────────────── */
-    const SplitTitle = ({ text, className = '' }) => (
-      <motion.span
-        variants={container}
-        initial="hidden"
-        animate="visible"
-        className={className}
-        style={{ display:'flex', flexWrap:'wrap', gap:'0 .3em' }}
-      >
-        {text.split(' ').map((w, i) => (
-          <span key={i} style={{ overflow:'hidden', display:'inline-block' }}>
-            <motion.span variants={wordReveal} style={{ display:'inline-block' }}>{w}</motion.span>
-          </span>
-        ))}
-      </motion.span>
-    );
-
-    /* ── DATA ─────────────────────────────────────────────── */
-    const SERVICES = [
-      { icon:'globe',    title:'Landing Pages de Elite',      desc:'Arquitetura persuasiva que converte tráfego em clientes de alto ticket.' },
-      { icon:'palette',  title:'Identidade Visual Premium',   desc:'Marcas memoráveis que exalam autoridade e sofisticação.' },
-      { icon:'utensils', title:'Cardápios Digitais de Luxo',  desc:'A joia tecnológica para o setor gastronômico premium.' },
-    ];
-
-    const PORTFOLIO = [
-      { title:'Landing Pages',    tag:'Arquitetura de Conversão', img:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426', desc:'Engenharia visual focada em transformar cliques em faturamento real.' },
-      { title:'Identidade Visual',tag:'Branding de Luxo',         img:'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=2000', desc:'A alma da sua marca em formas, tons e tipografias de elite.' },
-      { title:'Cardápios Digitais',tag:'UX Premium',              img:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=2070', desc:'Gastronomia apresentada com sofisticação tecnológica.' },
-    ];
-
-    /* ── PAGES ────────────────────────────────────────────── */
-
-    /* — Selection — */
-    const SelectionPage = ({ go }) => (
-      <div style={{ minHeight:'100svh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'1.5rem', gap:'3rem' }}>
-        <div style={{ textAlign:'center' }}>
-          <motion.div
-            initial={{ scale:.8, opacity:0 }}
-            animate={{ scale:1,  opacity:1 }}
-            transition={{ duration:.6, ease:[.16,1,.3,1] }}
-            style={{ display:'inline-flex', alignItems:'center', justifyContent:'center',
-              width:96, height:96, border:'2px solid var(--gold)', borderRadius:24,
-              fontFamily:"'Playfair Display',serif", fontSize:'2.5rem', color:'var(--gold)',
-              marginBottom:'1.5rem', position:'relative' }}
-          >
-            VZ
-            <span style={{ position:'absolute', top:-4, right:-4, width:14, height:14,
-              background:'#dc2626', borderRadius:'50%' }} />
-          </motion.div>
-
-          <h1 className="fade-up type-display" style={{
-            fontSize:'clamp(2rem,5vw,3.5rem)', color:'#fff', textAlign:'center',
-            letterSpacing:'.3em', textTransform:'uppercase' }}>
-            VZ | web &amp; designer
-          </h1>
-          <p className="fade-up delay-1 type-label text-gold"
-            style={{ marginTop:'.75rem', opacity:.8 }}>
-            Design Digital Estratégico &amp; Identidade de Luxo
-          </p>
+      <div style="padding:16px;background:var(--glass);">
+        <div class="speed-bar-wrap">
+          <div class="speed-label">Link Comum — 6.2s</div>
+          <div class="speed-track"><div class="speed-fill slow"></div></div>
         </div>
-
-        <div className="fade-up delay-2" style={{ width:'100%', maxWidth:380, display:'flex', flexDirection:'column', gap:'1rem' }}>
-          <p className="type-label text-muted" style={{ textAlign:'center' }}>
-            Disponibilidade limitada · 2 projetos/mês
-          </p>
-
-          {/* WhatsApp */}
-          <a href="https://wa.me/5581995655408" target="_blank" data-magnetic
-            className="glass" style={{ display:'flex', alignItems:'center', justifyContent:'space-between',
-              padding:'1.5rem 1.75rem', borderRadius:28, textDecoration:'none', transition:'transform .4s' }}
-            onMouseEnter={e => e.currentTarget.style.transform='translateY(-4px)'}
-            onMouseLeave={e => e.currentTarget.style.transform='translateY(0)'}>
-            <div style={{ display:'flex', alignItems:'center', gap:'1.25rem' }}>
-              <div style={{ width:52, height:52, background:'rgba(37,211,102,.1)', borderRadius:16,
-                display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <Icon name="message-circle" style={{ color:'#25D366' }} />
-              </div>
-              <div>
-                <span style={{ display:'block', fontWeight:700, fontSize:'.875rem',
-                  letterSpacing:'.1em', textTransform:'uppercase', color:'rgba(255,255,255,.9)' }}>
-                  Solicitar Orçamento
-                </span>
-                <span className="type-label text-muted" style={{ fontSize:'.5rem', marginTop:4 }}>
-                  Direct Premium
-                </span>
-              </div>
-            </div>
-            <Icon name="external-link" style={{ color:'rgba(255,255,255,.15)' }} />
-          </a>
-
-          {/* Manifesto */}
-          <button onClick={() => go('presentation')} data-magnetic
-            className="glass" style={{ display:'flex', alignItems:'center', justifyContent:'space-between',
-              padding:'1.5rem 1.75rem', borderRadius:28, background:'transparent',
-              border:'1px solid rgba(255,255,255,.1)', color:'#fff', width:'100%',
-              transition:'transform .4s', cursor:'none' }}
-            onMouseEnter={e => e.currentTarget.style.transform='translateY(-4px)'}
-            onMouseLeave={e => e.currentTarget.style.transform='translateY(0)'}>
-            <div style={{ display:'flex', alignItems:'center', gap:'1.25rem' }}>
-              <div style={{ width:52, height:52, background:'rgba(212,195,163,.05)', borderRadius:16,
-                display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <Icon name="award" style={{ color:'var(--gold)' }} />
-              </div>
-              <div style={{ textAlign:'left' }}>
-                <span style={{ display:'block', fontWeight:700, fontSize:'.875rem',
-                  letterSpacing:'.1em', textTransform:'uppercase' }}>O Manifesto</span>
-                <span className="type-label text-muted" style={{ fontSize:'.5rem', marginTop:4 }}>
-                  Visão VZ | web &amp; designer
-                </span>
-              </div>
-            </div>
-            <Icon name="chevron-right" style={{ color:'rgba(255,255,255,.15)' }} />
-          </button>
-
-          {/* Estúdio */}
-          <button onClick={() => go('site')} data-magnetic
-            style={{ display:'flex', alignItems:'center', justifyContent:'space-between',
-              padding:'1.5rem 1.75rem', borderRadius:28, background:'var(--gold)',
-              border:'none', color:'var(--black)', width:'100%', cursor:'none',
-              boxShadow:'0 40px 80px rgba(212,195,163,.15)',
-              transition:'transform .5s, box-shadow .5s' }}
-            onMouseEnter={e => {
-              e.currentTarget.style.transform='scale(1.03)';
-              e.currentTarget.style.boxShadow='0 40px 100px rgba(212,195,163,.25)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.transform='scale(1)';
-              e.currentTarget.style.boxShadow='0 40px 80px rgba(212,195,163,.15)';
-            }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'1.25rem' }}>
-              <div style={{ width:52, height:52, background:'rgba(10,10,10,.1)', borderRadius:16,
-                display:'flex', alignItems:'center', justifyContent:'center' }}>
-                <Icon name="globe" />
-              </div>
-              <div style={{ textAlign:'left' }}>
-                <span style={{ display:'block', fontWeight:800, fontSize:'.875rem',
-                  letterSpacing:'.1em', textTransform:'uppercase' }}>Estúdio VZ</span>
-                <span style={{ display:'block', fontSize:'.5rem', opacity:.5,
-                  letterSpacing:'.3em', fontWeight:900, marginTop:4, textTransform:'uppercase' }}>
-                  Performance &amp; Luxo
-                </span>
-              </div>
-            </div>
-            <Icon name="arrow-right" />
-          </button>
+        <div class="speed-bar-wrap" style="margin-top:10px;">
+          <div class="speed-label" style="color:var(--cyan);">BIOFY Netlify Edge — <strong style="color:var(--cyan);">0.4s</strong> ⚡</div>
+          <div class="speed-track"><div class="speed-fill fast"></div></div>
         </div>
       </div>
-    );
+    </div>
 
-    /* — Presentation — */
-    const PresentationPage = ({ go }) => (
-      <motion.div
-        initial={{ opacity:0 }} animate={{ opacity:1 }} exit={{ opacity:0 }}
-        style={{ position:'fixed', inset:0, zIndex:50, background:'var(--black)',
-          padding:'2rem', display:'flex', flexDirection:'column',
-          alignItems:'center', justifyContent:'center', overflowY:'auto' }}>
+    <!-- Benefits -->
+    <div class="section-label">O que você recebe</div>
 
-        {/* dot grid */}
-        <div aria-hidden style={{ position:'absolute', inset:0, opacity:.03, zIndex:-1,
-          backgroundImage:'radial-gradient(#D4C3A3 1px,transparent 1px)',
-          backgroundSize:'40px 40px' }} />
-
-        <button onClick={() => go('selection')} style={{
-          position:'fixed', top:24, right:24, zIndex:60,
-          display:'flex', alignItems:'center', gap:8,
-          background:'rgba(255,255,255,.05)', backdropFilter:'blur(20px)',
-          border:'1px solid rgba(255,255,255,.1)', borderRadius:16,
-          padding:'10px 16px', color:'rgba(255,255,255,.4)',
-          cursor:'none', transition:'color .3s' }}
-          onMouseEnter={e => e.currentTarget.style.color='#fff'}
-          onMouseLeave={e => e.currentTarget.style.color='rgba(255,255,255,.4)'}>
-          <span className="type-label" style={{ fontSize:'.5rem' }}>Voltar ao Início</span>
-          <Icon name="x" style={{ width:18, height:18 }} />
-        </button>
-
-        <motion.div
-          variants={container} initial="hidden" animate="visible"
-          style={{ width:'100%', maxWidth:720, display:'flex', flexDirection:'column', gap:'2.5rem' }}>
-
-          <motion.div variants={itemReveal}>
-            <span style={{ display:'inline-block', color:'var(--gold)', fontSize:'.625rem',
-              fontWeight:700, letterSpacing:'.5em', textTransform:'uppercase',
-              padding:'6px 16px', border:'1px solid rgba(212,195,163,.3)',
-              borderRadius:9999, marginBottom:'1rem' }}>VZ | web &amp; designer</span>
-            <h2 style={{ fontFamily:"'Playfair Display',serif", fontSize:'clamp(2.5rem,8vw,5rem)',
-              lineHeight:1, color:'#fff', letterSpacing:'-.04em' }}>
-              Supremacia <br />
-              <span style={{ fontStyle:'italic', fontWeight:400, color:'var(--gold)' }}>Digital.</span>
-            </h2>
-          </motion.div>
-
-          <motion.p variants={itemReveal}
-            style={{ fontFamily:"'Playfair Display',serif", fontStyle:'italic',
-              fontSize:'clamp(1.1rem,2vw,1.4rem)', lineHeight:1.75, color:'rgba(255,255,255,.7)',
-              maxWidth:680 }}>
-            O design medíocre é o{' '}
-            <span style={{ color:'rgba(239,68,68,.8)', textDecoration:'line-through' }}>maior custo</span>
-            {' '}de um negócio de luxo. Minha missão é transpor a{' '}
-            <span style={{ color:'#fff', fontWeight:500 }}>exclusividade física</span>
-            {' '}para o ambiente digital — criando ecossistemas que{' '}
-            <span style={{ borderBottom:'1px solid rgba(212,195,163,.5)' }}>declaram soberania</span>.
-          </motion.p>
-
-          <motion.div variants={container} style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(240px,1fr))', gap:'1.25rem' }}>
-            {[
-              { icon:'star',         title:'Exclusividade', desc:'Apenas 2 marcas por mês recebem atenção total.' },
-              { icon:'shield-check', title:'Autoridade',    desc:'Interfaces que justificam seu preço premium.' },
-            ].map((c,i) => (
-              <motion.div key={i} variants={itemReveal}
-                className="glass card-luxury"
-                style={{ padding:'2rem', borderRadius:28, display:'flex', flexDirection:'column', gap:'1rem' }}>
-                <Icon name={c.icon} style={{ color:'var(--gold)' }} />
-                <h3 style={{ fontFamily:"'Playfair Display',serif", fontSize:'1.5rem' }}>{c.title}</h3>
-                <p style={{ color:'rgba(255,255,255,.3)', fontSize:'.75rem' }}>{c.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
-    );
-
-    /* — Main Site — */
-    const MainSite = ({ go }) => {
-      const tilt1 = useTilt();
-      const tilt2 = useTilt();
-      const tilt3 = useTilt();
-      const tilts = [tilt1, tilt2, tilt3];
-
-      return (
-        <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }}
-          style={{ minHeight:'100vh', overflowX:'hidden' }}>
-
-          {/* NAV */}
-          <nav style={{ display:'flex', justifyContent:'space-between', alignItems:'center',
-            padding:'1.5rem 2rem', maxWidth:1280, margin:'0 auto' }}>
-            <div style={{ display:'flex', alignItems:'center', gap:'2rem' }}>
-              <button onClick={() => go('selection')} data-magnetic
-                style={{ display:'flex', alignItems:'center', gap:'.75rem',
-                  background:'transparent', border:'none', cursor:'none', color:'#fff' }}>
-                <div style={{ width:48, height:48, border:'1px solid rgba(212,195,163,.4)',
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                  color:'var(--gold)', fontFamily:"'Playfair Display',serif",
-                  fontWeight:700, fontSize:'1.1rem', borderRadius:10,
-                  transition:'all .4s' }}>VZ</div>
-                <span style={{ fontFamily:"'Playfair Display',serif", fontSize:'1.1rem',
-                  letterSpacing:'.15em', textTransform:'uppercase' }}>
-                  VZ | web &amp; designer
-                </span>
-              </button>
-              <button onClick={() => go('selection')}
-                style={{ display:'none', alignItems:'center', gap:'.5rem',
-                  color:'rgba(255,255,255,.3)', background:'transparent', border:'none',
-                  fontSize:'.625rem', fontWeight:700, letterSpacing:'.3em',
-                  textTransform:'uppercase', cursor:'none' }}
-                className="back-btn">
-                ← Voltar
-              </button>
-            </div>
-            <a href="https://wa.me/5581995655408" target="_blank" data-magnetic
-              className="glass" style={{ padding:'.75rem 1.75rem', borderRadius:9999,
-                fontSize:'.625rem', fontWeight:700, letterSpacing:'.15em',
-                textTransform:'uppercase', textDecoration:'none', color:'#fff',
-                transition:'border-color .3s' }}>
-              Falar com Especialista
-            </a>
-          </nav>
-
-          {/* HERO */}
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 2rem 4rem' }}>
-            <div className="glass card-luxury" ref={tilt1}
-              style={{ padding:'clamp(2rem,5vw,5rem)', borderRadius:48,
-                overflow:'hidden', position:'relative' }}>
-              <div aria-hidden style={{ position:'absolute', inset:0, zIndex:0,
-                background:'linear-gradient(135deg,rgba(212,195,163,.05) 0%,transparent 100%)',
-                opacity:0, transition:'opacity 1s', pointerEvents:'none' }} />
-
-              <motion.div variants={container} initial="hidden" animate="visible"
-                style={{ position:'relative', zIndex:1 }}>
-                <motion.span variants={itemReveal} className="type-label text-gold"
-                  style={{ display:'block', marginBottom:'1.5rem' }}>
-                  Estúdio Digital de Elite | VZ
-                </motion.span>
-
-                <div style={{ overflow:'hidden', marginBottom:'1.5rem' }}>
-                  <SplitTitle
-                    text="Sua Presença Digital com Autoridade Máxima."
-                    className="type-display"
-                    style={{ fontSize:'var(--step-4)', color:'#fff' }} />
-                </div>
-
-                <motion.div variants={itemReveal}
-                  style={{ display:'flex', flexWrap:'wrap', gap:'1.5rem',
-                    alignItems:'center', marginBottom:'3rem' }}>
-                  <p style={{ color:'rgba(255,255,255,.4)', maxWidth:540,
-                    fontSize:'var(--step-1)', fontWeight:300, lineHeight:1.75 }}>
-                    Projetamos{' '}
-                    <em style={{ color:'rgba(255,255,255,.8)', fontStyle:'italic' }}>
-                      ecossistemas de autoridade
-                    </em>
-                    {' '}para marcas que exigem o topo.
-                  </p>
-                  <div style={{ background:'rgba(212,195,163,.1)',
-                    border:'1px solid rgba(212,195,163,.2)',
-                    padding:'1rem 1.5rem', borderRadius:16, backdropFilter:'blur(20px)' }}>
-                    <span className="type-label text-gold" style={{ display:'block' }}>Status</span>
-                    <span style={{ fontFamily:"'Playfair Display',serif",
-                      fontStyle:'italic', fontSize:'1.1rem', letterSpacing:'.05em' }}>
-                      Últimas 2 vagas/mês
-                    </span>
-                  </div>
-                </motion.div>
-
-                {/* Services grid */}
-                <motion.div variants={container}
-                  style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',
-                    gap:'1.5rem', marginBottom:'3rem' }}>
-                  {SERVICES.map((s,i) => (
-                    <motion.div key={i} variants={itemReveal}
-                      className="card-luxury"
-                      style={{ background:'rgba(255,255,255,.03)',
-                        border:'1px solid rgba(255,255,255,.05)',
-                        padding:'2.5rem', borderRadius:28,
-                        transition:'border-color .4s' }}
-                      onMouseEnter={e => e.currentTarget.style.borderColor='rgba(212,195,163,.4)'}
-                      onMouseLeave={e => e.currentTarget.style.borderColor='rgba(255,255,255,.05)'}>
-                      <Icon name={s.icon} style={{ color:'var(--gold)', marginBottom:'1.25rem' }} />
-                      <h3 style={{ fontFamily:"'Playfair Display',serif",
-                        fontSize:'1.25rem', marginBottom:'.5rem' }}>{s.title}</h3>
-                      <p style={{ color:'rgba(255,255,255,.4)', fontSize:'.8rem',
-                        lineHeight:1.75 }}>{s.desc}</p>
-                    </motion.div>
-                  ))}
-                </motion.div>
-
-                <motion.div variants={itemReveal}
-                  style={{ display:'flex', flexWrap:'wrap', alignItems:'center',
-                    justifyContent:'space-between', gap:'1.5rem',
-                    borderTop:'1px solid rgba(255,255,255,.1)', paddingTop:'2rem' }}>
-                  <div style={{ display:'flex', alignItems:'center', gap:'1.5rem',
-                    color:'rgba(255,255,255,.3)', fontSize:'.625rem',
-                    fontWeight:700, letterSpacing:'.2em', textTransform:'uppercase' }}>
-                    <div style={{ display:'flex', alignItems:'center', gap:8,
-                      paddingRight:'1.5rem', borderRight:'1px solid rgba(255,255,255,.1)' }}>
-                      <Icon name="shield-check" style={{ color:'var(--gold)', width:18, height:18 }} />
-                      Performance VZ
-                    </div>
-                    <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-                      <Icon name="zap" style={{ color:'var(--gold)', width:16, height:16 }} />
-                      0.8s Load
-                    </div>
-                  </div>
-                  <a href="https://wa.me/5581995655408" target="_blank"
-                    className="btn-gold" data-magnetic>
-                    Reservar Consultoria Estratégica
-                  </a>
-                </motion.div>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* PORTFOLIO */}
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'4rem 2rem 6rem' }}>
-            <motion.div variants={container} initial="hidden"
-              whileInView="visible" viewport={{ once:true, amount:.2 }}
-              style={{ textAlign:'center', marginBottom:'4rem' }}>
-              <motion.span variants={itemReveal}
-                className="type-label text-gold" style={{ display:'block', marginBottom:'.75rem' }}>
-                Nosso Portfolio
-              </motion.span>
-              <motion.h2 variants={itemReveal} className="type-display"
-                style={{ fontFamily:"'Playfair Display',serif",
-                  fontSize:'var(--step-3)', color:'#fff' }}>
-                Onde a Estética Encontra{' '}
-                <span style={{ fontStyle:'italic', fontWeight:400, color:'var(--gold)' }}>
-                  a Performance.
-                </span>
-              </motion.h2>
-            </motion.div>
-
-            <motion.div variants={container} initial="hidden"
-              whileInView="visible" viewport={{ once:true, amount:.15 }}
-              style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'2rem' }}>
-              {PORTFOLIO.map((p,i) => (
-                <motion.div key={i} variants={itemReveal}
-                  ref={tilts[i]}
-                  className="card-luxury"
-                  style={{ position:'relative', overflow:'hidden',
-                    borderRadius:40, aspectRatio:'4/5',
-                    background:'var(--black)', border:'1px solid rgba(255,255,255,.05)' }}
-                  whileHover={{ y:-10 }}
-                  transition={{ type:'spring', stiffness:260, damping:28 }}>
-                  <img src={p.img} alt={p.title}
-                    loading="lazy"
-                    style={{ position:'absolute', inset:0, width:'100%', height:'100%',
-                      objectFit:'cover', opacity:.5, transition:'transform 1s, opacity .5s' }}
-                    onMouseEnter={e => { e.target.style.transform='scale(1.1)'; e.target.style.opacity=.7; }}
-                    onMouseLeave={e => { e.target.style.transform='scale(1)';   e.target.style.opacity=.5; }} />
-                  <div style={{ position:'absolute', inset:'0 0 0', bottom:0,
-                    padding:'2.5rem', background:'linear-gradient(to top,var(--black) 0%,rgba(10,10,10,.7) 50%,transparent 100%)',
-                    display:'flex', flexDirection:'column', justifyContent:'flex-end', gap:'1rem' }}>
-                    <span style={{ background:'rgba(212,195,163,.1)',
-                      border:'1px solid rgba(212,195,163,.2)',
-                      borderRadius:9999, padding:'4px 12px',
-                      color:'var(--gold)', fontSize:'.55rem',
-                      fontWeight:700, letterSpacing:'.25em', textTransform:'uppercase',
-                      alignSelf:'flex-start' }}>{p.tag}</span>
-                    <h3 style={{ fontFamily:"'Playfair Display',serif",
-                      fontSize:'1.75rem', color:'#fff' }}>{p.title}</h3>
-                    <p style={{ color:'rgba(255,255,255,.4)', fontSize:'.75rem',
-                      lineHeight:1.75 }}>{p.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-
-          {/* PHILOSOPHY */}
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'4rem 2rem 6rem',
-            borderTop:'1px solid rgba(255,255,255,.05)' }}>
-            <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(300px,1fr))',
-              gap:'5rem', alignItems:'center' }}>
-
-              <motion.div variants={container} initial="hidden"
-                whileInView="visible" viewport={{ once:true, amount:.2 }}
-                style={{ display:'flex', flexDirection:'column', gap:'2rem' }}>
-                <motion.span variants={itemReveal} className="type-label text-gold">
-                  Por que VZ?
-                </motion.span>
-                <motion.h2 variants={itemReveal} className="type-display"
-                  style={{ fontFamily:"'Playfair Display',serif",
-                    fontSize:'var(--step-3)', color:'#fff' }}>
-                  Não Vendemos Sites.{' '}
-                  <span style={{ fontStyle:'italic', fontWeight:400, color:'var(--gold)' }}>
-                    Vendemos Poder.
-                  </span>
-                </motion.h2>
-                <motion.p variants={itemReveal}
-                  style={{ color:'rgba(255,255,255,.4)', fontSize:'var(--step-1)',
-                    lineHeight:1.75, fontWeight:300 }}>
-                  No mercado de alto luxo, a primeira impressão é o veredito final.
-                  Se o seu site parece comum, você será precificado como comum.
-                </motion.p>
-                {[
-                  { icon:'star',  title:'Ecossistemas de Elite',  desc:'Branding, tecnologia e estratégia em um só lugar.' },
-                  { icon:'cpu',   title:'Tecnologia Invisível',    desc:'Código limpo e rápido para o setor premium.' },
-                ].map((item, i) => (
-                  <motion.div key={i} variants={itemReveal}
-                    style={{ display:'flex', gap:'1.25rem', alignItems:'flex-start' }}>
-                    <div style={{ width:48, height:48, background:'rgba(212,195,163,.1)',
-                      borderRadius:16, display:'flex', alignItems:'center',
-                      justifyContent:'center', flexShrink:0 }}>
-                      <Icon name={item.icon} style={{ color:'var(--gold)' }} />
-                    </div>
-                    <div>
-                      <h4 style={{ fontWeight:700, fontSize:'.8rem', letterSpacing:'.15em',
-                        textTransform:'uppercase', marginBottom:4 }}>{item.title}</h4>
-                      <p style={{ color:'rgba(255,255,255,.3)', fontSize:'.75rem',
-                        lineHeight:1.75 }}>{item.desc}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              <motion.div initial={{ opacity:0, x:40 }}
-                whileInView={{ opacity:1, x:0 }}
-                viewport={{ once:true, amount:.3 }}
-                transition={{ duration:.8, ease:[.16,1,.3,1] }}
-                style={{ position:'relative' }}>
-                <div style={{ aspectRatio:'1', background:'rgba(212,195,163,.05)',
-                  borderRadius:60, border:'1px solid rgba(212,195,163,.2)',
-                  display:'flex', alignItems:'center', justifyContent:'center',
-                  overflow:'hidden', position:'relative' }}>
-                  <div style={{ position:'absolute', inset:0,
-                    backgroundImage:"url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=2070')",
-                    backgroundSize:'cover', opacity:.1, filter:'grayscale(100%)' }} />
-                  <span style={{ fontFamily:"'Playfair Display',serif", fontStyle:'italic',
-                    fontSize:'clamp(6rem,15vw,11rem)', color:'rgba(212,195,163,.2)',
-                    userSelect:'none' }}>VZ</span>
-                </div>
-                <div className="glass" style={{ position:'absolute', bottom:-32, left:-32,
-                  padding:'1.5rem 2rem', borderRadius:32 }}>
-                  <span style={{ display:'block', fontFamily:"'Playfair Display',serif",
-                    fontSize:'2.5rem', color:'#fff' }}>99%</span>
-                  <span className="type-label text-muted" style={{ fontSize:'.5rem' }}>
-                    Satisfação Elite
-                  </span>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-
-          {/* FEATURES */}
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 2rem 6rem',
-            display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:'1.5rem' }}>
-            {[
-              { icon:'smartphone', title:'Mobile First',    desc:'Projetado para converter clientes via Instagram e WhatsApp.' },
-              { icon:'zap',        title:'Alta Performance',desc:'Infraestrutura robusta para velocidade em qualquer dispositivo.' },
-            ].map((f,i) => (
-              <motion.div key={i} initial={{ opacity:0, y:24 }}
-                whileInView={{ opacity:1, y:0 }} viewport={{ once:true }}
-                transition={{ delay:i*.12, duration:.7, ease:[.16,1,.3,1] }}
-                style={{ background:'rgba(255,255,255,.03)',
-                  border:'1px solid rgba(255,255,255,.05)',
-                  borderRadius:40, padding:'2.5rem',
-                  position:'relative', overflow:'hidden' }}
-                onMouseEnter={e => e.currentTarget.querySelector('.bg-icon').style.transform='scale(1.25)'}
-                onMouseLeave={e => e.currentTarget.querySelector('.bg-icon').style.transform='scale(1)'}>
-                <div className="bg-icon" style={{ position:'absolute', bottom:-32, right:-32,
-                  transition:'transform .6s cubic-bezier(.23,1,.32,1)' }}>
-                  <Icon name={f.icon} style={{ width:120, height:120, color:'rgba(212,195,163,.08)' }} />
-                </div>
-                <h2 style={{ fontFamily:"'Playfair Display',serif",
-                  fontSize:'1.75rem', marginBottom:'1rem' }}>{f.title}</h2>
-                <p style={{ color:'rgba(255,255,255,.4)', fontSize:'.85rem',
-                  maxWidth:280, lineHeight:1.75 }}>{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* CTA */}
-          <div style={{ maxWidth:1280, margin:'0 auto', padding:'0 2rem 6rem' }}>
-            <motion.div initial={{ opacity:0, y:40 }}
-              whileInView={{ opacity:1, y:0 }} viewport={{ once:true, amount:.3 }}
-              transition={{ duration:.8, ease:[.16,1,.3,1] }}
-              style={{ background:'rgba(212,195,163,.05)',
-                border:'1px solid rgba(212,195,163,.1)',
-                borderRadius:60, padding:'clamp(3rem,7vw,6rem) 2rem',
-                textAlign:'center', display:'flex', flexDirection:'column',
-                alignItems:'center', gap:'2rem' }}>
-              <h2 className="type-display"
-                style={{ fontFamily:"'Playfair Display',serif",
-                  fontSize:'var(--step-3)', color:'#fff' }}>
-                Pronto para Dominar{' '}
-                <span style={{ fontStyle:'italic', fontWeight:400, color:'var(--gold)' }}>
-                  o seu Mercado?
-                </span>
-              </h2>
-              <p style={{ color:'rgba(255,255,255,.4)', maxWidth:480,
-                fontSize:'var(--step-1)', fontWeight:300, lineHeight:1.75 }}>
-                Não deixe sua autoridade ao acaso. Reserve sua vaga para o próximo mês.
-              </p>
-              <a href="https://wa.me/5581995655408" target="_blank"
-                className="btn-gold" data-magnetic>
-                Quero Minha Presença de Elite
-              </a>
-            </motion.div>
-          </div>
-
-          {/* FOOTER */}
-          <footer style={{ borderTop:'1px solid rgba(255,255,255,.05)',
-            padding:'3rem 2rem', textAlign:'center' }}
-            className="type-label text-muted">
-            VZ | web &amp; designer — © 2026 — Todos os direitos reservados
-          </footer>
-        </motion.div>
-      );
-    };
-
-    /* ── APP ROOT ─────────────────────────────────────────── */
-    const App = () => {
-      const [page, setPage] = useState('selection');
-
-      return (
-        <div style={{ minHeight:'100vh', position:'relative' }}>
-          <MagneticCursor />
-          <AnimatePresence mode="wait">
-            {page === 'selection'   && <SelectionPage    key="sel"  go={setPage} />}
-            {page === 'presentation'&& <PresentationPage key="pres" go={setPage} />}
-            {page === 'site'        && <MainSite         key="site" go={setPage} />}
-          </AnimatePresence>
+    <div class="benefit-list">
+      <div class="benefit-item">
+        <div class="benefit-icon">🎨</div>
+        <div class="benefit-text">
+          <strong>Design Premium Exclusivo</strong>
+          <span>Nada de templates prontos. Identidade visual única, criada para converter.</span>
         </div>
-      );
-    };
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🎯</div>
+        <div class="benefit-text">
+          <strong>Botões Inteligentes de Conversão</strong>
+          <span>WhatsApp, Instagram e links de vendas com CTAs otimizados.</span>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🔍</div>
+        <div class="benefit-text">
+          <strong>Indexação Google (SEO Básico)</strong>
+          <span>Sua bio encontrada organicamente. Mais alcance, sem pagar por anúncio.</span>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">☁️</div>
+        <div class="benefit-text">
+          <strong>Hospedagem Netlify Edge</strong>
+          <span>Rede global de servidores. Disponibilidade 99.9% garantida.</span>
+        </div>
+      </div>
+    </div>
 
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
+    <button class="cta-btn pulse" onclick="goTo(3)">
+      🚀 Ver solução premium
+    </button>
+  </div>
+</div>
 
-  <!-- Cursor DOM fallback (para quando React ainda não montou) -->
-  <script>
-    (function () {
-      const dot  = document.getElementById('cd');
-      const ring = document.getElementById('cr');
-      let pos = {x:0,y:0}, rp = {x:0,y:0}, raf;
-      const lerp = (a,b,t) => a+(b-a)*t;
-      window.addEventListener('mousemove', e => { pos.x=e.clientX; pos.y=e.clientY; });
-      (function tick(){
-        rp.x = lerp(rp.x, pos.x, .08);
-        rp.y = lerp(rp.y, pos.y, .08);
-        dot.style.transform  = `translate(${pos.x}px,${pos.y}px)`;
-        ring.style.transform = `translate(${rp.x}px,${rp.y}px)`;
-        raf = requestAnimationFrame(tick);
-      })();
-    })();
-  </script>
+<!-- ════════════════════════════════════════
+     PAGE 3 — AUTORIDADE E PROVA SOCIAL
+════════════════════════════════════════ -->
+<div class="page" id="page3">
+  <div class="page-accent" style="width:280px;height:280px;background:var(--cyan);top:-60px;left:-60px;"></div>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-mark">BF</div>
+      <div>
+        <div class="logo-text">BIOFY</div>
+        <div class="logo-sub">Digital Ecosystem</div>
+      </div>
+    </div>
+    <div class="step-nav"><button class="step-dot done" onclick="goTo(1)" title="Etapa 1">1</button><div class="step-sep"></div><button class="step-dot done" onclick="goTo(2)" title="Etapa 2">2</button><div class="step-sep"></div><button class="step-dot active" onclick="goTo(3)" title="Etapa 3">3</button><div class="step-sep"></div><button class="step-dot " onclick="goTo(4)" title="Etapa 4">4</button></div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" style="width:75%"></div>
+  </div>
+
+  <div class="content">
+    <div>
+      <div class="eyebrow">💬 Prova social real</div>
+      <h2 style="margin-top:10px;">Quem usa <em>BIOFY</em>, converte mais.</h2>
+      <p class="lead" style="margin-top:10px;">Resultados reais de quem transformou a presença digital com a nossa plataforma.</p>
+    </div>
+
+    <!-- Testimonials -->
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Aumentei meus cliques no WhatsApp em 40% na primeira semana. Antes eu perdia cliente porque meu link era lento e feio. Agora vendo todo dia."</p>
+        <div class="testimonial-author">
+          <div class="avatar a1">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Ana Caroline Souza" onerror="this.style.display='none';this.parentElement.textContent='AC'">
+          </div>
+          <div>
+            <div class="author-name">Ana Caroline Souza</div>
+            <div class="author-role" style="display:flex;align-items:center;gap:5px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" width="11" height="11" style="border-radius:2px;opacity:0.8;"> @anacaroline.modas · Lojista
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Meus pacientes comentam sobre o site antes mesmo de me conhecer. O design da BIOFY passou muito mais autoridade e credibilidade pra minha marca."</p>
+        <div class="testimonial-author">
+          <div class="avatar a2">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Dr. Marcos Ferreira" onerror="this.style.display='none';this.parentElement.textContent='MF'">
+          </div>
+          <div>
+            <div class="author-name">Dr. Marcos Ferreira</div>
+            <div class="author-role" style="display:flex;align-items:center;gap:5px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" width="11" height="11" style="border-radius:2px;opacity:0.8;"> @dr.marcosferreira · Consultor
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Em menos de 24h meu link estava no ar. Rápido, bonito e diferente de tudo. Minha taxa de contato via WhatsApp triplicou no primeiro mês."</p>
+        <div class="testimonial-author">
+          <div class="avatar a3">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Juliana Pinheiro" onerror="this.style.display='none';this.parentElement.textContent='JP'">
+          </div>
+          <div>
+            <div class="author-name">Juliana Pinheiro</div>
+            <div class="author-role" style="display:flex;align-items:center;gap:5px;">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png" width="11" height="11" style="border-radius:2px;opacity:0.8;"> @juliana.foto · Fotógrafa
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seals -->
+    <div class="section-label">Certificações</div>
+
+    <div class="seals">
+      <div class="seal">
+        <div class="seal-icon">🔒</div>
+        <div class="seal-text">SSL Seguro</div>
+      </div>
+      <div class="seal">
+        <div class="seal-icon">⚡</div>
+        <div class="seal-text">Entrega 24h</div>
+      </div>
+      <div class="seal">
+        <div class="seal-icon">🔍</div>
+        <div class="seal-text">Google Ready</div>
+      </div>
+    </div>
+
+    <button class="cta-btn pulse" onclick="goTo(4)">
+      ✨ Quero minha bio profissional
+    </button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     PAGE 4 — A OFERTA IRRESISTÍVEL
+════════════════════════════════════════ -->
+<div class="page" id="page4">
+  <div class="page-accent" style="width:320px;height:320px;background:var(--cyan);bottom:-80px;right:-80px;"></div>
+
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-mark">BF</div>
+      <div>
+        <div class="logo-text">BIOFY</div>
+        <div class="logo-sub">Digital Ecosystem</div>
+      </div>
+    </div>
+    <div class="step-nav"><button class="step-dot done" onclick="goTo(1)" title="Etapa 1">1</button><div class="step-sep"></div><button class="step-dot done" onclick="goTo(2)" title="Etapa 2">2</button><div class="step-sep"></div><button class="step-dot done" onclick="goTo(3)" title="Etapa 3">3</button><div class="step-sep"></div><button class="step-dot active" onclick="goTo(4)" title="Etapa 4">4</button></div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" style="width:100%"></div>
+  </div>
+
+  <div class="content">
+    <div>
+      <div class="eyebrow">🔥 Oferta exclusiva</div>
+      <h2 style="margin-top:10px;">Seu <em>Ecossistema Tech</em> por um único pagamento.</h2>
+    </div>
+
+    <!-- Price card -->
+    <div class="price-card">
+      <div class="price-tag">pagamento único · sem mensalidade</div>
+      <div class="price-old">De R$ 197,00</div>
+      <div class="price-new"><span>R$</span> 67<span style="font-size:28px;">,90</span></div>
+      <div class="scan-line"></div>
+      <p class="price-desc" style="margin-top:10px;">Hospedagem Netlify Edge inclusa. Link exclusivo configurado e entregue em até 24h.</p>
+    </div>
+
+    <!-- Scarcity -->
+    <div class="scarcity">
+      <div class="scarcity-dot"></div>
+      <div class="scarcity-text"><strong>⚠️ Apenas 10 vagas</strong> para configuração manual nesta semana. Restam poucas disponibilidades.</div>
+    </div>
+
+    <!-- Includes -->
+    <div class="section-label">Incluído no pacote</div>
+    <div class="glass-card">
+      <div class="includes">
+        <div class="include-item"><div class="check">✓</div> Design exclusivo personalizado para sua marca</div>
+        <div class="include-item"><div class="check">✓</div> Hospedagem Netlify Edge Computing (&lt;1s)</div>
+        <div class="include-item"><div class="check">✓</div> SSL gratuito + domínio personalizado</div>
+        <div class="include-item"><div class="check">✓</div> Botões de conversão inteligentes</div>
+        <div class="include-item"><div class="check">✓</div> SEO básico configurado</div>
+        <div class="include-item"><div class="check">✓</div> Entrega em até 24 horas</div>
+        <div class="include-item"><div class="check">✓</div> Suporte via WhatsApp</div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-label">Perguntas frequentes</div>
+    <div class="faq">
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Preciso pagar mensalidade?
+          <div class="faq-arrow">▾</div>
+        </div>
+        <div class="faq-a">Não. A BIOFY cobra apenas uma taxa única de R$ 67,90. Hospedagem no Netlify é inclusa, sem custos recorrentes ocultos.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Como recebo meu site?
+          <div class="faq-arrow">▾</div>
+        </div>
+        <div class="faq-a">Após a confirmação, nossa equipe cria e configura seu link exclusivo no Netlify. Você recebe o link funcional em até 24 horas, direto no WhatsApp.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Posso alterar o conteúdo depois?
+          <div class="faq-arrow">▾</div>
+        </div>
+        <div class="faq-a">Sim. Você pode solicitar alterações de texto e links a qualquer momento via WhatsApp, sem custo adicional nas primeiras 30 dias.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">
+          Funciona para qualquer nicho?
+          <div class="faq-arrow">▾</div>
+        </div>
+        <div class="faq-a">Absolutamente. Atendemos lojistas, prestadores de serviços, profissionais liberais, influenciadores e qualquer profissional que queira uma presença digital premium.</div>
+      </div>
+    </div>
+
+    <!-- WA CTA -->
+    <a class="wa-btn"
+       href="https://wa.me/5583981633543?text=Ol%C3%A1%2C%20equipe%20BIOFY.%20Tudo%20bem%3F%0ATenho%20interesse%20em%20garantir%20minha%20vaga%20na%20oferta%20no%20valor%20de%20R%24%2067%2C90%2C%20com%20hospedagem%20via%20Netlify%20inclusa.%0APoderiam%2C%20por%20gentileza%2C%20me%20orientar%20sobre%20os%20pr%C3%B3ximos%20passos%20para%20concluir%20a%20contrata%C3%A7%C3%A3o%3F%0AFico%20no%20aguardo.%20Obrigado."
+       target="_blank" rel="noopener">
+      <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" fill="#fff">
+        <path d="M16 2.9C8.8 2.9 3 8.7 3 15.9c0 2.3.6 4.5 1.8 6.5L3 29l6.8-1.8c1.9 1 4 1.6 6.2 1.6 7.2 0 13-5.8 13-13S23.2 2.9 16 2.9zm0 23.8c-2 0-3.9-.5-5.6-1.5l-.4-.2-4 1.1 1.1-3.9-.3-.4c-1.1-1.7-1.7-3.7-1.7-5.8 0-5.9 4.8-10.7 10.7-10.7S26.7 10 26.7 15.9 21.9 26.7 16 26.7zm5.8-8c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1c-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.6-2.1s0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5s0-.4-.1-.6-.7-1.7-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.4 1.4 3.6c.2.2 2.4 3.7 5.8 5.1.8.3 1.4.5 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4s.3-1.3.2-1.4c-.2-.1-.4-.2-.7-.4z"/>
+      </svg>
+      Finalizar meu projeto no WhatsApp
+    </a>
+
+    <p class="trust-line">🔒 Pagamento 100% seguro · Suporte imediato · Garantia de entrega</p>
+
+    <!-- Footer brand -->
+    <div style="text-align:center;padding-top:8px;border-top:1px solid var(--glass-border);">
+      <div style="font-family:'Syne',sans-serif;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.25);text-transform:uppercase;">BIOFY Digital Ecosystem · 2025</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Generate particles
+  (function() {
+    const container = document.getElementById('particles');
+    for (let i = 0; i < 18; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.cssText = `
+        left: ${Math.random() * 100}%;
+        bottom: 0;
+        --dur: ${6 + Math.random() * 10}s;
+        --delay: ${Math.random() * 8}s;
+        opacity: ${0.3 + Math.random() * 0.4};
+        width: ${1 + Math.random() * 2}px;
+        height: ${1 + Math.random() * 2}px;
+      `;
+      container.appendChild(p);
+    }
+  })();
+
+  // Navigation
+  function goTo(n) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page' + n);
+    target.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Quiz interaction
+  function selectQuiz(btn, answer) {
+    document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    const feedback = document.getElementById('quiz-feedback');
+    feedback.style.display = 'block';
+    if (answer === 'sim') {
+      feedback.innerHTML = '⚠️ <strong style="color:#ff8060;">Problema identificado!</strong> Seu site está perdendo visitantes agora. A BIOFY resolve isso com hospedagem Netlify Edge — carregamento em menos de 1 segundo.';
+    } else {
+      feedback.innerHTML = '👍 <strong style="color:var(--cyan);">Ótimo ponto de partida!</strong> Mas velocidade é só o começo. Descubra como o design e a estratégia BIOFY podem multiplicar suas conversões.';
+    }
+  }
+
+  // FAQ accordion
+  function toggleFaq(item) {
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
 </body>
 </html>
